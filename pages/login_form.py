@@ -1,10 +1,10 @@
-from tkinter import *
 from config import Global_all
 import hashlib
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk
 from PIL import Image, ImageTk
 import fontawesome as fa
+from pages import register_form
 
 
 class LoginForm(Frame):
@@ -31,7 +31,8 @@ class LoginForm(Frame):
         self.__create_all_fields()
 
     def __callback_for_change(self, *args):
-        self.__user_name.delete(0, END)
+        if self.__user_name.get() == "Username":
+            self.__user_name.delete(0, END)
 
     def __create_all_fields(self):
         """create_all_fields
@@ -40,7 +41,7 @@ class LoginForm(Frame):
         """
 
         # Create a button for registering the user
-        register_button = Button(
+        self.__register_button = Button(
             self.master,
             bg=self.__backgorud_color,
             text="Register?",
@@ -49,7 +50,7 @@ class LoginForm(Frame):
             relief=FLAT,
             command=self.register
         )
-        register_button.place(x=570, y=3)
+        self.__register_button.place(x=570, y=3)
 
         self.__loginHead = Label(
             self.master,
@@ -96,7 +97,7 @@ class LoginForm(Frame):
         self.__password.place(height=50, x=250, y=270)
 
         # Show pass eye button
-        self.eye_show = Button(
+        self.__eye_show = Button(
             self.master,
             bg=self.__backgorud_color,
             bd=0,
@@ -106,10 +107,10 @@ class LoginForm(Frame):
             command=self.show,
             activeforeground=self.__primary_color
         )
-        self.eye_show.place(height=50, x=410, y=270)
+        self.__eye_show.place(height=50, x=410, y=270)
 
         # Hide pass eye button
-        self.eye_hide = Button(
+        self.__eye_hide = Button(
             self.master,
             bg=self.__backgorud_color,
             text=fa.icons['eye-slash'],
@@ -120,17 +121,17 @@ class LoginForm(Frame):
             activeforeground=self.__primary_color
         )
 
-        self.error_label = Label(
+        self.__error_label = Label(
             fg="red",
             bd=0,
             bg=self.__backgorud_color,
             font=(self.__font_family, self.__font_size - 2)
         )
-        self.error_label.place(x=250, y=320)
+        self.__error_label.place(x=250, y=320)
 
         # Create a forgot password button
         var = StringVar()
-        forgot_password = Button(
+        self.__forgot_password = Button(
             self.master,
             font=(self.__font_family, 10),
             bg=self.__backgorud_color,
@@ -140,7 +141,7 @@ class LoginForm(Frame):
             relief=FLAT
         )
         var.set("Forgot Password?")
-        forgot_password.place(x=310, y=340)
+        self.__forgot_password.place(x=310, y=340)
 
         # Create the login Button
         self.__login_button = Button(
@@ -157,13 +158,13 @@ class LoginForm(Frame):
 
     def show(self):
         self.__password.config(show="")
-        self.eye_show.place_forget()
-        self.eye_hide.place(height=50, x=410, y=270)
+        self.__eye_show.place_forget()
+        self.__eye_hide.place(height=50, x=410, y=270)
 
     def hide(self):
         self.__password.config(show="\u2022")
-        self.eye_hide.place_forget()
-        self.eye_show.place(height=50, x=410, y=270)
+        self.__eye_hide.place_forget()
+        self.__eye_show.place(height=50, x=410, y=270)
 
 
     def forgot_pass(self):
@@ -176,12 +177,12 @@ class LoginForm(Frame):
         ) or (
             self.__user_name.get() == "Username"
         ):
-            self.error_label.config(text="Provide Username First.")
+            self.__error_label.config(text="Provide Username First.")
         else:
             username = self.__user_name.get()
             self.master.destroy()
             forgot = Tk()
-            forgot_password.ForgotPass(forgot, user=username)
+            self.__forgot_password.ForgotPass(forgot, user=username)
             forgot.mainloop()
 
     def __login(self):
@@ -191,11 +192,11 @@ class LoginForm(Frame):
             matches to the id and password on the databases.
         """
         global all
-        self.error_label.config(text="")
+        self.__error_label.config(text="")
         self.__provided_user_name = self.__user_name.get()
         self.__provided_password = self.__password.get()
         if self.__provided_user_name == "" or self.__provided_password == "":
-            self.error_label.config(text="Fill the credentials")
+            self.__error_label.config(text="Fill the credentials")
             return 0
         else:
             try:
@@ -220,24 +221,23 @@ class LoginForm(Frame):
                                         self.log_user_in()
                                     else:
                                         print("Credentials donot match")
-                                        self.error_label.config(
+                                        self.__error_label.config(
                                             text="Credentials donot match"
                                         )
                             except:
-                                self.error_label.config(
+                                self.__error_label.config(
                                     text="Credentials donot match"
                                 )
                             break
                         else:
                             users = all_users.readline()
                     else:
-                        self.error_label.config(text="Credentials donot match")
+                        self.__error_label.config(text="Credentials donot match")
             except:
                 with open("database/user_names", "a+") as done:
                     self.__login()
 
     def log_user_in(self):
-        global all
         try:
             user = self.__user_name.get()
             with open("loggedin", "w") as logged_user:
@@ -256,8 +256,29 @@ class LoginForm(Frame):
             What if user has no id?
             After pressing Register button this function executes
         """
-        self.master.destroy()
-        my_root_app = Tk()
-        my_root_app.resizable(False, False)
-        my_app = mainClass(master=my_root_app, scheme="register")
-        my_app.mainloop()
+        self.forget_all()
+        # self.master.destroy()
+        # my_root_app = Tk()
+        register_form.RegisterForm(self.master)
+        # my_root_app.mainloop()
+
+    def forget_all(self):
+        self.__eye_show.pi = self.__eye_show.place_info()
+        self.__eye_hide.pi = self.__eye_hide.place_info()
+        self.__password.pi = self.__password.place_info()
+        self.__register_button.pi = self.__register_button.place_info()
+        self.__user_name.pi = self.__user_name.place_info()
+        self.__error_label.pi = self.__error_label.place_info()
+        self.__forgot_password.pi = self.__forgot_password.place_info()
+        self.__loginHead.pi = self.__loginHead.place_info()
+        self.__login_button.pi = self.__login_button.place_info()
+
+        self.__eye_show.place_forget()
+        self.__login_button.place_forget()
+        self.__loginHead.place_forget()
+        self.__forgot_password.place_forget()
+        self.__eye_hide.place_forget()
+        self.__error_label.place_forget()
+        self.__password.place_forget()
+        self.__register_button.place_forget()
+        self.__user_name.place_forget()

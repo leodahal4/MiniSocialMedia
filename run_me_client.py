@@ -1,6 +1,6 @@
 from tkinter import Tk, Frame, Menu
 from config import Global_all
-import login_form
+from pages import login_form
 
 class mainClass(Frame):
     def __init__(self, master=None):
