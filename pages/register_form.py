@@ -253,6 +253,9 @@ class RegisterForm(Frame):
                 This function is responsible for creating a image browser
                 for letting the user choose the image for his/her avatar.
         """
+        self.__img.pi = self.__img.place_info()
+        self.__img.place_forget()
+
         filename = filedialog.askopenfilename(
             initialdir=".",
             title="Select a Image",
@@ -406,6 +409,7 @@ class RegisterForm(Frame):
             This method removes all the widgets that is created by the register
             page
         """
+        self.__img.image = ""
         self.__first_name_entry.pi = self.__first_name_entry.place_info()
         self.__first_name_error_label.pi = self.__first_name_error_label.place_info()
         self.__img.pi = self.__img.place_info()

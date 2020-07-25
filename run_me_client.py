@@ -2,6 +2,7 @@ from tkinter import Tk, Frame, Menu
 from config import Global_all
 from pages import login_form
 
+
 class mainClass(Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -60,6 +61,7 @@ class mainClass(Frame):
         self.__font_size = returned[1]
         self.__weight = returned[2]
         self.__background_color = returned[3]
+
 
 def main():
     """main
