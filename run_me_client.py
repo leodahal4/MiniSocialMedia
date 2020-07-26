@@ -1,7 +1,11 @@
-from tkinter import Tk, Frame, Menu
+from tkinter import Tk, Frame, Menu, messagebox
 from config import Global_all
 from pages import login_form
+import os, os.path
+import subprocess
+import shutil
 
+my_root_app = ""
 
 class mainClass(Frame):
     def __init__(self, master=None):
@@ -67,10 +71,36 @@ def main():
     """main
         Create a tk window for making the things true.
     """
+    if os.path.isdir('temp'):
+        pass
+    else:
+        make_temp_Folder()
+
+    global my_root_app
     my_root_app = Tk()
     my_root_app.resizable(False, False)
     my_app = mainClass(master=my_root_app)
+    my_root_app.protocol("WM_DELETE_WINDOW", on_closing)
     my_app.mainloop()
+
+def make_temp_Folder():
+    temp_path = os.path.join('temp', 'assets')
+    os.mkdir('temp')
+    os.mkdir(temp_path)
+
+
+def on_closing():
+    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+        clear_all_temp()
+        my_root_app.destroy()
+
+def clear_all_temp():
+    folder_path = "temp"
+    if os.path.exists(folder_path):
+        try:
+            shutil.rmtree(folder_path)
+        except OSError as e:
+            print("Error: %s : %s" % (folder_path, e.strerror))
 
 
 if __name__ == "__main__":

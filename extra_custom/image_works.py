@@ -60,7 +60,7 @@ class Image_work:
             (100, 100), Image.LANCZOS
         )
         im_thumb = self.mask_circle_transparent(im_square, 4)
-        im_thumb.save('assets/' + name + '.png')
+        im_thumb.save('temp/assets/' + name + '.png')
 
         # return the saved path of the processed image
-        return "assets/" + name + ".png"
+        return "temp/assets/" + name + ".png"
