@@ -2,7 +2,7 @@
 
 
 # Introduction
-This is a small try for making a Social Media using python Tkinter,
+This is a small try for making a Social Media using python Tkinter,  
 As a final assignment of 
 
 > Algorithm and Data Structures.
