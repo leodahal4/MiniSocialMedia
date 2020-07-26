@@ -395,12 +395,6 @@ class RegisterForm(Frame):
             the main class ( i.e User_management_system ) as
             setting the scheme as login
         """
-        # # global all
-        # # self.master.destroy()
-        # # my_root_app = Tk()
-        # # my_root_app.resizable(False, False)
-        # my_app = User_management_system.mainClass(master=my_root_app)
-        # my_app.mainloop()
         self.forget_all()
         login_form.LoginForm(self.master)
 
@@ -453,44 +447,7 @@ class RegisterForm(Frame):
         """
         self.__encoded_pass = hashlib.md5(self.__password_info.encode())
         self.__encrypted_pass = self.__encoded_pass.hexdigest()
-        try:
-            # check if the database directory is on the path
-            if not os.path.exists("database"):
-                os.mkdir("database")
-            # check if the userdetails directory is on the path
-            if not os.path.exists("database/user_details"):
-                os.mkdir("database/user_details")
-            # write the user name on the user_names file
-            with open("database/user_names", "a+") as user_name:
-                user_name.write(self.__user_name_info + "\n")
-
-            # make a user directory to keep his avatar on his own folder
-            if not(os.path.exists("database/users")):
-                os.mkdir("database/users")
-            os.mkdir("database/users/" + self.__user_name_info)
-            os.mkdir("database/users/" + self.__user_name_info + "/Images")
-            shutil.move(
-                self.__user_avatar_path,
-                "database/users/" + self.__user_name_info + "/"
-                + self.__user_avatar_path
-            )
-            # now change the default avatar path to the new path
-            self.__user_avatar_path = "database/users/" \
-                + self.__user_name_info + "/" + self.__user_avatar_path
-
-            # Store the user details on the user file, named as the username
-            # provided
-            with open(
-                "database/user_details/" +
-                self.__user_name_info,
-                "a+"
-            ) as details:
-                details.write(self.__encrypted_pass + "\n")
-                details.write(self.__first_name_info + "\n")
-                details.write(self.__last_name_info + "\n")
-                details.write(self.__user_avatar_path)
-        except IOError:
-            pass
+        pass
 
         # write out the logged in user name on the logged in file.
         try:
@@ -502,11 +459,4 @@ class RegisterForm(Frame):
         self.forgot_password_form()
 
     def forgot_password_form(self):
-        self.master.destroy()
-        my_root_app = Tk()
-        my_root_app.resizable(False, False)
-        my_app = User_management_system.mainClass(
-            master=my_root_app,
-            scheme="forgot_pass_form"
-        )
-        my_app.mainloop()
+        pass
