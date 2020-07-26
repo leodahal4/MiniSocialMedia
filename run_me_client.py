@@ -17,7 +17,7 @@ class mainClass(Frame):
         master.title("MSM - Mini Social Media")
         master.geometry("700x700+550+180")
         master.config(bg=self.__background_color)
-        self.menuBar()
+        # self.menuBar()
         login_form.LoginForm(self.master)
 
     def menuBar(self):

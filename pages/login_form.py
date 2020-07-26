@@ -29,10 +29,12 @@ class LoginForm(Frame):
         self.master.bind("<Return>", lambda x: self.__login())
         # now pass the program flow to create_all_fields
         self.__create_all_fields()
+        self.__cleared = 0
 
     def __callback_for_change(self, *args):
-        if self.__user_name.get() == "Username":
+        if self.__user_name.get() == "Username" and self.__cleared == 0:
             self.__user_name.delete(0, END)
+        self.__cleared = 1
 
     def __create_all_fields(self):
         """create_all_fields
@@ -61,7 +63,7 @@ class LoginForm(Frame):
             bg=self.__backgorud_color,
             font=(self.__font_family, 15)
         )
-        self.__loginHead.place(height=40, x=250, y=130)
+        self.__loginHead.place(height=40, x=220, y=130)
         # Create username field with a label on the top of it.
         self.__user_name = StringVar()
         self.__user_name = Entry(
@@ -172,18 +174,7 @@ class LoginForm(Frame):
             This function is called whenever the user clicks on the Forgot
             Password button on the window
         """
-        if (
-            self.__user_name.get() == ""
-        ) or (
-            self.__user_name.get() == "Username"
-        ):
-            self.__error_label.config(text="Provide Username First.")
-        else:
-            username = self.__user_name.get()
-            self.master.destroy()
-            forgot = Tk()
-            self.__forgot_password.ForgotPass(forgot, user=username)
-            forgot.mainloop()
+        pass
 
     def __login(self):
         """login
@@ -191,7 +182,7 @@ class LoginForm(Frame):
             This function checks whether the user provied id and password
             matches to the id and password on the databases.
         """
-        global all
+        # global all
         self.__error_label.config(text="")
         self.__provided_user_name = self.__user_name.get()
         self.__provided_password = self.__password.get()
@@ -199,57 +190,10 @@ class LoginForm(Frame):
             self.__error_label.config(text="Fill the credentials")
             return 0
         else:
-            try:
-                with open("database/user_names") as all_users:
-                    users = all_users.readlines()
-                    for i in users:
-                        if self.__provided_user_name+"\n" == i:
-                            try:
-                                with open(
-                                    "database/user_details/"+
-                                    self.__provided_user_name,
-                                    "r"
-                                ) as details:
-                                    original_password = details.readline()
-                                    encoded_provided_pass = hashlib.md5(
-                                        self.__provided_password.encode()
-                                    )
-                                    password_hash = encoded_provided_pass.hexdigest()
-                                    if (
-                                        password_hash + "\n"
-                                    ) == original_password:
-                                        self.log_user_in()
-                                    else:
-                                        print("Credentials donot match")
-                                        self.__error_label.config(
-                                            text="Credentials donot match"
-                                        )
-                            except:
-                                self.__error_label.config(
-                                    text="Credentials donot match"
-                                )
-                            break
-                        else:
-                            users = all_users.readline()
-                    else:
-                        self.__error_label.config(text="Credentials donot match")
-            except:
-                with open("database/user_names", "a+") as done:
-                    self.__login()
+            pass
 
     def log_user_in(self):
-        try:
-            user = self.__user_name.get()
-            with open("loggedin", "w") as logged_user:
-                logged_user.write(user)
-        except:
-            pass
-        self.destroy()
-        self.master.destroy()
-        my_root_app = Tk()
-        my_root_app.resizable(False, False)
-        my_app = mainClass(master=my_root_app, scheme="logged_in")
-        my_app.mainloop()
+        pass
 
     def register(self):
         """register
@@ -257,10 +201,7 @@ class LoginForm(Frame):
             After pressing Register button this function executes
         """
         self.forget_all()
-        # self.master.destroy()
-        # my_root_app = Tk()
         register_form.RegisterForm(self.master)
-        # my_root_app.mainloop()
 
     def forget_all(self):
         self.__eye_show.pi = self.__eye_show.place_info()
