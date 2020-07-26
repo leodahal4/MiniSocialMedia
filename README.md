@@ -12,18 +12,18 @@ As a final assignment of
 
 
 #Pages
-> Login Form\
+> # Login Form
   widgets / components:\
     Username \
-    Password \
+    Password
 
-> Register Form \
+> # Register Form
   widgets / components: \
     First Name \
     Last Name \
     Username \
     Password \
     Confirm Password \
-    Avatar / Image \
+    Avatar / Image
 
 # Complete README.md will be updated soon.
