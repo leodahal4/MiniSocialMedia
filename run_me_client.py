@@ -1,9 +1,9 @@
 from tkinter import Tk, Frame, Menu, messagebox
-from config import Global_all
-from pages import login_form
+from configs.config import Global_all
 import os, os.path
 import subprocess
 import shutil
+from routes.index import Routes
 
 my_root_app = ""
 
@@ -17,8 +17,7 @@ class mainClass(Frame):
         master.title("MSM - Mini Social Media")
         master.geometry("700x700+550+180")
         master.config(bg=self.__background_color)
-        # self.menuBar()
-        login_form.LoginForm(self.master)
+        Routes(master=master, source="initial", destination="login")
 
     def menuBar(self):
         """menuBar

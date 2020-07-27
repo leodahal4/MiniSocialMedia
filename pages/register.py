@@ -1,6 +1,7 @@
 from PIL import Image, ImageTk
-from config import Global_all
-from extra_custom import image_works
+from configs.config import Global_all
+# from extra_custom import image_works
+from configs import image_works
 from routes.index import Routes
 from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
 from tkinter import filedialog, Tk

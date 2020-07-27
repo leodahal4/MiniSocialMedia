@@ -2,8 +2,11 @@ class Routes:
     def __init__(self, master, source, destination):
         print(master, source, destination)
         if destination == "register":
-            from pages.register_form import RegisterForm
+            from pages.register import RegisterForm
             RegisterForm(master)
         elif destination == 'login':
-            from pages.login_form import LoginForm
+            from pages.login import LoginForm
+            LoginForm(master)
+        else:
+            from pages.login import LoginForm
             LoginForm(master)
