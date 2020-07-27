@@ -11,14 +11,15 @@ As a final assignment of
 > python3 run_me_client.py
 
 
-#Pages
+# Pages
+
 > # Login Form
-  widgets / components:\
+> Necessary Fields: \
     Username \
     Password
 
 > # Register Form
-  widgets / components: \
+> Necessary Fields: \
     First Name \
     Last Name \
     Username \
@@ -26,4 +27,4 @@ As a final assignment of
     Confirm Password \
     Avatar / Image
 
-# Complete README.md will be updated soon.
+> Complete README.md will be updated soon.

@@ -1,16 +1,12 @@
-from tkinter import filedialog, Tk
-from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
-# import the image_works module for cropping the user choosen image to circle
-# import the necessary modules from PIL for working with image
 from PIL import Image, ImageTk
-# from PIL import *
-# import check_strength to check the strength of the user password
+from config import Global_all
+from extra_custom import image_works
+from routes.index import Routes
+from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
+from tkinter import filedialog, Tk
 import hashlib
 import os
 import shutil
-from pages import login_form
-from config import Global_all
-from extra_custom import image_works
 
 
 class RegisterForm(Frame):
@@ -39,6 +35,8 @@ class RegisterForm(Frame):
         self.__background_color = returned[3]
 
         self.create_all_fields()
+        print()
+
 
     def create_all_fields(self):
         """create_all_fields
@@ -240,13 +238,16 @@ class RegisterForm(Frame):
         )
         self.__login_button.place(height=50, x=0, y=10)
 
+
     def show_pass(self, event):
         self.__entry.config(show="")
         self.__entry.after(1000, lambda: self.__entry.config(show="\u2022"))
 
+
     def re_show_pass(self, event):
         self.__entry2.config(show="")
         self.__entry2.after(1000, lambda: self.__entry2.config(show="\u2022"))
+
 
     def user_avtar(self):
         """user_avtar
@@ -277,6 +278,7 @@ class RegisterForm(Frame):
         self.__img = Label(self.master, image=render)
         self.__img.image = render
         self.__img.place(x=580, y=5)
+
 
     def register(self):
         """register
@@ -371,6 +373,7 @@ class RegisterForm(Frame):
             self.__password_error_count = 0
         self.check_errors()
 
+
     def check_errors(self):
         """check_errors
                 This function checks whether there are any error labels
@@ -387,6 +390,7 @@ class RegisterForm(Frame):
         if not(self.__total_error):
             self.create()
 
+
     def login(self):
         """login
             What if user has got id?
@@ -396,7 +400,9 @@ class RegisterForm(Frame):
             setting the scheme as login
         """
         self.forget_all()
-        login_form.LoginForm(self.master)
+        # login_form.LoginForm(self.master)
+        Routes(master=self.master, source='register', destination='login')
+
 
     def forget_all(self):
         """forget_all
@@ -436,6 +442,7 @@ class RegisterForm(Frame):
         self.__user_name_entry.place_forget()
         self.__user_name_error_label.place_forget()
 
+
     def create(self):
         """create
                 This function is called when there will be no error
@@ -457,6 +464,7 @@ class RegisterForm(Frame):
         except IOError:
             pass
         self.forgot_password_form()
+
 
     def forgot_password_form(self):
         pass

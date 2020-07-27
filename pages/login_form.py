@@ -4,7 +4,7 @@ from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk
 from PIL import Image, ImageTk
 import fontawesome as fa
-from pages import register_form
+from routes import index
 
 
 class LoginForm(Frame):
@@ -201,7 +201,7 @@ class LoginForm(Frame):
             After pressing Register button this function executes
         """
         self.forget_all()
-        register_form.RegisterForm(self.master)
+        index.Routes(master=self.master, source="login", destination="register")
 
     def forget_all(self):
         self.__eye_show.pi = self.__eye_show.place_info()
