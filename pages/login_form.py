@@ -5,6 +5,8 @@ from tkinter import GROOVE, RIDGE, Tk
 from PIL import Image, ImageTk
 import fontawesome as fa
 from routes import index
+# from validation.login_validation import Validate
+from validation.login_validation import Validate
 
 
 class LoginForm(Frame):
@@ -184,9 +186,11 @@ class LoginForm(Frame):
         """
         # global all
         self.__error_label.config(text="")
-        self.__provided_user_name = self.__user_name.get()
-        self.__provided_password = self.__password.get()
-        if self.__provided_user_name == "" or self.__provided_password == "":
+        valid = Validate()
+        if valid.isBlank(self.__user_name) or valid.isBlank(self.__password):
+            self.__error_label.config(text="Fill the credentials")
+            return 0
+        elif not self.__cleared:
             self.__error_label.config(text="Fill the credentials")
             return 0
         else:

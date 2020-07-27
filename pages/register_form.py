@@ -7,6 +7,7 @@ from tkinter import filedialog, Tk
 import hashlib
 import os
 import shutil
+from pages.clear_widgets import Clear
 
 
 class RegisterForm(Frame):
@@ -35,7 +36,6 @@ class RegisterForm(Frame):
         self.__background_color = returned[3]
 
         self.create_all_fields()
-        print()
 
 
     def create_all_fields(self):
@@ -86,7 +86,7 @@ class RegisterForm(Frame):
         self.__first_name_error_label.place(x=180, y=130)
         # First name entry
         self.__first_name_var = StringVar()
-        self.__first_name_entry = Entry(
+        self.first_name_entry = Entry(
             self.master,
             textvariable=self.__first_name_var,
             width=18,
@@ -94,12 +94,12 @@ class RegisterForm(Frame):
             font=(self.__font_family, self.__font_size),
             relief=FLAT
         )
-        self.__first_name_entry.insert(0, "First Name")
-        self.__first_name_entry.bind(
+        self.first_name_entry.insert(0, "First Name")
+        self.first_name_entry.bind(
             "<Button-1>",
-            lambda x: self.__first_name_entry.delete(0, END)
+            lambda x: self.first_name_entry.delete(0, END)
         )
-        self.__first_name_entry.place(height=50, x=120, y=80)
+        self.first_name_entry.place(height=50, x=120, y=80)
 
         # Create Last Name field
         # Last name error label
@@ -409,39 +409,26 @@ class RegisterForm(Frame):
             This method removes all the widgets that is created by the register
             page
         """
+
         self.__img.image = ""
-        self.__first_name_entry.pi = self.__first_name_entry.place_info()
-        self.__first_name_error_label.pi = self.__first_name_error_label.place_info()
-        self.__img.pi = self.__img.place_info()
-        self.__last_name_entry.pi = self.__last_name_entry.place_info()
-        self.__last_name_error_label.pi = self.__last_name_error_label.place_info()
-        self.__login_button.pi = self.__login_button.place_info()
-        self.__password_entry.pi = self.__last_name_entry.place_info()
-        self.__password_error_label.pi = self.__last_name_error_label.place_info()
-        self.__password_label.pi = self.__password_label.place_info()
-        self.__re_password_entry.pi = self.__re_password_entry.place_info()
-        self.__re_password_label.pi = self.__re_password_label.place_info()
-        self.__register_button.pi = self.__register_button.place_info()
-        self.__user_avatar_browser.pi = self.__user_avatar_browser.place_info()
-        self.__user_name_entry.pi = self.__last_name_entry.place_info()
-        self.__user_name_error_label.pi = self.__last_name_error_label.place_info()
-
-        self.__first_name_entry.place_forget()
-        self.__first_name_error_label.place_forget()
-        self.__img.place_forget()
-        self.__last_name_entry.place_forget()
-        self.__last_name_error_label.place_forget()
-        self.__login_button.place_forget()
-        self.__password_entry.place_forget()
-        self.__password_error_label.place_forget()
-        self.__password_label.place_forget()
-        self.__re_password_entry.place_forget()
-        self.__re_password_label.place_forget()
-        self.__register_button.place_forget()
-        self.__user_avatar_browser.place_forget()
-        self.__user_name_entry.place_forget()
-        self.__user_name_error_label.place_forget()
-
+        now = Clear()
+        now.this_one(
+            self.first_name_entry,
+            self.__first_name_error_label,
+            self.__img,
+            self.__last_name_entry,
+            self.__last_name_error_label,
+            self.__user_name_entry,
+            self.__user_name_error_label,
+            self.__user_avatar_browser,
+            self.__register_button,
+            self.__password_entry,
+            self.__password_label,
+            self.__password_error_label,
+            self.__re_password_entry,
+            self.__re_password_label,
+            self.__login_button
+        )
 
     def create(self):
         """create
