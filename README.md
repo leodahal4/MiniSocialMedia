@@ -7,8 +7,12 @@ As a final assignment of
 
 > Algorithm and Data Structures.
 
+
 # Run as
-> python3 run_me_client.py
+
+> virtualenv venv \
+  source venv/bin/activate \
+  pip install -r requirements.txt
 
 
 # Pages
