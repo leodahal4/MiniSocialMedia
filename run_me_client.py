@@ -1,5 +1,5 @@
 from tkinter import Tk, Frame, Menu, messagebox
-from configs.config import Global_all
+from Config.config import Global_all
 import os, os.path
 import subprocess
 import shutil

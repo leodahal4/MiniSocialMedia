@@ -1,14 +1,14 @@
 from PIL import Image, ImageTk
-from configs.config import Global_all
+from Config.config import Global_all
 # from extra_custom import image_works
-from configs import image_works
+from Config import image_works
 from routes.index import Routes
 from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
 from tkinter import filedialog, Tk
 import hashlib
 import os
 import shutil
-from pages.clear_widgets import Clear
+from resources.views.clear_widgets import Clear
 
 
 class RegisterForm(Frame):
@@ -52,7 +52,7 @@ class RegisterForm(Frame):
             # use the default image as the default user avatar
             self.__user_avatar_path = "Images/default_avatar.png"
             # Load User Avatar
-            load = Image.open("assets/default_avatar.png")
+            load = Image.open("resources/assets/default_avatar.png")
 
         load.resize((100, 100), Image.ANTIALIAS)
         render = ImageTk.PhotoImage(load)

@@ -1,4 +1,4 @@
-from configs.config import Global_all
+from Config.config import Global_all
 import hashlib
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk
