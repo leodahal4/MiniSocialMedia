@@ -1,12 +1,10 @@
 from Config.config import Global_all
-import hashlib
+from routes import index
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk
-from PIL import Image, ImageTk
-import fontawesome as fa
-from routes import index
-# from validation.login_validation import Validate
 from validation.login_validation import Validate
+import fontawesome as fa
+from resources.views.clear_widgets import Clear
 
 
 class LoginForm(Frame):
@@ -14,7 +12,6 @@ class LoginForm(Frame):
         This class is responsible for generating the form which is used
         to log in to the system.
     '''
-
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -170,13 +167,13 @@ class LoginForm(Frame):
         self.__eye_hide.place_forget()
         self.__eye_show.place(height=50, x=410, y=270)
 
-
     def forgot_pass(self):
         """forgot_pass
             This function is called whenever the user clicks on the Forgot
             Password button on the window
         """
-        pass
+        self.forget_all()
+        index.Routes(master=self.master, source="login", destination="forgotpassword")
 
     def __login(self):
         """login
@@ -208,22 +205,15 @@ class LoginForm(Frame):
         index.Routes(master=self.master, source="login", destination="register")
 
     def forget_all(self):
-        self.__eye_show.pi = self.__eye_show.place_info()
-        self.__eye_hide.pi = self.__eye_hide.place_info()
-        self.__password.pi = self.__password.place_info()
-        self.__register_button.pi = self.__register_button.place_info()
-        self.__user_name.pi = self.__user_name.place_info()
-        self.__error_label.pi = self.__error_label.place_info()
-        self.__forgot_password.pi = self.__forgot_password.place_info()
-        self.__loginHead.pi = self.__loginHead.place_info()
-        self.__login_button.pi = self.__login_button.place_info()
-
-        self.__eye_show.place_forget()
-        self.__login_button.place_forget()
-        self.__loginHead.place_forget()
-        self.__forgot_password.place_forget()
-        self.__eye_hide.place_forget()
-        self.__error_label.place_forget()
-        self.__password.place_forget()
-        self.__register_button.place_forget()
-        self.__user_name.place_forget()
+        now = Clear()
+        now.this_one(
+            self.__eye_show,
+            self.__eye_hide,
+            self.__password,
+            self.__register_button,
+            self.__user_name,
+            self.__error_label,
+            self.__forgot_password,
+            self.__loginHead,
+            self.__login_button
+        )
