@@ -17,7 +17,7 @@ class Validate:
 
     def auth(self, username, password):
         self.initialize_connection()
-        to_auth = username + ":" + password
+        to_auth = "login:" + username + ":" + password
         self.send_to_server(to_auth)
         self.send_to_server(DISCONNECT_MESSAGE)
 
