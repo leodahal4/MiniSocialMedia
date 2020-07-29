@@ -191,7 +191,7 @@ class LoginForm(Frame):
             self.__error_label.config(text="Fill the credentials")
             return 0
         else:
-            pass
+            valid.auth(self.__user_name.get(), self.__password.get())
 
     def log_user_in(self):
         pass
