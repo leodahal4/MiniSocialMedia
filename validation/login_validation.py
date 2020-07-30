@@ -9,16 +9,8 @@ SERVER = "192.168.2.108"
 ADDR = (SERVER, PORT)
 
 class Validate:
-    def isBlank(self, widget):
-        if widget.get() == "":
-            return True
-        else:
-            return False
-
     def auth(self, username, password):
         self.initialize_connection()
-        # to_auth = "{ 'route': 'login', 'username':" +\
-        #             username + ", 'password':"+ password + " }"
         to_auth = {
             "route": "login",
             "username": username,

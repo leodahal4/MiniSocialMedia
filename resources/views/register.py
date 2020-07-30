@@ -1,14 +1,15 @@
-from PIL import Image, ImageTk
-from Config.config import Global_all
 # from extra_custom import image_works
 from Config import image_works
+from Config.config import Global_all
+from PIL import Image, ImageTk
+from resources.views.clear_widgets import Clear
 from routes.index import Routes
 from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
 from tkinter import filedialog, Tk
+from validation.core_validation import CoreValidation
 import hashlib
 import os
 import shutil
-from resources.views.clear_widgets import Clear
 
 
 class RegisterForm(Frame):
@@ -294,10 +295,9 @@ class RegisterForm(Frame):
 
         # time.sleep(0.5)
 
+        valid = CoreValidation()
         # Check for the first name
-        if (self.__first_name_info == "") or (
-            self.__first_name_info == "First Name"
-        ):
+        if valid.isBlank(self.__first_name_var, "First Name"):
             self.__first_name_error_label.config(text="*Required")
             self.__first_name_error_count = 1
         else:

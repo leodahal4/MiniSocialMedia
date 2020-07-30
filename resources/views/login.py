@@ -1,10 +1,11 @@
 from Config.config import Global_all
+from resources.views.clear_widgets import Clear
 from routes import index
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk
+from validation.core_validation import CoreValidation
 from validation.login_validation import Validate
 import fontawesome as fa
-from resources.views.clear_widgets import Clear
 
 
 class LoginForm(Frame):
@@ -183,7 +184,7 @@ class LoginForm(Frame):
         """
         # global all
         self.__error_label.config(text="")
-        valid = Validate()
+        valid = CoreValidation()
         if valid.isBlank(self.__user_name) or valid.isBlank(self.__password):
             self.__error_label.config(text="Fill the credentials")
             return 0
@@ -191,6 +192,7 @@ class LoginForm(Frame):
             self.__error_label.config(text="Fill the credentials")
             return 0
         else:
+            valid = Validate()
             valid.auth(self.__user_name.get(), self.__password.get())
 
     def log_user_in(self):
