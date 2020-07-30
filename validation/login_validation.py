@@ -5,7 +5,7 @@ HEADER = 64
 PORT = 5060
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "192.168.100.39"
+SERVER = "192.168.2.108"
 ADDR = (SERVER, PORT)
 
 class Validate:
@@ -17,10 +17,14 @@ class Validate:
 
     def auth(self, username, password):
         self.initialize_connection()
-        to_auth = "{ 'route': 'login', 'username':" +\
-                    username + ", 'password':"+ password + " }"
-        print(type(to_auth))
-        print(to_auth)
+        # to_auth = "{ 'route': 'login', 'username':" +\
+        #             username + ", 'password':"+ password + " }"
+        to_auth = {
+            "route": "login",
+            "username": username,
+            "password": password
+        }
+        to_auth = json.dumps(to_auth)
         self.send_to_server(to_auth)
         self.send_to_server(DISCONNECT_MESSAGE)
 
@@ -31,6 +35,7 @@ class Validate:
         send_length += b' ' * (HEADER - len(send_length))
         self.__client.send(send_length)
         self.__client.send(message)
+
         print(self.__client.recv(2048).decode(FORMAT))
 
     def initialize_connection(self):

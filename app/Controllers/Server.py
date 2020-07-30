@@ -1,6 +1,8 @@
+from app.Controllers.LoginController import LoginController
 import socket
 import threading
 import time
+import json
 
 
 class Server:
@@ -44,30 +46,31 @@ class Server:
         # create_post
         # open post
         # people / person
-        self.__request_route = request
-        if "login" in self.__request_route:
-            print("You want to login")
-            # credentails = self.__request_route
-            # LoginController()
+        self.__request_route = json.loads(request)
+        if self.__request_route['route'] == "login":
+            LoginController(self.__request_route)
             return "You want to login"
-        elif "register" in self.__request_route:
-            print("You want to register")
+        elif self.__request_route['route'] == "register":
             return "You want to register"
         else:
-            print("Request is unknown")
             return "Request is unknown"
 
     def start(self):
-        self.__server.listen()
-        print(f"[LISTENING] Server is listening on {self.__SERVER}")
         try:
+            self.__server.listen()
+            print(f"[LISTENING] Server is listening on {self.__SERVER}")
             while True:
-                conn, addr = self.__server.accept()
-                thread = threading.Thread(target=self.handle_client, args=(conn, addr))
-                thread.start()
-                print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+                try:
+                    conn, addr = self.__server.accept()
+                    thread = threading.Thread(target=self.handle_client, args=(conn, addr))
+                    thread.start()
+                    print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+                except KeyboardInterrupt:
+                    socket.close()
+
         except KeyboardInterrupt:
             print('You pressed Ctrl + C')
+            socket.close()
 
         for i in range(1000):
             print()
