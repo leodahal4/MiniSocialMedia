@@ -9,7 +9,7 @@ class Server:
 
     def constant(self):
         self.__HEADER = 64
-        self.__PORT = 5050
+        self.__PORT = 5060
         self.__SERVER = socket.gethostbyname(socket.gethostname())
         self.__ADDR = (self.__SERVER, self.__PORT)
         self.__FORMAT = 'utf-8'
@@ -47,6 +47,8 @@ class Server:
         self.__request_route = request
         if "login" in self.__request_route:
             print("You want to login")
+            # credentails = self.__request_route
+            # LoginController()
             return "You want to login"
         elif "register" in self.__request_route:
             print("You want to register")
@@ -54,7 +56,6 @@ class Server:
         else:
             print("Request is unknown")
             return "Request is unknown"
-
 
     def start(self):
         self.__server.listen()

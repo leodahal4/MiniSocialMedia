@@ -1,8 +1,8 @@
-
+import json
 
 # constants that will be used here.
 HEADER = 64
-PORT = 5050
+PORT = 5060
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 SERVER = "192.168.100.39"
@@ -17,7 +17,10 @@ class Validate:
 
     def auth(self, username, password):
         self.initialize_connection()
-        to_auth = "login:" + username + ":" + password
+        to_auth = "{ 'route': 'login', 'username':" +\
+                    username + ", 'password':"+ password + " }"
+        print(type(to_auth))
+        print(to_auth)
         self.send_to_server(to_auth)
         self.send_to_server(DISCONNECT_MESSAGE)
 
