@@ -48,8 +48,9 @@ class Server:
         # people / person
         self.__request_route = json.loads(request)
         if self.__request_route['route'] == "login":
-            LoginController(self.__request_route)
-            return "You want to login"
+            controller = LoginController()
+            return controller.check(self.__request_route)
+
         elif self.__request_route['route'] == "register":
             return "You want to register"
         else:
