@@ -1,7 +1,7 @@
-# from extra_custom import image_works
 from Config import image_works
 from Config.config import Global_all
 from PIL import Image, ImageTk
+from app.Exceptions.DuplicateUserName import DuplicateUserName
 from resources.views.clear_widgets import Clear
 from routes.index import Routes
 from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
@@ -10,6 +10,7 @@ from validation.core_validation import CoreValidation
 import hashlib
 import os
 import shutil
+from Config.check import Check_strength
 
 
 class RegisterForm(Frame):
@@ -45,7 +46,6 @@ class RegisterForm(Frame):
                 This function is responsible for creating all the entries,
                  and the labels used for the registration process
         """
-        # global all
 
         if self.__user_avatar_path != "":
             load = Image.open(self.__user_avatar_path)
@@ -293,11 +293,9 @@ class RegisterForm(Frame):
         self.__re_password_info = self.__re_password_var.get()
         self.__user_name_info = self.__user_name_var.get()
 
-        # time.sleep(0.5)
-
         valid = CoreValidation()
         # Check for the first name
-        if valid.isBlank(self.__first_name_var, "First Name"):
+        if valid.isBlank(self.__first_name_var.get(), "First Name"):
             self.__first_name_error_label.config(text="*Required")
             self.__first_name_error_count = 1
         else:
@@ -324,13 +322,7 @@ class RegisterForm(Frame):
             self.__user_name_error_count = 1
         else:
             try:
-                with open("database/user_names", "r") as registered_users:
-                    provided_user_name = self.__user_name_info + "\n"
-                    for users in registered_users:
-                        if provided_user_name == users:
-                            self.__user_name_error_count = 1
-                            raise DuplicateUserName
-
+                pass
             except DuplicateUserName:
                 self.__user_name_error_label.config(text="*UserName taken")
 
@@ -357,15 +349,16 @@ class RegisterForm(Frame):
         elif len(self.__password_info) >= 6 and (
             self.__password_info == self.__re_password_info
         ):
-            condition = check.Check_strength()
+            condition = Check_strength()
             password_condition = condition.password_strength(
                 self.__password_info
             )
             if not password_condition:
                 self.__password_error_label.config(
-                    text="*Password must \
-                    have one number and one UPPER case letter."
+                    text=
+                    "*Password must have one number and one UPPER case letter."
                 )
+                self.__password_error_count = 1
             else:
                 self.__password_error_label.config(text="")
                 self.__password_error_count = 0
@@ -401,7 +394,6 @@ class RegisterForm(Frame):
             setting the scheme as login
         """
         self.forget_all()
-        # login_form.LoginForm(self.master)
         Routes(master=self.master, source='register', destination='login')
 
 
@@ -442,16 +434,14 @@ class RegisterForm(Frame):
         """
         self.__encoded_pass = hashlib.md5(self.__password_info.encode())
         self.__encrypted_pass = self.__encoded_pass.hexdigest()
-        pass
-
-        # write out the logged in user name on the logged in file.
-        try:
-            user = self.__user_name_info
-            with open("loggedin", "w") as logged_user:
-                logged_user.write(user)
-        except IOError:
-            pass
-        self.forgot_password_form()
+        from validation.register_validation import Validate
+        valid = Validate()
+        valid.register(
+            self.__first_name_var.get(),
+            self.__last_name_var.get(),
+            self.__user_name_var.get(),
+            self.__password_var.get()
+        )
 
 
     def forgot_password_form(self):

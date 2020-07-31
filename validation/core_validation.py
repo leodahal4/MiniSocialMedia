@@ -1,10 +1,14 @@
 class CoreValidation:
     def isBlank(self, widget, placeholder=""):
-        if widget.get() == "" or widget.get() == placeholder:
+        if widget == "" or widget == placeholder:
             return True
         else:
             return False
 
-    def length(string, requiredLength, validity):
+    def length(self, string, requiredLength, validity):
         if validity == "greater":
-            len(string) < requiredLength?: return True : return False
+            return True if len(string) < requiredLength else False
+        elif validity == "smaller":
+            return True if len(string) > requiredLength else False
+        else:
+            pass
