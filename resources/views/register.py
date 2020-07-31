@@ -1,4 +1,5 @@
 from Config import image_works
+from Config.check import Check_strength
 from Config.config import Global_all
 from PIL import Image, ImageTk
 from app.Exceptions.DuplicateUserName import DuplicateUserName
@@ -10,7 +11,6 @@ from validation.core_validation import CoreValidation
 import hashlib
 import os
 import shutil
-from Config.check import Check_strength
 
 
 class RegisterForm(Frame):
@@ -335,10 +335,10 @@ class RegisterForm(Frame):
                 self.__user_name_error_count = 0
 
         # Check for the password
-        if self.__password_info == "":
+        if valid.isBlank(self.__password_var.get()):
             self.__password_error_label.config(text="*Enter your password")
             self.__password_error_count = 1
-        elif len(self.__password_info) < 6:
+        elif valid.length(self.__password_var.get(), 5, "greater"):
             self.__password_error_label.config(
                 text="*Passwords length must be greater than 5 characters."
             )
@@ -346,7 +346,7 @@ class RegisterForm(Frame):
         elif self.__password_info != self.__re_password_info:
             self.__password_error_label.config(text="*Passwords donot match")
             self.__password_error_count = 1
-        elif len(self.__password_info) >= 6 and (
+        elif valid.length(self.__password_var.get(), 5, "greater") and (
             self.__password_info == self.__re_password_info
         ):
             condition = Check_strength()

@@ -7,6 +7,10 @@ class Routes:
         elif destination == 'login':
             from resources.views.login import LoginForm
             LoginForm(master)
+        elif destination == 'home':
+            if self.from_address(source, destination):
+                from resources.views.home import Home
+                Home(master)
         else:
             from resources.views.login import LoginForm
             LoginForm(master)
@@ -19,4 +23,5 @@ class Routes:
         # destination: Register -> source: login
         # destination: Forgot password -> source: login
         # destination: Change password -> source: settings
-        pass
+        if destination == "home":
+            return True if source == "login" or source == "register" else False

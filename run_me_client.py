@@ -19,41 +19,6 @@ class mainClass(Frame):
         master.config(bg=self.__background_color)
         Routes(master=master, source="initial", destination="login")
 
-    def menuBar(self):
-        """menuBar
-            This function is responsible for creating the menus bar at the top
-            of the window along with ohter submenus with them.
-        """
-        self.__font_size = 10
-
-        menu = Menu(self.master)
-        self.master.config(menu=menu)
-        filemenu = Menu(menu)
-        menu.add_cascade(
-            label='File',
-            font=(self.__font_family, self.__font_size),
-            menu=filemenu
-        )
-        filemenu.add_command(
-            label="Exit",
-            font=(self.__font_family, self.__font_size),
-            command=self.quit_all
-        )
-        helpmenu = Menu(menu)
-        menu.add_cascade(
-            label='Help',
-            font=(self.__font_family, self.__font_size),
-            menu=helpmenu
-        )
-        helpmenu.add_command(
-            label='About',
-            font=(self.__font_family, self.__font_size)
-        )
-        helpmenu.add_command(
-            label="How to use?",
-            font=(self.__font_family, self.__font_size)
-        )
-
     def quit_all(self):
         self.destroy()
         self.master.destroy()
