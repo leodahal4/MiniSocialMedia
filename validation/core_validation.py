@@ -4,3 +4,7 @@ class CoreValidation:
             return True
         else:
             return False
+
+    def length(string, requiredLength, validity):
+        if validity == "greater":
+            len(string) < requiredLength?: return True : return False

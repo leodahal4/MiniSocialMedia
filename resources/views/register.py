@@ -305,7 +305,7 @@ class RegisterForm(Frame):
             self.__first_name_error_count = 0
 
         # Check for the last name
-        if self.__last_name_info == "" or self.__last_name_info == "Last Name":
+        if valid.isBlank(self.__last_name_var.get(), "Last Name"):
             self.__last_name_error_label.config(text="*Required")
             self.__last_name_error_count = 1
         else:
@@ -314,10 +314,10 @@ class RegisterForm(Frame):
 
         # Check for the username and its length
         # i.e username length must be equal or greater than 3
-        if self.__user_name_info == "" or self.__user_name_info == "UserName":
+        if valid.isBlank(self.__user_name_var.get(), "UserName"):
             self.__user_name_error_label.config(text="*Required")
             self.__user_name_error_count = 1
-        elif len(self.__user_name_info) < 3:
+        elif valid.length(self.__user_name_var.get(), 3, "greater"):
             self.__user_name_error_label.config(
                 text="*Username must be greater than 2 characters."
             )
