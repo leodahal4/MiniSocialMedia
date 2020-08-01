@@ -50,9 +50,12 @@ class Server:
         if self.__request_route['route'] == "login":
             controller = LoginController()
             return controller.check(self.__request_route)
-
         elif self.__request_route['route'] == "register":
             return "You want to register"
+        elif self.__request_route['route'] == "get_posts":
+            return "You want to get the posts from the database."
+        elif self.__request_route['route'] == "post":
+            return "You want to post a tweet on the database."
         else:
             return "Request is unknown"
 

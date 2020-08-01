@@ -8,6 +8,12 @@ As a final assignment of
 > Algorithm and Data Structures.
 
 
+I have tried my best to implement this project as MVC architecture.\
+All the application logic will be on the app directory.\
+Each view will have its own respective Controller on the controllers\
+directory under app directory.
+
+
 # Run as
 
 > virtualenv venv \
