@@ -6,7 +6,7 @@ from app.Exceptions.DuplicateUserName import DuplicateUserName
 from resources.views.clear_widgets import Clear
 from routes.index import Routes
 from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
-from tkinter import filedialog, Tk
+from tkinter import filedialog, Tk, messagebox
 from validation.core_validation import CoreValidation
 import hashlib
 import os
@@ -436,12 +436,19 @@ class RegisterForm(Frame):
         self.__encrypted_pass = self.__encoded_pass.hexdigest()
         from validation.register_validation import Validate
         valid = Validate()
-        valid.register(
-            self.__first_name_var.get(),
-            self.__last_name_var.get(),
-            self.__user_name_var.get(),
-            self.__password_var.get()
-        )
+        try:
+            valid.register(
+                self.__first_name_var.get(),
+                self.__last_name_var.get(),
+                self.__user_name_var.get(),
+                # self.__password_var.get()
+                self.__encrypted_pass
+            )
+        except ConnectionRefusedError:
+            messagebox.showerror(
+                title="Eroor",
+                message="Unable to connect to the server."
+            )
 
 
     def forgot_password_form(self):

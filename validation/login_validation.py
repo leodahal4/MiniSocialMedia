@@ -1,11 +1,13 @@
 import json
+import socket
+
 
 # constants that will be used here.
 HEADER = 64
 PORT = 5060
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "192.168.2.108"
+SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 
 class Validate:

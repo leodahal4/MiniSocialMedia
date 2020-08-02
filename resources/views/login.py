@@ -2,7 +2,7 @@ from Config.config import Global_all
 from resources.views.clear_widgets import Clear
 from routes import index
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
-from tkinter import GROOVE, RIDGE, Tk
+from tkinter import GROOVE, RIDGE, Tk, messagebox
 from validation.core_validation import CoreValidation
 from validation.login_validation import Validate
 import fontawesome as fa
@@ -182,7 +182,6 @@ class LoginForm(Frame):
             This function checks whether the user provied id and password
             matches to the id and password on the databases.
         """
-        # global all
         self.__error_label.config(text="")
         valid = CoreValidation()
         if valid.isBlank(self.__user_name) or valid.isBlank(self.__password):
@@ -193,7 +192,14 @@ class LoginForm(Frame):
             return 0
         else:
             valid = Validate()
-            valid.auth(self.__user_name.get(), self.__password.get())
+            try:
+                valid.auth(self.__user_name.get(), self.__password.get())
+            except ConnectionRefusedError:
+                # self.__error_label.config(text="Unable to connect to the server")
+                messagebox.showerror(
+                    title="Eroor",
+                    message="Unable to connect to the server."
+                )
 
     def log_user_in(self):
         pass
