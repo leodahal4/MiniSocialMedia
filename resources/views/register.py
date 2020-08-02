@@ -441,7 +441,6 @@ class RegisterForm(Frame):
                 self.__first_name_var.get(),
                 self.__last_name_var.get(),
                 self.__user_name_var.get(),
-                # self.__password_var.get()
                 self.__encrypted_pass
             )
         except ConnectionRefusedError:
