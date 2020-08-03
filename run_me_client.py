@@ -17,7 +17,7 @@ class mainClass(Frame):
         master.title("MSM - Mini Social Media")
         master.geometry("700x700+550+180")
         master.config(bg=self.__background_color)
-        Routes(master=master, source="initial", destination="login")
+        Routes(master=master, source="login", destination="home")
 
     def quit_all(self):
         self.destroy()

@@ -34,12 +34,12 @@ class Home(Frame):
         mylist = Listbox(self.master, yscrollcommand = scrollbar.set )
         for line in range(100):
             mylist.insert(END, "This is line number " + str(line))
-        # mylist.pack( side = LEFT, fill = BOTH )
         mylist.place(height=690, x=160, y=5, width=430)
         scrollbar.config( command = mylist.yview )
 
     def get_posts(self):
-        pass
+        controller = PostController()
+        self.__posts = controller.get()
 
     def navbar(self):
         # Create a vertical line for seperating Nav Bar from rest of the

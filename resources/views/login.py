@@ -195,14 +195,10 @@ class LoginForm(Frame):
             try:
                 valid.auth(self.__user_name.get(), self.__password.get())
             except ConnectionRefusedError:
-                # self.__error_label.config(text="Unable to connect to the server")
                 messagebox.showerror(
                     title="Eroor",
                     message="Unable to connect to the server."
                 )
-
-    def log_user_in(self):
-        pass
 
     def register(self):
         """register
