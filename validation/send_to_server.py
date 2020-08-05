@@ -1,6 +1,5 @@
 import socket
-import json
-# constants that will be used here.
+# Global constants that will be used here.
 HEADER = 64
 PORT = 5060
 FORMAT = 'utf-8'
@@ -8,11 +7,13 @@ DISCONNECT_MESSAGE = "!DISCONNECT"
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 
+
 class Send:
     def message(self, msg_to_send):
         print("message to send to the server is :\t", end=" ")
         print(msg_to_send)
         self.initialize_connection()
+        import json
         msg = json.dumps(msg_to_send)
         self.send_to_server(msg)
         self.send_to_server(DISCONNECT_MESSAGE)
@@ -25,6 +26,7 @@ class Send:
         self.__client.send(send_length)
         self.__client.send(message)
 
+        print("in here\t", end=" ")
         print(self.__client.recv(2048).decode(FORMAT))
 
     def initialize_connection(self):

@@ -1,4 +1,3 @@
-from app.Controllers.LoginController import LoginController
 import socket
 import threading
 import time
@@ -48,6 +47,7 @@ class Server:
         # people / person
         self.__request_route = json.loads(request)
         if self.__request_route['route'] == "login":
+            from app.Controllers.LoginController import LoginController
             controller = LoginController()
             return controller.check(self.__request_route)
         elif self.__request_route['route'] == "register":
@@ -64,17 +64,16 @@ class Server:
             self.__server.listen()
             print(f"[LISTENING] Server is listening on {self.__SERVER}")
             while True:
-                try:
-                    conn, addr = self.__server.accept()
-                    thread = threading.Thread(target=self.handle_client, args=(conn, addr))
-                    thread.start()
-                    print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
-                except KeyboardInterrupt:
-                    socket.close()
+                conn, addr = self.__server.accept()
+                thread = threading.Thread(target=self.handle_client, args=(conn, addr))
+                thread.start()
+                print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
 
         except KeyboardInterrupt:
             print('You pressed Ctrl + C')
-            socket.close()
+            # socket.close()
+            self.__server.shutdown(1)
+            self.__server.close()
 
         for i in range(1000):
             print()
