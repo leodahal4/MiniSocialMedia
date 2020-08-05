@@ -4,7 +4,8 @@ from routes import index
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk, messagebox
 from validation.core_validation import CoreValidation
-from validation.login_validation import Validate
+# from validation.login_validation import Validate
+from validation.send_to_server import Send
 import fontawesome as fa
 
 
@@ -191,9 +192,14 @@ class LoginForm(Frame):
             self.__error_label.config(text="Fill the credentials")
             return 0
         else:
-            valid = Validate()
+            valid = Send()
             try:
-                valid.auth(self.__user_name.get(), self.__password.get())
+                to_auth = {
+                    "route": "login",
+                    "username": self.__user_name.get(),
+                    "password": self.__password.get()
+                }
+                valid.message(to_auth)
             except ConnectionRefusedError:
                 messagebox.showerror(
                     title="Eroor",

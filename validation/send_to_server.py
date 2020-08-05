@@ -1,5 +1,5 @@
-import json
 import socket
+import json
 # constants that will be used here.
 HEADER = 64
 PORT = 5060
@@ -8,16 +8,13 @@ DISCONNECT_MESSAGE = "!DISCONNECT"
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 
-class Validate:
-    def auth(self, username, password):
+class Send:
+    def message(self, msg_to_send):
+        print("message to send to the server is :\t", end=" ")
+        print(msg_to_send)
         self.initialize_connection()
-        to_auth = {
-            "route": "login",
-            "username": username,
-            "password": password
-        }
-        to_auth = json.dumps(to_auth)
-        self.send_to_server(to_auth)
+        msg = json.dumps(msg_to_send)
+        self.send_to_server(msg)
         self.send_to_server(DISCONNECT_MESSAGE)
 
     def send_to_server(self, msg):

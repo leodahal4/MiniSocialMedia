@@ -1,5 +1,4 @@
 from Config import image_works
-from Config.check import Check_strength
 from Config.config import Global_all
 from PIL import Image, ImageTk
 from app.Exceptions.DuplicateUserName import DuplicateUserName
@@ -15,17 +14,14 @@ import shutil
 
 class RegisterForm(Frame):
     """RegisterForm(Frame)
-        This form is responsible for creating all the various fields,
-        for making the registration process successfull.
-        This class contains the listed methods:
-            create_all_fields
-            user_avatar
-            register
-            check_errors
-            login
-            create
+        This class will create a form with different widgets in it,
+        in order to make a user able to register.
+        Widgets used in this class are listed below:
+            Text Field : First name entry, Last name Entry, Password,
+                        Username
+            Button: Register, Login, Image Browser
+            Image: Default Avatar and User Image
     """
-
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -37,9 +33,7 @@ class RegisterForm(Frame):
         self.__font_size = returned[1]
         self.__weight = returned[2]
         self.__background_color = returned[3]
-
         self.create_all_fields()
-
 
     def create_all_fields(self):
         """create_all_fields
@@ -50,11 +44,9 @@ class RegisterForm(Frame):
         if self.__user_avatar_path != "":
             load = Image.open(self.__user_avatar_path)
         else:
-            # use the default image as the default user avatar
+            # use the default image as the default user avatar at first
             self.__user_avatar_path = "Images/default_avatar.png"
-            # Load User Avatar
             load = Image.open("resources/assets/default_avatar.png")
-
         load.resize((100, 100), Image.ANTIALIAS)
         render = ImageTk.PhotoImage(load)
         self.__img = Label(
@@ -78,7 +70,6 @@ class RegisterForm(Frame):
         self.__user_avatar_browser.place(x=580, y=120)
 
         # Create First Name field
-        # First name error label
         self.__first_name_error_label = Label(
             self.master,
             bg=self.__background_color,
@@ -86,7 +77,6 @@ class RegisterForm(Frame):
             font=(self.__font_family, 8)
         )
         self.__first_name_error_label.place(x=180, y=130)
-        # First name entry
         self.__first_name_var = StringVar()
         self.first_name_entry = Entry(
             self.master,
@@ -104,7 +94,6 @@ class RegisterForm(Frame):
         self.first_name_entry.place(height=50, x=120, y=80)
 
         # Create Last Name field
-        # Last name error label
         self.__last_name_error_label = Label(
             self.master,
             text="",
@@ -114,7 +103,6 @@ class RegisterForm(Frame):
             relief=FLAT
         )
         self.__last_name_error_label.place(x=380, y=130)
-        # Last name entry
         self.__last_name_var = StringVar()
         self.__last_name_entry = Entry(
             self.master,
@@ -132,7 +120,6 @@ class RegisterForm(Frame):
         self.__last_name_entry.place(height=50, x=360, y=80)
 
         # Create User Name field
-        # User name error label
         self.__user_name_error_label = Label(
             self.master,
             text="",
@@ -142,7 +129,6 @@ class RegisterForm(Frame):
             relief=FLAT
         )
         self.__user_name_error_label.place(x=180, y=200)
-        # Username Entry
         self.__user_name_var = StringVar()
         self.__user_name_entry = Entry(
             self.master,
@@ -159,7 +145,7 @@ class RegisterForm(Frame):
         )
         self.__user_name_entry.place(height=50, x=120, y=150)
 
-        # Create Password label
+        # Create Password field
         self.__password_label = Label(
             self.master,
             font=(self.__font_family, 13),
@@ -168,8 +154,6 @@ class RegisterForm(Frame):
             relief=FLAT
         )
         self.__password_label.place(height=20, x=120, y=220)
-        # Create Password field
-        # Password error label
         self.__password_error_label = Label(
             self.master,
             fg="red",
@@ -192,7 +176,7 @@ class RegisterForm(Frame):
         self.__password_entry.bind("<Key>", self.show_pass)
         self.__password_entry.place(height=50, x=120, y=250)
 
-        # Create Re-Type Password label
+        # Create Re-Type Password Field
         self.__re_password_label = Label(
             self.master,
             font=(self.__font_family, 13),
@@ -201,8 +185,6 @@ class RegisterForm(Frame):
             relief=FLAT
         )
         self.__re_password_label.place(height=20, x=120, y=330)
-
-        # Create Re-Type Password field
         self.__re_password_var = StringVar()
         self.__entry2 = self.__re_password_entry = Entry(
             self.master,
@@ -301,7 +283,6 @@ class RegisterForm(Frame):
         else:
             self.__first_name_error_label.config(text="")
             self.__first_name_error_count = 0
-
         # Check for the last name
         if valid.isBlank(self.__last_name_var.get(), "Last Name"):
             self.__last_name_error_label.config(text="*Required")
@@ -309,7 +290,6 @@ class RegisterForm(Frame):
         else:
             self.__last_name_error_label.config(text="")
             self.__last_name_error_count = 0
-
         # Check for the username and its length
         # i.e username length must be equal or greater than 3
         if valid.isBlank(self.__user_name_var.get(), "UserName"):
@@ -333,7 +313,6 @@ class RegisterForm(Frame):
             else:
                 self.__user_name_error_label.config(text="")
                 self.__user_name_error_count = 0
-
         # Check for the password
         if valid.isBlank(self.__password_var.get()):
             self.__password_error_label.config(text="*Enter your password")
@@ -346,13 +325,13 @@ class RegisterForm(Frame):
         elif self.__password_info != self.__re_password_info:
             self.__password_error_label.config(text="*Passwords donot match")
             self.__password_error_count = 1
-        elif valid.length(self.__password_var.get(), 5, "greater") and (
+        elif not valid.length(self.__password_var.get(), 5, "greater") and (
             self.__password_info == self.__re_password_info
         ):
-            condition = Check_strength()
-            password_condition = condition.password_strength(
-                self.__password_info
-            )
+            print("in hre")
+            from Config.check import Check_strength
+            valid = Check_strength()
+            password_condition = valid.password_strength(self.__password_info)
             if not password_condition:
                 self.__password_error_label.config(
                     text=
@@ -434,15 +413,24 @@ class RegisterForm(Frame):
         """
         self.__encoded_pass = hashlib.md5(self.__password_info.encode())
         self.__encrypted_pass = self.__encoded_pass.hexdigest()
-        from validation.register_validation import Validate
-        valid = Validate()
+        # from validation.register_validation import Validate
+        from validation.send_to_server import Send
+        valid = Send()
         try:
-            valid.register(
-                self.__first_name_var.get(),
-                self.__last_name_var.get(),
-                self.__user_name_var.get(),
-                self.__encrypted_pass
-            )
+            # valid.register(
+            #     self.__first_name_var.get(),
+            #     self.__last_name_var.get(),
+            #     self.__user_name_var.get(),
+            #     self.__encrypted_pass
+            # )
+            to_register = {
+                "route": "register",
+                "username": self.__user_name_var.get(),
+                "password": self.__encrypted_pass,
+                "fname": self.__first_name_var.get(),
+                "lname": self.__last_name_var.get()
+            }
+            valid.message(to_register)
         except ConnectionRefusedError:
             messagebox.showerror(
                 title="Eroor",
