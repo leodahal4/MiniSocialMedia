@@ -18,11 +18,11 @@ class LoginRegister:
             results = cursor.fetchall()
             print(results)
             if results:
-                return "valid user"
+                return "True"
             else:
-                return "no user"
+                return "False"
         except:
-            return "Error"
+            pass
         db.close()
 
     def register(self):

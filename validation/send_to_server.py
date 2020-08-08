@@ -15,8 +15,9 @@ class Send:
         self.initialize_connection()
         import json
         msg = json.dumps(msg_to_send)
-        self.send_to_server(msg)
+        server_reply = self.send_to_server(msg)
         self.send_to_server(DISCONNECT_MESSAGE)
+        return server_reply
 
     def send_to_server(self, msg):
         message = msg.encode(FORMAT)
@@ -27,7 +28,8 @@ class Send:
         self.__client.send(message)
 
         print("in here\t", end=" ")
-        print(self.__client.recv(2048).decode(FORMAT))
+        # print(self.__client.recv(2048).decode(FORMAT))
+        return self.__client.recv(2048).decode(FORMAT)
 
     def initialize_connection(self):
         import socket

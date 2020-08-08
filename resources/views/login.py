@@ -7,6 +7,7 @@ from validation.core_validation import CoreValidation
 # from validation.login_validation import Validate
 from validation.send_to_server import Send
 import fontawesome as fa
+from routes.index import Routes
 
 
 class LoginForm(Frame):
@@ -199,7 +200,11 @@ class LoginForm(Frame):
                     "username": self.__user_name.get(),
                     "password": self.__password.get()
                 }
-                valid.message(to_auth)
+                if(valid.message(to_auth) == "True"):
+                    print("logged in")
+                    Routes(master=self.master, source="login", destination="home")
+                else:
+                    print("user not found")
             except ConnectionRefusedError:
                 messagebox.showerror(
                     title="Eroor",
