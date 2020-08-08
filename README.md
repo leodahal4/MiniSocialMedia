@@ -1,11 +1,12 @@
-# MiniSocialMedia
+## MiniSocialMedia
+[Star Repo]
 
 
-# Introduction
+## Introduction
 This is a small try for making a Social Media using python Tkinter,  
 As a final assignment of 
 
-> Algorithm and Data Structures.
+### Algorithm and Data Structures.
 
 
 I have tried my best to implement this project as MVC architecture.\
@@ -14,21 +15,21 @@ Each view will have its own respective Controller on the controllers\
 directory under app directory.
 
 
-# Run as
+## Run as
 
-> virtualenv venv \
+- virtualenv venv \
   source venv/bin/activate \
   pip install -r requirements.txt
 
 
-# Pages
+## Pages
 
-> # Login Form
+- Login Form
 > Necessary Fields: \
     Username \
     Password
 
-> # Register Form
+- # Register Form
 > Necessary Fields: \
     First Name \
     Last Name \
@@ -38,3 +39,6 @@ directory under app directory.
     Avatar / Image
 
 > Complete README.md will be updated soon.
+
+
+[Star Repo]: https://github.com/leodahal4/MiniSocialMedia
