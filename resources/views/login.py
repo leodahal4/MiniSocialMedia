@@ -205,6 +205,7 @@ class LoginForm(Frame):
                     Routes(master=self.master, source="login", destination="home")
                 else:
                     print("user not found")
+                    self.__error_label.config(text="Credentials donot match")
             except ConnectionRefusedError:
                 messagebox.showerror(
                     title="Eroor",
