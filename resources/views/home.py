@@ -1,5 +1,5 @@
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
-from tkinter import LEFT, Listbox, END, Scrollbar, Y
+from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from PIL import Image, ImageTk
 from app.Controllers.PostController import PostController
 
@@ -23,19 +23,51 @@ class Home(Frame):
         self.navbar()
         self.posts()
 
+    def on_configure(self, event):
+        # update scrollregion after starting 'mainloop'
+        # when all widgets are in canvas
+        self.canvas.configure(scrollregion=self.canvas.bbox('all'))
+
     def forget_all(self):
         pass
 
     def posts(self):
-        scrollbar = Scrollbar(self.master)
-        # scrollbar.pack( side = RIGHT, fill = Y )
-        scrollbar.place(height=690, x=686, y=0)
         self.get_posts()
-        mylist = Listbox(self.master, yscrollcommand = scrollbar.set )
-        for line in range(100):
-            mylist.insert(END, "This is line number " + str(line))
-        mylist.place(height=690, x=160, y=5, width=430)
-        scrollbar.config( command = mylist.yview )
+
+        scrollbar = Scrollbar(self.master, command=self.canvas.yview)
+        scrollbar.place(height=690, x=686, y=0)
+        self.canvas.configure(yscrollcommand = scrollbar.set)
+        self.canvas.bind('<Configure>', self.on_configure)
+        frame = Frame(self.canvas, bg="white")
+        self.canvas.create_window(
+            (160,0),
+            window=frame,
+            anchor='nw',
+            width="500"
+        )
+
+        # l = Button(frame, text="Hello World", font="-size 50", command=self.clickThis)
+        # l.pack()
+        # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
+        # l.pack()
+        # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
+        # l.pack()
+        # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
+        # l.pack()
+        for i in self.__posts:
+            print(i)
+            print(type(i))
+            l = Button(
+                frame,
+                text=i[1] + "\n" + i[2],
+                font="-size 10",
+                command=self.clickThis,
+                width="300"
+            )
+            l.pack()
+
+    def clickThis(self):
+        print("clicked")
 
     def get_posts(self):
         controller = PostController()

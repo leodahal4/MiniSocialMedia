@@ -13,6 +13,8 @@ class Post:
             results = cursor.fetchall()
             for row in results:
                 print(row)
+
+            return results
         except:
             return "Error"
         db.close()
