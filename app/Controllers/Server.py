@@ -51,7 +51,9 @@ class Server:
             controller = LoginController()
             return controller.check(self.__request_route)
         elif self.__request_route['route'] == "register":
-            return "You want to register"
+            from app.Controllers.RegisterController import Register
+            controller = Register()
+            return controller.register(self.__request_route)
         elif self.__request_route['route'] == "get_posts":
             return "You want to get the posts from the database."
         elif self.__request_route['route'] == "post":

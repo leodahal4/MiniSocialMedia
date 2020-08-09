@@ -402,6 +402,7 @@ class RegisterForm(Frame):
             self.__login_button
         )
 
+
     def create(self):
         """create
                 This function is called when there will be no error
@@ -413,24 +414,34 @@ class RegisterForm(Frame):
         """
         self.__encoded_pass = hashlib.md5(self.__password_info.encode())
         self.__encrypted_pass = self.__encoded_pass.hexdigest()
-        # from validation.register_validation import Validate
         from validation.send_to_server import Send
         valid = Send()
         try:
-            # valid.register(
-            #     self.__first_name_var.get(),
-            #     self.__last_name_var.get(),
-            #     self.__user_name_var.get(),
-            #     self.__encrypted_pass
-            # )
-            to_register = {
-                "route": "register",
-                "username": self.__user_name_var.get(),
-                "password": self.__encrypted_pass,
-                "fname": self.__first_name_var.get(),
-                "lname": self.__last_name_var.get()
-            }
-            valid.message(to_register)
+            # to_register = {
+            #     "route": "register",
+            #     "username": self.__user_name_var.get(),
+            #     "password": self.__encrypted_pass,
+            #     "fname": self.__first_name_var.get(),
+            #     "lname": self.__last_name_var.get()
+            # }
+            # print("server reply" + valid.message(to_register))
+            try:
+                to_register = {
+                    "route": "register",
+                    "username": self.__user_name_var.get(),
+                    "password": self.__encrypted_pass,
+                    "fname": self.__first_name_var.get(),
+                    "lname": self.__last_name_var.get()
+                }
+                print("server reply" + valid.message(to_register))
+                print("opennning home inside")
+            except DuplicateUserName:
+                print("duplicate user name")
+            if valid.message(to_register) == "False":
+                print("username already register")
+                self.__user_name_error_label.config(text="Username taken")
+            else:
+                print("openning home")
         except ConnectionRefusedError:
             messagebox.showerror(
                 title="Eroor",
