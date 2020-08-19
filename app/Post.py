@@ -5,9 +5,9 @@ from mysql.connector import Error
 
 class Post:
     def get_posts():
-        db = mysql.connect(host="localhost",database="trywala",user="root",password="MausamDahal" )
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
-        sql = "SELECT * FROM trywala"
+        sql = "SELECT * FROM posts"
         try:
             cursor.execute(sql)
             results = cursor.fetchall()

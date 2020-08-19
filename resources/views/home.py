@@ -54,17 +54,27 @@ class Home(Frame):
         # l.pack()
         # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
         # l.pack()
-        for i in self.__posts:
-            print(i)
-            print(type(i))
-            l = Button(
-                frame,
-                text=i[1] + "\n" + i[2],
-                font="-size 10",
-                command=self.clickThis,
-                width="300"
-            )
-            l.pack()
+
+        for i in range(10):
+            for i in self.__posts:
+                title = i[3].capitalize() + " says \t" + i[1]
+                if len(title) < 120:
+                    fill_gaps = 120 - len(title)
+                    title += fill_gaps*" "
+
+                desc = i[2]
+                if len(desc) > 90:
+                    textD = title + "\n" + desc[:90] + "\n" + desc[90:]
+                else:
+                    textD = title + "\n" + desc
+                l = Button(
+                    frame,
+                    text=textD,
+                    font="-size 8",
+                    command=self.clickThis,
+                    width="300"
+                )
+                l.pack()
 
     def clickThis(self):
         print("clicked")
