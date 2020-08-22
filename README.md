@@ -42,3 +42,10 @@ directory under app directory.
 
 
 [Star Repo]: https://github.com/leodahal4/MiniSocialMedia
+
+
+
+# Right now the user can only login using the credentials that have been hardcoded in the database.
+And the user can view the posts which is also hardcoded.
+
+> Updates will be coming soon.
