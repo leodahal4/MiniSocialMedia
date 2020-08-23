@@ -9,5 +9,4 @@ class Register:
     def register(self, credentials):
         print("Registering user")
         model = LoginRegister()
-        # credentials = json.dumps(credentials)
         return model.register(credentials)

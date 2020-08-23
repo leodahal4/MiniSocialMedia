@@ -417,31 +417,22 @@ class RegisterForm(Frame):
         from validation.send_to_server import Send
         valid = Send()
         try:
-            # to_register = {
-            #     "route": "register",
-            #     "username": self.__user_name_var.get(),
-            #     "password": self.__encrypted_pass,
-            #     "fname": self.__first_name_var.get(),
-            #     "lname": self.__last_name_var.get()
-            # }
-            # print("server reply" + valid.message(to_register))
-            try:
-                to_register = {
-                    "route": "register",
-                    "username": self.__user_name_var.get(),
-                    "password": self.__encrypted_pass,
-                    "fname": self.__first_name_var.get(),
-                    "lname": self.__last_name_var.get()
-                }
-                print("server reply" + valid.message(to_register))
-                print("opennning home inside")
-            except DuplicateUserName:
-                print("duplicate user name")
-            if valid.message(to_register) == "False":
-                print("username already register")
+            to_register = {
+                "route": "register",
+                "username": self.__user_name_var.get(),
+                "password": self.__encrypted_pass,
+                "fname": self.__first_name_var.get(),
+                "lname": self.__last_name_var.get()
+            }
+            reply = valid.message(to_register)
+            if reply == "False":
                 self.__user_name_error_label.config(text="Username taken")
-            else:
-                print("openning home")
+            elif reply == "True":
+                print("database updated with provided cred")
+                self.forget_all()
+                Routes(master=self.master, source='register', destination='login')
+            elif reply == "Error":
+                raise ConnectionRefusedError
         except ConnectionRefusedError:
             messagebox.showerror(
                 title="Eroor",

@@ -45,7 +45,6 @@ class Home(Frame):
             anchor='nw',
             width="500"
         )
-
         # l = Button(frame, text="Hello World", font="-size 50", command=self.clickThis)
         # l.pack()
         # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")

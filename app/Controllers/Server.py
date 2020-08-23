@@ -15,13 +15,11 @@ class Server:
         self.__ADDR = (self.__SERVER, self.__PORT)
         self.__FORMAT = 'utf-8'
         self.__DISCONNECT_MESSAGE = "!DISCONNECT"
-
         self.__server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__server.bind(self.__ADDR)
 
     def handle_client(self, conn, addr):
         print(f"[NEW CONNECTION] {addr} connected.")
-
         connected = True
         while connected:
             msg_length = conn.recv(self.__HEADER).decode(self.__FORMAT)
@@ -34,7 +32,6 @@ class Server:
                     return_msg = self.route(msg)
                 print(f"[{addr}] {msg}")
                 conn.send(return_msg.encode(self.__FORMAT))
-
         conn.close()
 
     def route(self, request):
