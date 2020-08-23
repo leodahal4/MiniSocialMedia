@@ -16,9 +16,6 @@ class Home(Frame):
         self.__create_all_fields()
 
     def __create_all_fields(self):
-        # menu bar
-        # navbar
-        # initial is posts
         self.menu_bar()
         self.navbar()
         self.posts()
@@ -34,49 +31,71 @@ class Home(Frame):
     def posts(self):
         self.get_posts()
 
-        scrollbar = Scrollbar(self.master, command=self.canvas.yview)
-        scrollbar.place(height=690, x=686, y=0)
-        self.canvas.configure(yscrollcommand = scrollbar.set)
+        self.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
+        self.scrollbar.place(height=690, x=686, y=0)
+        self.canvas.configure(yscrollcommand = self.scrollbar.set)
         self.canvas.bind('<Configure>', self.on_configure)
-        frame = Frame(self.canvas, bg="white")
+        self.frame = Frame(self.canvas, bg="white")
         self.canvas.create_window(
-            (160,0),
-            window=frame,
+            (160,50),
+            window=self.frame,
             anchor='nw',
             width="500"
         )
-        # l = Button(frame, text="Hello World", font="-size 50", command=self.clickThis)
-        # l.pack()
-        # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
-        # l.pack()
-        # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
-        # l.pack()
-        # l = Label(frame, text="Test text 1\nTest text 2\nTest text 3\nTest text 4\nTest text 5\nTest text 6\nTest text 7\nTest text 8\nTest text 9", font="-size 20")
-        # l.pack()
+        for i in self.__posts:
+            title = i[3].capitalize() + " says \t" + i[1]
+            if len(title) < 120:
+                fill_gaps = 120 - len(title)
+                title += fill_gaps*" "
 
-        for i in range(10):
-            for i in self.__posts:
-                title = i[3].capitalize() + " says \t" + i[1]
-                if len(title) < 120:
-                    fill_gaps = 120 - len(title)
+            desc = i[2]
+            if len(desc) > 90:
+                textD = title + "\n" + desc[:90] + "\n" + desc[90:]
+            else:
+                textD = title + "\n" + desc
+            l = Button(
+                self.frame,
+                text=textD,
+                font="-size 8",
+                command= lambda id=i[0]: self.clickThis(id),
+                pady=1,
+                width="300",
+                bg="white"
+            )
+            l.pack()
+
+    def clickThis(self, clickedPostId):
+        print(str(clickedPostId) + " is clicked")
+        self.frame.destroy()
+        self.frame = Frame(self.canvas)
+        self.canvas.create_window(
+            (160,50),
+            window=self.frame,
+            anchor='nw',
+            width="500"
+        )
+        for i in self.__posts:
+            if i[0] == clickedPostId:
+                title = i[3].capitalize() + " says \t\"" + i[1] + "\""
+                if len(title) < 80:
+                    fill_gaps = 80 - len(title)
                     title += fill_gaps*" "
 
                 desc = i[2]
-                if len(desc) > 90:
-                    textD = title + "\n" + desc[:90] + "\n" + desc[90:]
+                if len(desc) > 80:
+                    textD = title + "\n" + desc[:75] + "\n" + desc[75:]
                 else:
-                    textD = title + "\n" + desc
+                    textD = title + "\n\n" + desc
                 l = Button(
-                    frame,
+                    self.frame,
                     text=textD,
-                    font="-size 8",
-                    command=self.clickThis,
+                    font="-size 10",
+                    command= lambda id=i[0]: self.clickThis(id),
+                    pady=50,
+                    bg="white",
                     width="300"
                 )
                 l.pack()
-
-    def clickThis(self):
-        print("clicked")
 
     def get_posts(self):
         controller = PostController()
