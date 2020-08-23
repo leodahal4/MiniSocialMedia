@@ -51,8 +51,10 @@ class Server:
             from app.Controllers.RegisterController import Register
             controller = Register()
             return controller.register(self.__request_route)
-        elif self.__request_route['route'] == "get_posts":
-            return "You want to get the posts from the database."
+        elif self.__request_route['route'] == "get_post":
+            from app.Controllers.PostController import PostController
+            controller = PostController()
+            return controller.handle(self.__request_route)
         elif self.__request_route['route'] == "post":
             return "You want to post a tweet on the database."
         else:

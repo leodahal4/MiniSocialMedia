@@ -26,9 +26,6 @@ class Send:
         send_length += b' ' * (HEADER - len(send_length))
         self.__client.send(send_length)
         self.__client.send(message)
-
-        print("in here\t", end=" ")
-        # print(self.__client.recv(2048).decode(FORMAT))
         return self.__client.recv(2048).decode(FORMAT)
 
     def initialize_connection(self):

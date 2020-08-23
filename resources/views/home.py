@@ -2,7 +2,7 @@ from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from PIL import Image, ImageTk
 from app.Controllers.PostController import PostController
-
+from resources.views.OpenPost import OpenPost
 
 class Home(Frame):
     '''Home:
@@ -67,35 +67,8 @@ class Home(Frame):
     def clickThis(self, clickedPostId):
         print(str(clickedPostId) + " is clicked")
         self.frame.destroy()
-        self.frame = Frame(self.canvas)
-        self.canvas.create_window(
-            (160,50),
-            window=self.frame,
-            anchor='nw',
-            width="500"
-        )
-        for i in self.__posts:
-            if i[0] == clickedPostId:
-                title = i[3].capitalize() + " says \t\"" + i[1] + "\""
-                if len(title) < 80:
-                    fill_gaps = 80 - len(title)
-                    title += fill_gaps*" "
+        OpenPost(self.canvas, clickedPostId)
 
-                desc = i[2]
-                if len(desc) > 80:
-                    textD = title + "\n" + desc[:75] + "\n" + desc[75:]
-                else:
-                    textD = title + "\n\n" + desc
-                l = Button(
-                    self.frame,
-                    text=textD,
-                    font="-size 10",
-                    command= lambda id=i[0]: self.clickThis(id),
-                    pady=50,
-                    bg="white",
-                    width="300"
-                )
-                l.pack()
 
     def get_posts(self):
         controller = PostController()
