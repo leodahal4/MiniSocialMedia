@@ -8,6 +8,7 @@ from validation.core_validation import CoreValidation
 from validation.send_to_server import Send
 import fontawesome as fa
 from routes.index import Routes
+import hashlib
 
 
 class LoginForm(Frame):
@@ -193,12 +194,15 @@ class LoginForm(Frame):
             self.__error_label.config(text="Fill the credentials")
             return 0
         else:
+            self.__password_info = self.__password.get()
+            self.__encoded_pass = hashlib.md5(self.__password_info.encode())
+            self.__encrypted_pass = self.__encoded_pass.hexdigest()
             valid = Send()
             try:
                 to_auth = {
                     "route": "login",
                     "username": self.__user_name.get(),
-                    "password": self.__password.get()
+                    "password": self.__encrypted_pass
                 }
                 if(valid.message(to_auth) == "True"):
                     print("logged in")
