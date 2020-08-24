@@ -24,10 +24,9 @@ class Home(Frame):
         self.drawScrollBar()
 
     def forget_all(self):
-        self.app_title.destroy()
-        self.logout.destroy()
-        self.canvas.destroy()
-        self.scrollbar.destroy()
+        for child in self.master.winfo_children():
+            child.destroy()
+        print(self.master.winfo_children())
 
     def posts(self):
         AllPosts(self.canvas, self.master)

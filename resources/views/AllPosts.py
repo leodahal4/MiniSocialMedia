@@ -18,28 +18,27 @@ class AllPosts:
             anchor='nw',
             width="500"
         )
-        for i in range(100):
-            for i in self.__posts:
-                title = i[3].capitalize() + " says \t" + i[1]
-                if len(title) < 120:
-                    fill_gaps = 120 - len(title)
-                    title += fill_gaps*" "
+        for i in self.__posts:
+            title = i[3].capitalize() + " says \t" + i[1]
+            if len(title) < 120:
+                fill_gaps = 120 - len(title)
+                title += fill_gaps*" "
 
-                desc = i[2]
-                if len(desc) > 90:
-                    textD = title + "\n" + desc[:90] + "\n" + desc[90:]
-                else:
-                    textD = title + "\n" + desc
-                l = Button(
-                    self.frame,
-                    text=textD,
-                    font="-size 8",
-                    command= lambda id=i[0]: self.clickThis(id),
-                    pady=1,
-                    width="300",
-                    bg="white"
-                )
-                l.pack()
+            desc = i[2]
+            if len(desc) > 90:
+                textD = title + "\n" + desc[:90] + "\n" + desc[90:]
+            else:
+                textD = title + "\n" + desc
+            l = Button(
+                self.frame,
+                text=textD,
+                font="-size 8",
+                command= lambda id=i[0]: self.clickThis(id),
+                pady=1,
+                width="300",
+                bg="white"
+            )
+            l.pack()
 
     def get_posts(self):
         controller = PostController()

@@ -25,22 +25,47 @@ class OpenPost:
         self.backButton.place(x=10,y=5)
         self.frame = Frame(self.canvas)
         self.canvas.create_window(
-            (160,50),
+            (160,0),
             window=self.frame,
             anchor='nw',
             width="500"
         )
         for i in self.__post:
-            title = i[3].capitalize() + " said : \"" + i[1] + "\""
-            if len(title) < 95:
+            user = i[3]
+            desc = i[2]
+            title = user.capitalize() + " said : \"" + i[1] + "\""
+            if len(title) < 75:
                 fill_gaps = 95 - len(title)
                 title += fill_gaps*" "
-
-            desc = i[2]
-            if len(desc) > 80:
-                textD = title + "\n\n" + desc[:75] + "\n" + desc[75:]
             else:
-                textD = title + "\n\n" + desc
+                data = 1
+                headTitle = title
+                while True:
+                    if len(headTitle) > 75:
+                        title = title[:data*75] + "\n" + title[data*75:]
+                        headTitle = title[data*75:]
+                        data += 1
+                    else:
+                        title = title[:data*75] + "\n" + title[data*75:]
+                        headTitle = title[data*75:]
+                        break
+
+            if len(desc) < 80:
+                textD = title + "\n\n" + desc + "\n"
+            else:
+                data = 1
+                headDesc = desc
+                while True:
+                    if len(headDesc) > 75:
+                        desc = desc[:data*75] + "\n" + desc[data*75:]
+                        headDesc = desc[data*75:]
+                        data += 1
+                    else:
+                        desc = desc[:data*75] + "\n" + desc[data*75:]
+                        headDesc = desc[data*75:]
+                        break
+
+            textD = title + "\n\n" + desc
             l = Label(
                 self.frame,
                 text=textD,
@@ -50,6 +75,21 @@ class OpenPost:
                 width="300"
             )
             l.pack()
+
+        self.likeButton = Button(
+            self.frame,
+            text=fa.icons['thumbs-up'] + " \t 0",
+            bg="white",
+            width="10"
+        )
+        self.likeButton.pack(side=LEFT)
+        self.comment = Button(
+            self.frame,
+            text=fa.icons['comment-alt'] + " \t 0",
+            bg="white",
+            width="10"
+        )
+        self.comment.pack()
 
     def get_post(self):
         valid = Send()
@@ -66,3 +106,4 @@ class OpenPost:
         self.backButton.destroy()
         self.frame.destroy()
         AllPosts(self.canvas, self.master)
+
