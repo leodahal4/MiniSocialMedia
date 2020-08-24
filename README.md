@@ -22,30 +22,21 @@ directory under app directory.
   pip install -r requirements.txt
 
 
-## Pages
+### done
+> User can register
+> user can login
+> user can view all posts
+> user can view specific post
 
-- Login Form
-> Necessary Fields: \
-    Username \
-    Password
+### not done
+> User cannot see their avatar on Navbar or the left component
+> user can view specific posts but not the comments associated with those post
+> user cannot comment
+> user cannnot like the post
 
-- # Register Form
-> Necessary Fields: \
-    First Name \
-    Last Name \
-    Username \
-    Password \
-    Confirm Password \
-    Avatar / Image
+
+# Updates will be coming soon.
 
 > Complete README.md will be updated soon.
 
-
 [Star Repo]: https://github.com/leodahal4/MiniSocialMedia
-
-
-
-# Right now the user can only login using the credentials that have been hardcoded in the database.
-And the user can view the posts which is also hardcoded.
-
-> Updates will be coming soon.
