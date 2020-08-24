@@ -19,8 +19,10 @@ class OpenPost:
         self.backButton = Button(
             self.master,
             text=fa.icons['arrow-circle-left'],
-            font="-size 10",
-            command = self.backToAllPosts
+            font="-size 15",
+            command = self.backToAllPosts,
+            bg="white",
+            relief='flat'
         )
         self.backButton.place(x=10,y=5)
         self.frame = Frame(self.canvas)
