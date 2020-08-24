@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from resources.views.AllPosts import AllPosts
 import fontawesome as fa
 from routes.index import Routes
+from PIL import Image, ImageTk
 
 
 class Home(Frame):
@@ -39,6 +40,22 @@ class Home(Frame):
         self.canvas.create_line(150, 10, 150, 600, dash = (5, 2))
         self.canvas.pack(fill=BOTH, expand = True)
 
+
+        self.__user_avatar_path = "Images/default_avatar.png"
+
+        # now use the selected image as the avatar of the user
+        self.__user_avatar_path = "Images/default_avatar.png"
+        load = Image.open("resources/assets/default_avatar.png")
+        load.resize((100, 100), Image.ANTIALIAS)
+        render = ImageTk.PhotoImage(load)
+        self.__img = Label(
+            self.master,
+            bg="white",
+            image=render
+        )
+        self.__img.image = render
+        self.__img.place(x=10, y=50)
+
         # Username
         self.__user_name = "Leo"
         self.app_title = Label(
@@ -47,9 +64,32 @@ class Home(Frame):
             relief='flat',
             bg="white",
             text=self.__user_name if (self.__user_name) else "Username",
-            font=(20)
+            font=(20),
+            width=16
         )
-        self.app_title.place(x=100, y=5)
+        self.app_title.place(x=0, y=160)
+
+        self.addPostButton = Button(
+            self.master,
+            relief='flat',
+            text=fa.icons["plus-square"] + "\tAdd Post",
+            width=15,
+            bg="white",
+            font="-size 11"
+        )
+        self.addPostButton.place(x=0, y=180)
+        self.messagesButton = Button(
+            self.master,
+            relief='flat',
+            text=fa.icons["envelope"] + "\tMessages",
+            width=15,
+            font="-size 11",
+            bg="white"
+        )
+        self.messagesButton.place(x=0, y=210)
+
+
+
         self.logout = Button(
             self.master,
             relief='flat',

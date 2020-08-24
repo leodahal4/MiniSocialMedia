@@ -27,12 +27,14 @@ directory under app directory.
 > user can login  
 > user can view all posts  
 > user can view specific post  
+> Navbar design for messages, new post and user image
 
 ### not done
 > User cannot see their avatar on Navbar or the left component  
 > user can view specific posts but not the comments associated with those post  
 > user cannot comment  
 > user cannnot like the post  
+> UserController for gettting user details
 
 
 # Updates will be coming soon.

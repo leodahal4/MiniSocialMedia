@@ -222,16 +222,13 @@ class RegisterForm(Frame):
         )
         self.__login_button.place(height=50, x=0, y=10)
 
-
     def show_pass(self, event):
         self.__entry.config(show="")
         self.__entry.after(1000, lambda: self.__entry.config(show="\u2022"))
 
-
     def re_show_pass(self, event):
         self.__entry2.config(show="")
         self.__entry2.after(1000, lambda: self.__entry2.config(show="\u2022"))
-
 
     def user_avtar(self):
         """user_avtar
@@ -262,7 +259,6 @@ class RegisterForm(Frame):
         self.__img = Label(self.master, image=render)
         self.__img.image = render
         self.__img.place(x=580, y=5)
-
 
     def register(self):
         """register
@@ -346,7 +342,6 @@ class RegisterForm(Frame):
             self.__password_error_count = 0
         self.check_errors()
 
-
     def check_errors(self):
         """check_errors
                 This function checks whether there are any error labels
@@ -363,7 +358,6 @@ class RegisterForm(Frame):
         if not(self.__total_error):
             self.create()
 
-
     def login(self):
         """login
             What if user has got id?
@@ -374,7 +368,6 @@ class RegisterForm(Frame):
         """
         self.forget_all()
         Routes(master=self.master, source='register', destination='login')
-
 
     def forget_all(self):
         """forget_all
@@ -401,7 +394,6 @@ class RegisterForm(Frame):
             self.__re_password_label,
             self.__login_button
         )
-
 
     def create(self):
         """create
@@ -438,7 +430,6 @@ class RegisterForm(Frame):
                 title="Eroor",
                 message="Unable to connect to the server."
             )
-
 
     def forgot_password_form(self):
         pass
