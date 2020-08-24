@@ -33,9 +33,9 @@ class OpenPost:
             width="500"
         )
         for i in self.__post:
-            user = self.getUser(i[3])
+            user = "- " + self.getUser(i[3]).capitalize()
             desc = i[2]
-            title = user.capitalize() + " said : \"" + i[1] + "\""
+            title = "\"" + i[1] + "\""
             if len(title) < 75:
                 fill_gaps = 95 - len(title)
                 title += fill_gaps*" "
@@ -53,7 +53,9 @@ class OpenPost:
                         break
 
             if len(desc) < 80:
-                textD = title + "\n\n" + desc + "\n"
+                print("the length is smaller")
+                fill_gaps = 85 - len(desc)
+                textD = title + "\n\n" + desc + fill_gaps*" "
             else:
                 data = 1
                 headDesc = desc
@@ -65,12 +67,14 @@ class OpenPost:
                     else:
                         desc = desc[:data*75] + "\n" + desc[data*75:]
                         headDesc = desc[data*75:]
+                        textD = title + "\n\n" + desc
                         break
+            fill_gaps = 100 - len(user)
+            user = fill_gaps*" " + user
 
-            textD = title + "\n\n" + desc
             l = Label(
                 self.frame,
-                text=textD,
+                text=textD + "\n\n" + user,
                 font="-size 10",
                 pady=50,
                 bg="white",

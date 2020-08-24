@@ -22,16 +22,17 @@ class AllPosts:
         )
         for i in self.__posts:
             user = self.getUser(i[3])
-            title = user.capitalize() + " says    \' " + i[1] + " \'"
-            if len(title) < 85:
-                fill_gaps = 85 - len(title)
+            title = "\' " + i[1] + " \'"
+            if len(title) < 90:
+                fill_gaps = 90 - len(title)
                 title += fill_gaps*" "
             else:
                 title = title[:75] + " \'..."
 
             desc = i[2]
-            if len(desc) < 65:
-                textD = title + "\n" + desc
+            if len(desc) < 85:
+                fill_gaps = 85 - len(desc)
+                textD = title + "\n\n" + desc + fill_gaps*" "
             else:
                 if len(desc[70:]) > 70:
                     textD = title + "\n\n" + desc[:70] + "\n" + desc[70:140] + "..."
@@ -39,9 +40,12 @@ class AllPosts:
                     fill_gaps = 95 - len(desc[70:])
                     textD = title + "\n\n" + desc[:70] + "\n" + desc[70:] + fill_gaps*" "
 
+            fill_gaps = 100 - len(user)
+            user = fill_gaps*" " + user.capitalize()
+
             l = Button(
                 self.frame,
-                text=textD + "\n",
+                text=textD + "\n\n" + user,
                 font="-size 10",
                 command= lambda id=i[0]: self.clickThis(id),
                 pady=1,
