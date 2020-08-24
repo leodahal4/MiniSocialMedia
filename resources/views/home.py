@@ -1,10 +1,10 @@
-from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
-from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
+from PIL import Image, ImageTk
 from PIL import Image, ImageTk
 from resources.views.AllPosts import AllPosts
-import fontawesome as fa
 from routes.index import Routes
-from PIL import Image, ImageTk
+from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
+from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
+import fontawesome as fa
 
 
 class Home(Frame):
@@ -40,7 +40,6 @@ class Home(Frame):
         self.canvas.create_line(150, 10, 150, 600, dash = (5, 2))
         self.canvas.pack(fill=BOTH, expand = True)
 
-
         self.__user_avatar_path = "Images/default_avatar.png"
 
         # now use the selected image as the avatar of the user
@@ -75,6 +74,7 @@ class Home(Frame):
             text=fa.icons["plus-square"] + "\tAdd Post",
             width=15,
             bg="white",
+            command=self.addPostView,
             font="-size 11"
         )
         self.addPostButton.place(x=0, y=180)
@@ -87,8 +87,6 @@ class Home(Frame):
             bg="white"
         )
         self.messagesButton.place(x=0, y=210)
-
-
 
         self.logout = Button(
             self.master,
@@ -114,3 +112,8 @@ class Home(Frame):
         # update scrollregion after starting 'mainloop'
         # when all widgets are in canvas
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
+
+    def addPostView(self):
+        print("add post button clicked")
+        from resources.views.AddPost import AddPost
+        AddPost(self.canvas, self.master)
