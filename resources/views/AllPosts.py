@@ -1,6 +1,8 @@
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from app.Controllers.PostController import PostController
+import json
+
 
 
 class AllPosts:
@@ -19,12 +21,13 @@ class AllPosts:
             width="500"
         )
         for i in self.__posts:
-            title = i[3].capitalize() + " says \t\' " + i[1] + " \'"
-            if len(title) < 65:
-                fill_gaps = 90 - len(title)
+            user = self.getUser(i[3])
+            title = user.capitalize() + " says    \' " + i[1] + " \'"
+            if len(title) < 85:
+                fill_gaps = 85 - len(title)
                 title += fill_gaps*" "
             else:
-                title = title[:65] + " \'..."
+                title = title[:75] + " \'..."
 
             desc = i[2]
             if len(desc) < 65:
@@ -35,7 +38,6 @@ class AllPosts:
                 else:
                     fill_gaps = 95 - len(desc[70:])
                     textD = title + "\n\n" + desc[:70] + "\n" + desc[70:] + fill_gaps*" "
-
 
             l = Button(
                 self.frame,
@@ -56,3 +58,20 @@ class AllPosts:
         self.frame.destroy()
         from resources.views.OpenPost import OpenPost
         OpenPost(self.canvas, clickedPostId, self.master)
+
+    def getUser(self, userId):
+        getUser = {
+            "route": "get_user",
+            "userId": userId
+        }
+        from validation.send_to_server import Send
+        valid = Send()
+        reply = json.loads(valid.message(getUser))
+        print(reply)
+        print(type(reply))
+        for i in reply:
+            print(i)
+            for j in i:
+                print(j)
+                reply = j
+        return reply

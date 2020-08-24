@@ -57,6 +57,10 @@ class Server:
             return json.dumps(controller.handle(self.__request_route))
         elif self.__request_route['route'] == "post":
             return "You want to post a tweet on the database."
+        elif self.__request_route['route'] == "get_user":
+            from app.Controllers.UserController import UserController
+            controller = UserController()
+            return json.dumps(controller.get_user(self.__request_route['userId']))
         else:
             return "Request is unknown"
 

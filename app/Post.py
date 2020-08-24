@@ -7,7 +7,7 @@ class Post:
     def get_posts():
         db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
-        sql = "SELECT * FROM posts"
+        sql = "SELECT * FROM post"
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
@@ -22,7 +22,7 @@ class Post:
     def get_post(postId):
         db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
-        sql = "SELECT * FROM posts where id='" + str(postId) + "';"
+        sql = "SELECT * FROM post where id='" + str(postId) + "';"
         try:
             cursor.execute(sql)
             results = cursor.fetchall()

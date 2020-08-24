@@ -1,6 +1,5 @@
 # This one controlles the register form
 from app.LoginRegister import LoginRegister
-import json
 
 class Register:
     def __init__(self):

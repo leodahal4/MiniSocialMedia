@@ -33,7 +33,7 @@ class OpenPost:
             width="500"
         )
         for i in self.__post:
-            user = i[3]
+            user = self.getUser(i[3])
             desc = i[2]
             title = user.capitalize() + " said : \"" + i[1] + "\""
             if len(title) < 75:
@@ -109,3 +109,19 @@ class OpenPost:
         self.frame.destroy()
         AllPosts(self.canvas, self.master)
 
+    def getUser(self, userId):
+        getUser = {
+            "route": "get_user",
+            "userId": userId
+        }
+        from validation.send_to_server import Send
+        valid = Send()
+        reply = json.loads(valid.message(getUser))
+        print(reply)
+        print(type(reply))
+        for i in reply:
+            print(i)
+            for j in i:
+                print(j)
+                reply = j
+        return reply
