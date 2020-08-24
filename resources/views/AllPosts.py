@@ -19,20 +19,28 @@ class AllPosts:
             width="500"
         )
         for i in self.__posts:
-            title = i[3].capitalize() + " says \t" + i[1]
-            if len(title) < 120:
-                fill_gaps = 120 - len(title)
+            title = i[3].capitalize() + " says \t\' " + i[1] + " \'"
+            if len(title) < 65:
+                fill_gaps = 90 - len(title)
                 title += fill_gaps*" "
+            else:
+                title = title[:65] + " \'..."
 
             desc = i[2]
-            if len(desc) > 90:
-                textD = title + "\n" + desc[:90] + "\n" + desc[90:]
-            else:
+            if len(desc) < 65:
                 textD = title + "\n" + desc
+            else:
+                if len(desc[70:]) > 70:
+                    textD = title + "\n\n" + desc[:70] + "\n" + desc[70:140] + "..."
+                else:
+                    fill_gaps = 95 - len(desc[70:])
+                    textD = title + "\n\n" + desc[:70] + "\n" + desc[70:] + fill_gaps*" "
+
+
             l = Button(
                 self.frame,
-                text=textD,
-                font="-size 8",
+                text=textD + "\n",
+                font="-size 10",
                 command= lambda id=i[0]: self.clickThis(id),
                 pady=1,
                 width="300",
@@ -45,7 +53,6 @@ class AllPosts:
         self.__posts = controller.get()
 
     def clickThis(self, clickedPostId):
-        print(str(clickedPostId) + " is clicked")
         self.frame.destroy()
         from resources.views.OpenPost import OpenPost
         OpenPost(self.canvas, clickedPostId, self.master)
