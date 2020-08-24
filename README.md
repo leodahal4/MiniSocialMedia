@@ -23,16 +23,16 @@ directory under app directory.
 
 
 ### done
-> User can register
-> user can login
-> user can view all posts
-> user can view specific post
+> User can register  
+> user can login  
+> user can view all posts  
+> user can view specific post  
 
 ### not done
-> User cannot see their avatar on Navbar or the left component
-> user can view specific posts but not the comments associated with those post
-> user cannot comment
-> user cannnot like the post
+> User cannot see their avatar on Navbar or the left component  
+> user can view specific posts but not the comments associated with those post  
+> user cannot comment  
+> user cannnot like the post  
 
 
 # Updates will be coming soon.
