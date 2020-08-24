@@ -2,6 +2,8 @@ from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from PIL import Image, ImageTk
 from resources.views.AllPosts import AllPosts
+import fontawesome as fa
+from routes.index import Routes
 
 
 class Home(Frame):
@@ -16,12 +18,16 @@ class Home(Frame):
         self.__create_all_fields()
 
     def __create_all_fields(self):
-        self.menu_bar()
+        # self.menu_bar()
         self.navbar()
         self.posts()
+        self.drawScrollBar()
 
     def forget_all(self):
-        pass
+        self.app_title.destroy()
+        self.logout.destroy()
+        self.canvas.destroy()
+        self.scrollbar.destroy()
 
     def posts(self):
         AllPosts(self.canvas, self.master)
@@ -36,7 +42,7 @@ class Home(Frame):
 
         # Username
         self.__user_name = "Leo"
-        app_title = Label(
+        self.app_title = Label(
             self.master,
             bd=1,
             relief='flat',
@@ -44,39 +50,28 @@ class Home(Frame):
             text=self.__user_name if (self.__user_name) else "Username",
             font=(20)
         )
-        app_title.place(x=100, y=5)
+        self.app_title.place(x=100, y=5)
+        self.logout = Button(
+            self.master,
+            relief='flat',
+            text = "Logout",
+            bg="white",
+            command = self.logout,
+            width=17,
+        )
+        self.logout.place(x=0, y=650)
 
-    def quit_all(self):
-        pass
+    def logout(self):
+        self.forget_all()
+        Routes(master=self.master, source="home", destination="login")
 
-    def about(self):
-        pass
+    def drawScrollBar(self):
+        self.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
+        self.scrollbar.place(height=690, x=686, y=0)
+        self.canvas.configure(yscrollcommand = self.scrollbar.set)
+        self.canvas.bind('<Configure>', self.on_configure)
 
-    def guide_user_to_use(self):
-        pass
-
-    def menu_bar(self):
-        menu = Menu(self.master)
-        self.master.config(menu=menu)
-        filemenu = Menu(menu)
-        menu.add_cascade(
-            label='File',
-            menu=filemenu
-        )
-        filemenu.add_command(
-            label="Exit",
-            command=self.quit_all
-        )
-        helpmenu = Menu(menu)
-        menu.add_cascade(
-            label='Help',
-            menu=helpmenu
-        )
-        helpmenu.add_command(
-            label='About',
-            command=self.about
-        )
-        helpmenu.add_command(
-            label="How to use?",
-            command=self.guide_user_to_use
-        )
+    def on_configure(self, event):
+        # update scrollregion after starting 'mainloop'
+        # when all widgets are in canvas
+        self.canvas.configure(scrollregion=self.canvas.bbox('all'))
