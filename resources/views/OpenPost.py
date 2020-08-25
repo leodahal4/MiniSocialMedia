@@ -1,9 +1,8 @@
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
-from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from validation.send_to_server import Send
+from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 import json
 import fontawesome as fa
-from resources.views.AllPosts import AllPosts
 
 
 class OpenPost:
@@ -17,7 +16,7 @@ class OpenPost:
 
     def __draw_contents(self):
         self.backButton = Button(
-            self.master,
+            self.canvas,
             text=fa.icons['arrow-circle-left'],
             font="-size 15",
             command = self.backToAllPosts,
@@ -53,7 +52,6 @@ class OpenPost:
                         break
 
             if len(desc) < 80:
-                print("the length is smaller")
                 fill_gaps = 85 - len(desc)
                 textD = title + "\n\n" + desc + fill_gaps*" "
             else:
@@ -111,6 +109,7 @@ class OpenPost:
     def backToAllPosts(self):
         self.backButton.destroy()
         self.frame.destroy()
+        from resources.views.AllPosts import AllPosts
         AllPosts(self.canvas, self.master)
 
     def getUser(self, userId):
@@ -118,14 +117,9 @@ class OpenPost:
             "route": "get_user",
             "userId": userId
         }
-        from validation.send_to_server import Send
         valid = Send()
         reply = json.loads(valid.message(getUser))
-        print(reply)
-        print(type(reply))
         for i in reply:
-            print(i)
             for j in i:
-                print(j)
                 reply = j
         return reply

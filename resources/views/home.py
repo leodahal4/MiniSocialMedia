@@ -27,7 +27,6 @@ class Home(Frame):
     def forget_all(self):
         for child in self.master.winfo_children():
             child.destroy()
-        print(self.master.winfo_children())
 
     def posts(self):
         AllPosts(self.canvas, self.master)
@@ -67,6 +66,16 @@ class Home(Frame):
             width=16
         )
         self.app_title.place(x=0, y=160)
+        self.homeButton = Button(
+            self.master,
+            relief='flat',
+            text=fa.icons["home"] + "\tHome      ",
+            width=15,
+            bg="white",
+            command=self.homeView,
+            font="-size 11"
+        )
+        self.homeButton.place(x=0, y=190)
 
         self.addPostButton = Button(
             self.master,
@@ -77,7 +86,7 @@ class Home(Frame):
             command=self.addPostView,
             font="-size 11"
         )
-        self.addPostButton.place(x=0, y=180)
+        self.addPostButton.place(x=0, y=220)
         self.messagesButton = Button(
             self.master,
             relief='flat',
@@ -86,9 +95,9 @@ class Home(Frame):
             font="-size 11",
             bg="white"
         )
-        self.messagesButton.place(x=0, y=210)
+        self.messagesButton.place(x=0, y=250)
 
-        self.logout = Button(
+        self.logoutButton = Button(
             self.master,
             relief='flat',
             text = "Logout",
@@ -96,7 +105,7 @@ class Home(Frame):
             command = self.logout,
             width=17,
         )
-        self.logout.place(x=0, y=650)
+        self.logoutButton.place(x=0, y=650)
 
     def logout(self):
         self.forget_all()
@@ -114,6 +123,12 @@ class Home(Frame):
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
 
     def addPostView(self):
-        print("add post button clicked")
+        for child in self.canvas.winfo_children():
+            child.destroy()
         from resources.views.AddPost import AddPost
         AddPost(self.canvas, self.master)
+
+    def homeView(self):
+        for child in self.canvas.winfo_children():
+            child.destroy()
+        AllPosts(self.canvas, self.master)
