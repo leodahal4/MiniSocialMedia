@@ -15,6 +15,7 @@ class Home(Frame):
     def __init__(self, master):
         self.master = master
         self.master.title("Home")
+        self.master.unbind_all('<Return>')
 
         self.__create_all_fields()
 
@@ -84,7 +85,8 @@ class Home(Frame):
             width=15,
             bg="white",
             command=self.addPostView,
-            font="-size 11"
+            font="-size 11",
+            cursor="plus"
         )
         self.addPostButton.place(x=0, y=220)
         self.messagesButton = Button(

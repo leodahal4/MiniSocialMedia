@@ -1,4 +1,4 @@
-from tkinter import Frame, Entry, FLAT, StringVar, END, Button
+from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT
 import fontawesome as fa
 
 
@@ -31,24 +31,42 @@ class AddPost:
         )
         self.backButton.place(x=10,y=5)
 
-        self.__postTitle_var = StringVar()
-        self.__postTitle = Entry(
+        self.__postTitle = Text(
             self.frame,
             relief=FLAT,
             font=("monospace", 12),
-            textvariable=self.__postTitle_var,
-            width=22,
+            width=40,
             selectforeground="green",
-            bd=0
+            bd=0,
+            pady=5,
+            padx=5
         )
-        self.__postTitle.insert(0, 'Enter the title')
+        self.__postTitle.insert(INSERT, 'Enter the title')
         self.__postTitle.bind("<Button-1>", self.__callback_for_change)
-        self.__postTitle.pack()
+        self.__postTitle.place(height=60, x=10, y=20)
+
+        self.__postDescripton = Text(
+            self.frame,
+            relief=FLAT,
+            font=("monospace", 12),
+            width=40,
+            selectforeground="green",
+            bd=0,
+            pady=5,
+            padx=5
+        )
+        self.__postDescripton.insert(INSERT, 'Enter the Description for the post\nOver Here.')
+        self.__postDescripton.bind("<Button-1>", self.__callback_for_changeDes)
+        self.__postDescripton.place(height=300, x=10, y=100)
 
     def __callback_for_change(self, *args):
-        if self.__postTitle.get() == "Username" and self.__cleared == 0:
-            self.__postTitle.delete(0, END)
-        self.__cleared = 1
+        if self.__postTitle.get("1.0","end-1c") == "Enter the title":
+            self.__postTitle.delete("1.0", END)
+
+    def __callback_for_changeDes(self, *args):
+        print(self.__postDescripton.get("1.0", "end-1c"))
+        if self.__postDescripton.get("1.0","end-1c") == "Enter the Description for the post\nOver Here.":
+            self.__postDescripton.delete("1.0", END)
 
     def backToHome(self):
         self.backButton.destroy()

@@ -206,6 +206,7 @@ class LoginForm(Frame):
                 }
                 if(valid.message(to_auth) == "True"):
                     print("logged in")
+                    self.master.unbind("<Return>")
                     Routes(master=self.master, source="login", destination="home")
                 else:
                     print("user not found")
