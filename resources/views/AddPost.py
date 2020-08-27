@@ -1,6 +1,7 @@
 from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT
 import fontawesome as fa
 from Config.config import Global_all
+from validation.send_to_server import Send
 
 
 class AddPost:
@@ -76,6 +77,7 @@ class AddPost:
             activeforeground=self.__primary_color,
             width=10,
             bd=0,
+            command=self.__postThis,
             underline=0
         )
         self.__submitButton.place(height=50, x=350, y=520)
@@ -94,3 +96,14 @@ class AddPost:
         self.frame.destroy()
         from resources.views.AllPosts import AllPosts
         AllPosts(self.canvas, self.master)
+
+    def __postThis(self):
+        self.__title = self.__postTitle.get("1.0","end-1c")
+        self.__description = self.__postDescripton.get("1.0","end-1c")
+        valid = Send()
+        commitPost = {
+            "route": "add_post",
+            "postTitle": self.__title,
+            "postDescription": self.__description
+        }
+        print(valid.message(commitPost))
