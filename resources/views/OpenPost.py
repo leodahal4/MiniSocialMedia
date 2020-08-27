@@ -117,6 +117,7 @@ class OpenPost:
     def backToAllPosts(self):
         self.backButton.destroy()
         self.frame.destroy()
+        # self.master.scrollbar.destroy()
         from resources.views.AllPosts import AllPosts
         AllPosts(self.canvas, self.master)
 

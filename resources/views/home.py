@@ -29,7 +29,6 @@ class Home(Frame):
         # self.menu_bar()
         self.navbar()
         self.posts()
-        self.drawScrollBar()
 
     def forget_all(self):
         for child in self.master.winfo_children():
@@ -119,16 +118,6 @@ class Home(Frame):
         self.forget_all()
         Routes(master=self.master, source="home", destination="login")
 
-    def drawScrollBar(self):
-        self.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
-        self.scrollbar.place(height=690, x=686, y=0)
-        self.canvas.configure(yscrollcommand = self.scrollbar.set)
-        self.canvas.bind('<Configure>', self.on_configure)
-
-    def on_configure(self, event):
-        # update scrollregion after starting 'mainloop'
-        # when all widgets are in canvas
-        self.canvas.configure(scrollregion=self.canvas.bbox('all'))
 
     def addPostView(self):
         for child in self.canvas.winfo_children():

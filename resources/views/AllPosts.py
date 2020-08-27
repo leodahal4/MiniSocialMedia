@@ -18,6 +18,18 @@ class AllPosts:
         self.get_posts()
         self.master = master
         self.__allPosts()
+        self.drawScrollBar()
+
+    def drawScrollBar(self):
+        self.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
+        self.scrollbar.place(height=690, x=686, y=0)
+        self.canvas.configure(yscrollcommand = self.scrollbar.set)
+        self.canvas.bind('<Configure>', self.on_configure)
+
+    def on_configure(self, event):
+        # update scrollregion after starting 'mainloop'
+        # when all widgets are in canvas
+        self.canvas.configure(scrollregion=self.canvas.bbox('all'))
 
     def __allPosts(self):
         self.frame = Frame(self.canvas, bg="white")
@@ -68,6 +80,7 @@ class AllPosts:
 
     def clickThis(self, clickedPostId):
         self.frame.destroy()
+        self.scrollbar.destroy()
         from resources.views.OpenPost import OpenPost
         OpenPost(self.canvas, clickedPostId, self.master)
 
