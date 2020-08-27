@@ -35,7 +35,7 @@ class AddPost:
             self.frame,
             relief=FLAT,
             font=("monospace", 12),
-            width=40,
+            width=45,
             selectforeground="green",
             bd=0,
             pady=5,
@@ -49,7 +49,7 @@ class AddPost:
             self.frame,
             relief=FLAT,
             font=("monospace", 12),
-            width=40,
+            width=45,
             selectforeground="green",
             bd=0,
             pady=5,
@@ -57,7 +57,18 @@ class AddPost:
         )
         self.__postDescripton.insert(INSERT, 'Enter the Description for the post\nOver Here.')
         self.__postDescripton.bind("<Button-1>", self.__callback_for_changeDes)
-        self.__postDescripton.place(height=300, x=10, y=100)
+        self.__postDescripton.place(height=400, x=10, y=100)
+
+        self.__submitButton = Button(
+            self.frame,
+            bg="white",
+            text="Submit",
+            font=("monospace", 12),
+            width=10,
+            bd=0,
+            underline=0
+        )
+        self.__submitButton.place(height=50, x=350, y=520)
 
     def __callback_for_change(self, *args):
         if self.__postTitle.get("1.0","end-1c") == "Enter the title":
