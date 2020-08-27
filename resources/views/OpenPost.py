@@ -3,6 +3,7 @@ from validation.send_to_server import Send
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 import json
 import fontawesome as fa
+from Config.config import Global_all
 
 
 class OpenPost:
@@ -10,6 +11,12 @@ class OpenPost:
         self.canvas = canvas
         self.master = master
         self.clickedPostId = clickedPostId
+        # declare the global configurations
+        returned = Global_all.global_config_for_font()
+        self.__font_family = returned[0]
+        self.__font_size = returned[1]
+        self.__weight = returned[2]
+        self.__backgorud_color = returned[3]
         self.get_post()
         self.__draw_contents()
         self.__getComments()
@@ -35,36 +42,36 @@ class OpenPost:
             user = "- " + self.getUser(i[3]).capitalize()
             desc = i[2]
             title = "\"" + i[1] + "\""
-            if len(title) < 75:
-                fill_gaps = 95 - len(title)
+            if len(title) < 60:
+                fill_gaps = 62 - len(title)
                 title += fill_gaps*" "
             else:
                 data = 1
                 headTitle = title
                 while True:
-                    if len(headTitle) > 75:
-                        title = title[:data*75] + "\n" + title[data*75:]
-                        headTitle = title[data*75:]
+                    if len(headTitle) > 60:
+                        title = title[:data*60] + "\n" + title[data*60:]
+                        headTitle = title[data*60:]
                         data += 1
                     else:
-                        title = title[:data*75] + "\n" + title[data*75:]
-                        headTitle = title[data*75:]
+                        title = title[:data*60] + "\n" + title[data*60:]
+                        headTitle = title[data*60:]
                         break
 
-            if len(desc) < 80:
-                fill_gaps = 85 - len(desc)
+            if len(desc) < 60:
+                fill_gaps = 62 - len(desc)
                 textD = title + "\n\n" + desc + fill_gaps*" "
             else:
                 data = 1
                 headDesc = desc
                 while True:
-                    if len(headDesc) > 75:
-                        desc = desc[:data*75] + "\n" + desc[data*75:]
-                        headDesc = desc[data*75:]
+                    if len(headDesc) > 60:
+                        desc = desc[:data*60] + "\n" + desc[data*60:]
+                        headDesc = desc[data*60:]
                         data += 1
                     else:
-                        desc = desc[:data*75] + "\n" + desc[data*75:]
-                        headDesc = desc[data*75:]
+                        desc = desc[:data*60] + "\n" + desc[data*60:]
+                        headDesc = desc[data*60:]
                         textD = title + "\n\n" + desc
                         break
             fill_gaps = 100 - len(user)
@@ -73,7 +80,8 @@ class OpenPost:
             l = Label(
                 self.frame,
                 text=textD + "\n\n" + user,
-                font="-size 10",
+                font=(self.__font_family, 10),
+                # font="-size 10",
                 pady=50,
                 bg="white",
                 width="300"

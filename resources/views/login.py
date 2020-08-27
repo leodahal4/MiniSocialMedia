@@ -73,7 +73,7 @@ class LoginForm(Frame):
             self.master,
             relief=FLAT,
             bg=self.__backgorud_color,
-            font=("monospace", self.__font_size),
+            font=(self.__font_family, self.__font_size),
             textvariable=self.__user_name,
             width=22,
             highlightcolor=self.__primary_color,
@@ -90,7 +90,7 @@ class LoginForm(Frame):
         self.__password = Entry(
             self.master,
             bg=self.__backgorud_color,
-            font=("monospace", self.__font_size),
+            font=(self.__font_family, self.__font_size),
             width=16,
             bd=0,
             show="\u2022",

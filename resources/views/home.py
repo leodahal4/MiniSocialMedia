@@ -5,6 +5,7 @@ from routes.index import Routes
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 import fontawesome as fa
+from Config.config import Global_all
 
 
 class Home(Frame):
@@ -15,7 +16,12 @@ class Home(Frame):
     def __init__(self, master):
         self.master = master
         self.master.title("Home")
-        self.master.unbind_all('<Return>')
+        # declare the global configurations
+        returned = Global_all.global_config_for_font()
+        self.__font_family = returned[0]
+        self.__font_size = returned[1]
+        self.__weight = returned[2]
+        self.__backgorud_color = returned[3]
 
         self.__create_all_fields()
 
@@ -63,18 +69,18 @@ class Home(Frame):
             relief='flat',
             bg="white",
             text=self.__user_name if (self.__user_name) else "Username",
-            font=(20),
-            width=16
+            font=(self.__font_family, 12),
+            width=12
         )
         self.app_title.place(x=0, y=160)
         self.homeButton = Button(
             self.master,
             relief='flat',
-            text=fa.icons["home"] + "\tHome      ",
-            width=15,
+            text=fa.icons["home"] + "\tHome    ",
+            width=13,
             bg="white",
             command=self.homeView,
-            font="-size 11"
+            font=(self.__font_family, 11)
         )
         self.homeButton.place(x=0, y=190)
 
@@ -82,10 +88,10 @@ class Home(Frame):
             self.master,
             relief='flat',
             text=fa.icons["plus-square"] + "\tAdd Post",
-            width=15,
+            width=13,
             bg="white",
             command=self.addPostView,
-            font="-size 11",
+            font=(self.__font_family, 11),
             cursor="plus"
         )
         self.addPostButton.place(x=0, y=220)
@@ -93,8 +99,8 @@ class Home(Frame):
             self.master,
             relief='flat',
             text=fa.icons["envelope"] + "\tMessages",
-            width=15,
-            font="-size 11",
+            width=13,
+            font=(self.__font_family, 11),
             bg="white"
         )
         self.messagesButton.place(x=0, y=250)
