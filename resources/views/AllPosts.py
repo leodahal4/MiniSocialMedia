@@ -19,6 +19,8 @@ class AllPosts:
         self.master = master
         self.__allPosts()
         self.drawScrollBar()
+        self.canvas.create_line(150, 10, 150, len(self.__posts)*100, dash = (5, 2))
+        self.canvas.pack(fill=BOTH, expand = True)
 
     def drawScrollBar(self):
         self.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
@@ -39,40 +41,39 @@ class AllPosts:
             anchor='nw',
             width="500"
         )
-        for i in range(10):
-            for i in self.__posts:
-                user = self.getUser(i[3])
-                title = "\' " + i[1] + " \'"
-                if len(title) < 55:
-                    fill_gaps = 55 - len(title)
-                    title += fill_gaps*" "
+        for i in self.__posts:
+            user = self.getUser(i[3])
+            title = "\' " + i[1] + " \'"
+            if len(title) < 55:
+                fill_gaps = 55 - len(title)
+                title += fill_gaps*" "
+            else:
+                title = title[:55] + " \'..."
+
+            desc = i[2]
+            if len(desc) < 60:
+                fill_gaps = 60 - len(desc)
+                textD = title + "\n\n" + desc + fill_gaps*" "
+            else:
+                if len(desc[60:]) > 60:
+                    textD = title + "\n\n" + desc[:60] + "\n" + desc[60:118] + "..."
                 else:
-                    title = title[:55] + " \'..."
+                    fill_gaps = 60 - len(desc[60:])
+                    textD = title + "\n\n" + desc[:60] + "\n" + desc[60:] + fill_gaps*" "
 
-                desc = i[2]
-                if len(desc) < 60:
-                    fill_gaps = 60 - len(desc)
-                    textD = title + "\n\n" + desc + fill_gaps*" "
-                else:
-                    if len(desc[60:]) > 60:
-                        textD = title + "\n\n" + desc[:60] + "\n" + desc[60:118] + "..."
-                    else:
-                        fill_gaps = 60 - len(desc[60:])
-                        textD = title + "\n\n" + desc[:60] + "\n" + desc[60:] + fill_gaps*" "
+            fill_gaps = 45 - len(user)
+            user = fill_gaps*" " + user.capitalize()
 
-                fill_gaps = 45 - len(user)
-                user = fill_gaps*" " + user.capitalize()
-
-                l = Button(
-                    self.frame,
-                    text=textD + "\n\n" + user,
-                    font=(self.__font_family, 10),
-                    command= lambda id=i[0]: self.clickThis(id),
-                    pady=1,
-                    width="300",
-                    bg="white"
-                )
-                l.pack()
+            l = Button(
+                self.frame,
+                text=textD + "\n\n" + user,
+                font=(self.__font_family, 10),
+                command= lambda id=i[0]: self.clickThis(id),
+                pady=1,
+                width="300",
+                bg="white"
+            )
+            l.pack()
 
     def get_posts(self):
         controller = PostController()
@@ -80,7 +81,7 @@ class AllPosts:
 
     def clickThis(self, clickedPostId):
         self.frame.destroy()
-        self.scrollbar.destroy()
+        # self.scrollbar.destroy()
         from resources.views.OpenPost import OpenPost
         OpenPost(self.canvas, clickedPostId, self.master)
 

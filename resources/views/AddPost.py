@@ -1,18 +1,25 @@
 from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT
 import fontawesome as fa
+from Config.config import Global_all
 
 
 class AddPost:
     def __init__(self, canvas, master):
         self.canvas = canvas
         self.master = master
+        self.__primary_color="blue"
+        returned = Global_all.global_config_for_font()
+        self.__font_family = returned[0]
+        self.__font_size = returned[1]
+        self.__weight = returned[2]
+        self.__backgorud_color = returned[3]
         self.__draw_components()
 
     def __draw_components(self):
         self.__cleared = 0
         self.frame = Frame(
             self.canvas,
-            bg="white",
+            bg=self.__backgorud_color,
             height=650,
         )
         self.canvas.create_window(
@@ -26,7 +33,7 @@ class AddPost:
             text=fa.icons['arrow-circle-left'],
             font="-size 15",
             command = self.backToHome,
-            bg="white",
+            bg=self.__backgorud_color,
             relief='flat'
         )
         self.backButton.place(x=10,y=5)
@@ -34,9 +41,10 @@ class AddPost:
         self.__postTitle = Text(
             self.frame,
             relief=FLAT,
-            font=("monospace", 12),
+            font=(self.__font_family, 12),
             width=45,
             selectforeground="green",
+            highlightcolor=self.__primary_color,
             bd=0,
             pady=5,
             padx=5
@@ -48,9 +56,10 @@ class AddPost:
         self.__postDescripton = Text(
             self.frame,
             relief=FLAT,
-            font=("monospace", 12),
+            font=(self.__font_family, 12),
             width=45,
             selectforeground="green",
+            highlightcolor=self.__primary_color,
             bd=0,
             pady=5,
             padx=5
@@ -61,9 +70,10 @@ class AddPost:
 
         self.__submitButton = Button(
             self.frame,
-            bg="white",
+            bg=self.__backgorud_color,
             text="Submit",
-            font=("monospace", 12),
+            font=(self.__font_family, 12),
+            activeforeground=self.__primary_color,
             width=10,
             bd=0,
             underline=0

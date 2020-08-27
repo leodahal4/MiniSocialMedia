@@ -42,8 +42,8 @@ class Home(Frame):
         # contents
         self.__font_size = 10
         self.canvas = Canvas(self.master, bg="white")
-        self.canvas.create_line(150, 10, 150, 600, dash = (5, 2))
-        self.canvas.pack(fill=BOTH, expand = True)
+        # self.canvas.create_line(150, 10, 150, 6000, dash = (5, 2))
+        # self.canvas.pack(fill=BOTH, expand = True)
 
         self.__user_avatar_path = "Images/default_avatar.png"
 
@@ -110,14 +110,15 @@ class Home(Frame):
             text = "Logout",
             bg="white",
             command = self.logout,
-            width=17,
+            activeforeground="red",
+            font=(self.__font_family, 12),
+            width=11,
         )
         self.logoutButton.place(x=0, y=650)
 
     def logout(self):
         self.forget_all()
         Routes(master=self.master, source="home", destination="login")
-
 
     def addPostView(self):
         for child in self.canvas.winfo_children():

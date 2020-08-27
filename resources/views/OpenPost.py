@@ -74,7 +74,7 @@ class OpenPost:
                         headDesc = desc[data*60:]
                         textD = title + "\n\n" + desc
                         break
-            fill_gaps = 100 - len(user)
+            fill_gaps = 60 - len(user)
             user = fill_gaps*" " + user
 
             l = Label(
