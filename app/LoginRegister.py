@@ -36,5 +36,6 @@ class LoginRegister:
             values = (credentials['username'], credentials['password'], credentials['fname'], credentials['lname'])
             cursor.execute(sql, values)
             db.commit()
+            db.close()
             return "True"
         db.close()

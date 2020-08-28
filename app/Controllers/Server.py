@@ -58,7 +58,9 @@ class Server:
         elif self.__request_route['route'] == "add_post":
             print("Got this value from route")
             print(self.__request_route)
-            return "You want to post a tweet on the database."
+            from app.Controllers.PostController import PostController
+            controller = PostController()
+            return json.dumps(controller.handle(self.__request_route))
         elif self.__request_route['route'] == "get_user":
             from app.Controllers.UserController import UserController
             controller = UserController()

@@ -33,3 +33,12 @@ class Post:
         except:
             return "Error"
         db.close()
+
+    def commit_post(request):
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        sql = "insert into post(title, description, user_associated, likes) values('"+ request['postTitle'] +"', '"+request['postDescription'] + "', 2, 0);"
+        cursor.execute(sql)
+        db.commit()
+        db.close()
+        return "True"
