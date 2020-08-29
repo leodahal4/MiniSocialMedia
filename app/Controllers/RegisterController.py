@@ -6,6 +6,5 @@ class Register:
         pass
 
     def register(self, credentials):
-        print("Registering user")
         model = LoginRegister()
         return model.register(credentials)

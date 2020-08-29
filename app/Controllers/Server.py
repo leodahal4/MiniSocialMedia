@@ -55,9 +55,11 @@ class Server:
             from app.Controllers.PostController import PostController
             controller = PostController()
             return json.dumps(controller.handle(self.__request_route))
+        elif self.__request_route['route'] == "get_all_posts":
+            from app.Controllers.PostController import PostController
+            controller = PostController()
+            return json.dumps(controller.handle(self.__request_route))
         elif self.__request_route['route'] == "add_post":
-            print("Got this value from route")
-            print(self.__request_route)
             from app.Controllers.PostController import PostController
             controller = PostController()
             return json.dumps(controller.handle(self.__request_route))

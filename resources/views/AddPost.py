@@ -1,4 +1,5 @@
 from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT
+from tkinter import messagebox
 import fontawesome as fa
 from Config.config import Global_all
 from validation.send_to_server import Send
@@ -87,7 +88,6 @@ class AddPost:
             self.__postTitle.delete("1.0", END)
 
     def __callback_for_changeDes(self, *args):
-        print(self.__postDescripton.get("1.0", "end-1c"))
         if self.__postDescripton.get("1.0","end-1c") == "Enter the Description for the post\nOver Here.":
             self.__postDescripton.delete("1.0", END)
 
@@ -107,3 +107,7 @@ class AddPost:
             "postDescription": self.__description
         }
         print(valid.message(commitPost))
+        messagebox.showinfo(
+            title="Success",
+            message="Your Update has been successfully posted."
+        )

@@ -12,7 +12,6 @@ class Check_strength():
                 some of the universal convention used in secure password
         """
         # Check for digits in the password
-        print("entered password is : " + password_info)
         digit_error = re.search(r"\d", password_info) is None
         # Check for uppercase characters in the password
         uppercase_error = re.search(r"[A-Z]", password_info) is None
@@ -34,10 +33,8 @@ class Check_email():
         self.__condition = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
         if(re.search(self.__condition, email)):
-            print("Valid Email")
             return 1
         else:
-            print("Invalid Email")
             return 0
 
 

@@ -9,17 +9,13 @@ class Global_all:
         # try:
         #     import pyglet
         #     from pyglet import font
-        #     print('here')
         #     font.add_file("my_font.ttf")
-        #     print('here')
         #     firacode_font = font.load('Fira Code')
-        #     print('here')
         #
         #     font_family = "Fira Code"
         #
         # except:
         #     try:
-        #         print('except try')
         #         import subprocess
         #         import platform
         #         if platform.system() == "Linux":

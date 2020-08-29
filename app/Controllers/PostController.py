@@ -12,15 +12,20 @@ class PostController:
         return Post.get_posts()
 
     def post(self, request):
-        print("in conroller")
         return Post.commit_post(request)
+
+    def get_one(self, request):
+        return Post.get_post(request['postId'])
 
     def handle(self, request):
         if request['route'] == "get_post":
-            return Post.get_post(request['postId'])
+            return self.get_one(request)
 
         elif request['route'] == "add_post":
             return self.post(request)
+
+        elif request['route'] == "get_all_posts":
+            return self.get()
 
         else:
             print("in post controller\n\nDead End\tRequest Unknown")

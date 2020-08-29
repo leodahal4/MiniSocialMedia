@@ -11,8 +11,6 @@ class Post:
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
-            for row in results:
-                print(row)
 
             return results
         except:
@@ -26,8 +24,6 @@ class Post:
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
-            for row in results:
-                print(row)
 
             return results
         except:

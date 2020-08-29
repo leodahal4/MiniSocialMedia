@@ -205,11 +205,9 @@ class LoginForm(Frame):
                     "password": self.__encrypted_pass
                 }
                 if(valid.message(to_auth) == "True"):
-                    print("logged in")
                     self.master.unbind("<Return>")
                     Routes(master=self.master, source="login", destination="home")
                 else:
-                    print("user not found")
                     self.__error_label.config(text="Credentials donot match")
             except ConnectionRefusedError:
                 messagebox.showerror(

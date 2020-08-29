@@ -6,6 +6,5 @@ class LoginController:
             This class controlles all the login activities / request
     '''
     def check(self, rq_cred):
-        print("[CHECK] checking the credentials")
         model = LoginRegister()
         return model.login(rq_cred)

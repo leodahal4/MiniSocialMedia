@@ -324,7 +324,6 @@ class RegisterForm(Frame):
         elif not valid.length(self.__password_var.get(), 5, "greater") and (
             self.__password_info == self.__re_password_info
         ):
-            print("in hre")
             from Config.check import Check_strength
             valid = Check_strength()
             password_condition = valid.password_strength(self.__password_info)
@@ -420,7 +419,6 @@ class RegisterForm(Frame):
             if reply == "False":
                 self.__user_name_error_label.config(text="Username taken")
             elif reply == "True":
-                print("database updated with provided cred")
                 self.forget_all()
                 Routes(master=self.master, source='register', destination='login')
             elif reply == "Error":

@@ -3,6 +3,7 @@ from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from app.Controllers.PostController import PostController
 import json
 from Config.config import Global_all
+from validation.send_to_server import Send
 
 
 
@@ -18,14 +19,19 @@ class AllPosts:
         self.get_posts()
         self.master = master
         self.__allPosts()
+        try:
+            self.master.scrollbar.destroy()
+        except:
+            pass
+
         self.drawScrollBar()
-        self.canvas.create_line(150, 10, 150, len(self.__posts)*100, dash = (5, 2))
+        self.canvas.create_line(150, 10, 150, len(self.__posts)*100+20, dash = (5, 2))
         self.canvas.pack(fill=BOTH, expand = True)
 
     def drawScrollBar(self):
-        self.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
-        self.scrollbar.place(height=690, x=686, y=0)
-        self.canvas.configure(yscrollcommand = self.scrollbar.set)
+        self.master.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
+        self.master.scrollbar.place(height=690, x=686, y=0)
+        self.canvas.configure(yscrollcommand = self.master.scrollbar.set)
         self.canvas.bind('<Configure>', self.on_configure)
 
     def on_configure(self, event):
@@ -78,6 +84,11 @@ class AllPosts:
     def get_posts(self):
         controller = PostController()
         self.__posts = controller.get()
+        valid = Send()
+        get_post = {
+            "route": "get_all_posts"
+        }
+        self.__post = valid.message(get_post)
 
     def clickThis(self, clickedPostId):
         self.frame.destroy()
@@ -93,11 +104,7 @@ class AllPosts:
         from validation.send_to_server import Send
         valid = Send()
         reply = json.loads(valid.message(getUser))
-        print(reply)
-        print(type(reply))
         for i in reply:
-            print(i)
             for j in i:
-                print(j)
                 reply = j
         return reply
