@@ -1,8 +1,9 @@
-from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT
+from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT, Label
 from tkinter import messagebox
 import fontawesome as fa
 from Config.config import Global_all
 from validation.send_to_server import Send
+from validation.core_validation import CoreValidation
 
 
 class AddPost:
@@ -40,6 +41,15 @@ class AddPost:
         )
         self.backButton.place(x=10,y=5)
 
+        self.addpostTitle = Label(
+            self.frame,
+            font=(self.__font_family, 12, "bold"),
+            width=45,
+            bg=self.__backgorud_color,
+            text="New Post"
+        )
+        self.addpostTitle.place(height=60, x=10, y=-5)
+
         self.__postTitle = Text(
             self.frame,
             relief=FLAT,
@@ -53,7 +63,7 @@ class AddPost:
         )
         self.__postTitle.insert(INSERT, 'Enter the title')
         self.__postTitle.bind("<Button-1>", self.__callback_for_change)
-        self.__postTitle.place(height=60, x=10, y=20)
+        self.__postTitle.place(height=60, x=10, y=50)
 
         self.__postDescripton = Text(
             self.frame,
@@ -68,7 +78,16 @@ class AddPost:
         )
         self.__postDescripton.insert(INSERT, 'Enter the Description for the post\nOver Here.')
         self.__postDescripton.bind("<Button-1>", self.__callback_for_changeDes)
-        self.__postDescripton.place(height=400, x=10, y=100)
+        self.__postDescripton.place(height=400, x=10, y=130)
+
+        self.postError = Label(
+            self.frame,
+            font=(self.__font_family, 8, "bold"),
+            width=45,
+            fg="red",
+            bg=self.__backgorud_color
+        )
+        self.postError.place(height=50,x=130, y=550)
 
         self.__submitButton = Button(
             self.frame,
@@ -81,7 +100,7 @@ class AddPost:
             command=self.__postThis,
             underline=0
         )
-        self.__submitButton.place(height=50, x=350, y=520)
+        self.__submitButton.place(height=50, x=350, y=550)
 
     def __callback_for_change(self, *args):
         if self.__postTitle.get("1.0","end-1c") == "Enter the title":
@@ -98,16 +117,34 @@ class AddPost:
         AllPosts(self.canvas, self.master)
 
     def __postThis(self):
-        self.__title = self.__postTitle.get("1.0","end-1c")
-        self.__description = self.__postDescripton.get("1.0","end-1c")
-        valid = Send()
-        commitPost = {
-            "route": "add_post",
-            "postTitle": self.__title,
-            "postDescription": self.__description
-        }
-        print(valid.message(commitPost))
-        messagebox.showinfo(
-            title="Success",
-            message="Your Update has been successfully posted."
-        )
+        valid = CoreValidation()
+        if valid.isBlank(self.__postTitle.get("1.0", "end-1c"), "Enter the title"):
+            self.__titleError = 1
+        else:
+            self.__titleError = 0
+
+        if valid.isBlank(self.__postDescripton.get("1.0", "end-1c"), "Enter the Description for the post\nOver Here."):
+            self.__descError = 1
+        else:
+            self.__descError = 0
+
+        print(f"value of conditions {self.__titleError}, {self.__descError}")
+        notValid = True if(self.__descError or self.__titleError) else False
+
+        if notValid:
+            self.postError.config(text="Fill all the Text Boxes")
+        else:
+            self.postError.config(text="")
+            self.__title = self.__postTitle.get("1.0","end-1c")
+            self.__description = self.__postDescripton.get("1.0","end-1c")
+            valid = Send()
+            commitPost = {
+                "route": "add_post",
+                "postTitle": self.__title,
+                "postDescription": self.__description
+            }
+            print(valid.message(commitPost))
+            messagebox.showinfo(
+                title="Success",
+                message="Your Update has been successfully posted."
+            )
