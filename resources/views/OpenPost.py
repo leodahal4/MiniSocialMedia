@@ -31,7 +31,7 @@ class OpenPost:
             relief='flat'
         )
         self.backButton.place(x=10,y=5)
-        self.frame = Frame(self.canvas)
+        self.frame = Frame(self.canvas, bg="white")
         self.canvas.create_window(
             (160,0),
             window=self.frame,
@@ -81,7 +81,6 @@ class OpenPost:
                 self.frame,
                 text=textD + "\n\n" + user,
                 font=(self.__font_family, 10),
-                # font="-size 10",
                 pady=50,
                 bg="white",
                 width="300"
@@ -90,18 +89,23 @@ class OpenPost:
 
         self.likeButton = Button(
             self.frame,
-            text=fa.icons['thumbs-up'] + " \t 0",
+            text=fa.icons['thumbs-up'] + " \t " + str(i[4]),
             bg="white",
+            command=self.likeThis,
+            relief="flat",
             width="10"
         )
         self.likeButton.pack(side=LEFT)
+
         self.comment = Button(
             self.frame,
             text=fa.icons['comment-alt'] + " \t 0",
             bg="white",
-            width="10"
         )
-        self.comment.pack()
+        self.comment.pack( side = RIGHT)
+
+    def likeThis(self):
+        print("Like this post")
 
     def get_post(self):
         valid = Send()
