@@ -25,8 +25,12 @@ class AllPosts:
             pass
 
         self.drawScrollBar()
-        self.canvas.create_line(150, 10, 150, len(self.__posts)*100+20, dash = (5, 2))
-        self.canvas.pack(fill=BOTH, expand = True)
+        if len(self.__posts) > 7:
+            self.canvas.create_line(150, 10, 150, len(self.__posts)*100+20, dash = (5, 2))
+            self.canvas.pack(fill=BOTH, expand = True)
+        else:
+            self.canvas.create_line(150, 10, 150, 690, dash = (5, 2))
+            self.canvas.pack(fill=BOTH, expand = True)
 
     def drawScrollBar(self):
         self.master.scrollbar = Scrollbar(self.master, command=self.canvas.yview)
