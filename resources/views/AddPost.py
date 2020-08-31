@@ -141,7 +141,8 @@ class AddPost:
             commitPost = {
                 "route": "add_post",
                 "postTitle": self.__title,
-                "postDescription": self.__description
+                "postDescription": self.__description,
+                "userId": self.master.user[0]
             }
             print(valid.message(commitPost))
             messagebox.showinfo(

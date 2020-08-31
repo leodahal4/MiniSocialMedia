@@ -12,12 +12,14 @@ class LoginRegister:
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
+            print("data fetched from server is: ", end="\t")
+            print(results)
             if results:
-                return "True"
+                return results
             else:
                 return "False"
         except:
-            print("error on login model")
+            return "False"
         db.close()
 
     def register(self, credentials):

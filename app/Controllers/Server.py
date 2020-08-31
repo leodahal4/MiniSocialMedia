@@ -46,7 +46,7 @@ class Server:
         if self.__request_route['route'] == "login":
             from app.Controllers.LoginController import LoginController
             controller = LoginController()
-            return controller.check(self.__request_route)
+            return json.dumps(controller.check(self.__request_route))
         elif self.__request_route['route'] == "register":
             from app.Controllers.RegisterController import Register
             controller = Register()
@@ -67,6 +67,10 @@ class Server:
             from app.Controllers.UserController import UserController
             controller = UserController()
             return json.dumps(controller.get_user(self.__request_route['userId']))
+        elif self.__request_route['route'] == "like_post":
+            from app.Controllers.PostController import PostController
+            controller = PostController()
+            return json.dumps(controller.handle(self.__request_route))
         else:
             return "Request is unknown"
 

@@ -106,6 +106,17 @@ class OpenPost:
 
     def likeThis(self):
         print("Like this post")
+        valid = Send()
+        get_post = {
+            "route": "like_post",
+            "postId": self.clickedPostId,
+            "userId": self.master.user[0]
+        }
+        self.__message = json.loads(valid.message(get_post))
+        if self.__message == "False":
+            print("Post already liked")
+        else:
+            print("Post liked")
 
     def get_post(self):
         valid = Send()

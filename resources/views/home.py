@@ -61,7 +61,7 @@ class Home(Frame):
         self.__img.place(x=10, y=50)
 
         # Username
-        self.__user_name = "Leo"
+        self.__user_name = self.master.user[1].capitalize()
         self.app_title = Label(
             self.master,
             bd=1,

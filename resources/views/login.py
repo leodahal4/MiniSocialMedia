@@ -1,14 +1,15 @@
+# from validation.login_validation import Validate
 from Config.config import Global_all
 from resources.views.clear_widgets import Clear
 from routes import index
+from routes.index import Routes
 from tkinter import Frame, StringVar, Entry, Button, END, Label, FLAT
 from tkinter import GROOVE, RIDGE, Tk, messagebox
 from validation.core_validation import CoreValidation
-# from validation.login_validation import Validate
 from validation.send_to_server import Send
 import fontawesome as fa
-from routes.index import Routes
 import hashlib
+import json
 
 
 class LoginForm(Frame):
@@ -204,8 +205,12 @@ class LoginForm(Frame):
                     "username": self.__user_name.get(),
                     "password": self.__encrypted_pass
                 }
-                if(valid.message(to_auth) == "True"):
+                message = valid.message(to_auth)
+                message = json.loads(message)
+                if(type(message) == list):
                     self.master.unbind("<Return>")
+                    for i in message:
+                        self.master.user = i
                     Routes(master=self.master, source="login", destination="home")
                 else:
                     self.__error_label.config(text="Credentials donot match")
