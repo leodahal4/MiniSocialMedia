@@ -29,12 +29,13 @@ directory under app directory.
 > user can view specific post  
 > Navbar design for messages, new post and user image
 > how many likes already on the post?  
+> user can like the post  
 
 ### not done
 > user can view specific posts but not the comments associated with those post  
 > user cannot comment  
-> user cannnot like the post  
 > UserController for gettting user details
+> User cannot add friends
 
 
 # Updates will be coming soon.
