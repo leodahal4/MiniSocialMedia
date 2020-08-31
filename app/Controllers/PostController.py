@@ -30,8 +30,14 @@ class PostController:
         elif request['route'] == "like_post":
             return self.likeThis(request)
 
+        elif request['route'] == "check_like_post":
+            return self.checkThis(request)
+
         else:
             print("in post controller\n\nDead End\tRequest Unknown")
 
     def likeThis(self, request):
         return Post.likeThis(request['postId'], request['userId'])
+
+    def checkThis(self, request):
+        return Post.checkThis(request['postId'], request['userId'])

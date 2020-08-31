@@ -71,6 +71,10 @@ class Server:
             from app.Controllers.PostController import PostController
             controller = PostController()
             return json.dumps(controller.handle(self.__request_route))
+        elif self.__request_route['route'] == "check_like_post":
+            from app.Controllers.PostController import PostController
+            controller = PostController()
+            return json.dumps(controller.handle(self.__request_route))
         else:
             return "Request is unknown"
 

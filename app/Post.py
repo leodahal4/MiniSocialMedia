@@ -43,19 +43,53 @@ class Post:
     def likeThis(postId, userId):
         db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
-        sql = "SELECT * FROM likes where post_id='" + str(postId) + "' and user_id='" + str(userId) +"';"
-        cursor.execute(sql)
-        try:
-            results = cursor.fetchall()
-            print("data fetched from server is: ", end="\t")
-            print(results)
-            if results:
-                return "False"
-            else:
-                sql = "insert into  insert into likes(user_id, post_id) values("+ str(userId) +","+ str(postId) +");"
-                cursor.execute(sql)
-                db.commit()
-                return "True"
-        except:
+        sql = "SELECT * FROM likes where post_id=%s and user_id=%s;"
+        values = (str(postId), str(userId))
+        cursor.execute(sql, values)
+        results = cursor.fetchall()
+        print("data fetched from server is: ", end="\t")
+        print(results)
+        if results:
             return "False"
+        else:
+            sql = "insert into likes(user_id, post_id) values(%s, %s);"
+            values = (str(userId), str(postId))
+            cursor.execute(sql, values)
+            db.commit()
+
+            # increase the likes number in post table
+            sql = "select likes from post where id='"+ str(postId) +"';"
+            cursor.execute(sql)
+            likes = cursor.fetchall()
+            db.commit()
+            print("likes fetched is ", end="\t")
+            print(likes)
+            for i in likes:
+                print(likes)
+                newlikes = i[0]
+                print(newlikes)
+
+            newlikes += 1
+            print(likes)
+            sql = "update post set likes=%s where id=%s;"
+            values = (str(newlikes), str(postId))
+            cursor.execute(sql, values)
+            db.commit()
+
+            return "True"
+        db.close()
+
+    def checkThis(postId, userId):
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        sql = "SELECT * FROM likes where post_id=%s and user_id=%s;"
+        values = (str(postId), str(userId))
+        cursor.execute(sql, values)
+        results = cursor.fetchall()
+        print("data fetched from server  to check if liked is: ", end="\t")
+        print(results)
+        if results:
+            return "False"
+        else:
+            return "True"
         db.close()

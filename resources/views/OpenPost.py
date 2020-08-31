@@ -1,4 +1,5 @@
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
+from tkinter import DISABLED, NORMAL
 from validation.send_to_server import Send
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 import json
@@ -87,16 +88,8 @@ class OpenPost:
             )
             l.pack()
 
-        self.likeButton = Button(
-            self.frame,
-            text=fa.icons['thumbs-up'] + " \t " + str(i[4]),
-            bg="white",
-            command=self.likeThis,
-            relief="flat",
-            width="10"
-        )
-        self.likeButton.pack(side=LEFT)
-
+        self.likeCount = i[4]
+        self.drawLikeButton()
         self.comment = Button(
             self.frame,
             text=fa.icons['comment-alt'] + " \t 0",
@@ -104,8 +97,38 @@ class OpenPost:
         )
         self.comment.pack( side = RIGHT)
 
+    def checkThisLike(self):
+        valid = Send()
+        get_post = {
+            "route": "check_like_post",
+            "postId": self.clickedPostId,
+            "userId": self.master.user[0]
+        }
+        self.__message = json.loads(valid.message(get_post))
+        if self.__message == "False":
+            return True
+        else:
+            return False
+
+    def drawLikeButton(self):
+        self.liked = self.checkThisLike()
+        if self.liked:
+            self.newstate = DISABLED
+        else:
+            self.newstate = NORMAL
+
+        self.likeButton = Button(
+            self.frame,
+            text=fa.icons['thumbs-up'] + " \t " + str(self.likeCount),
+            bg="white",
+            command=self.likeThis,
+            relief="flat",
+            width="10",
+            state = self.newstate
+        )
+        self.likeButton.pack(side=LEFT)
+
     def likeThis(self):
-        print("Like this post")
         valid = Send()
         get_post = {
             "route": "like_post",
@@ -113,10 +136,10 @@ class OpenPost:
             "userId": self.master.user[0]
         }
         self.__message = json.loads(valid.message(get_post))
-        if self.__message == "False":
-            print("Post already liked")
-        else:
-            print("Post liked")
+        if self.__message != "False":
+            self.likeButton.destroy()
+            self.likeCount += 1
+            self.drawLikeButton()
 
     def get_post(self):
         valid = Send()

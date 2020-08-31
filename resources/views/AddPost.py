@@ -1,9 +1,9 @@
+from Config.config import Global_all
 from tkinter import Frame, Entry, FLAT, StringVar, END, Button, Text, INSERT, Label
 from tkinter import messagebox
-import fontawesome as fa
-from Config.config import Global_all
-from validation.send_to_server import Send
 from validation.core_validation import CoreValidation
+from validation.send_to_server import Send
+import fontawesome as fa
 
 
 class AddPost:
