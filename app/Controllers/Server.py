@@ -67,6 +67,10 @@ class Server:
             from app.Controllers.UserController import UserController
             controller = UserController()
             return json.dumps(controller.get_user(self.__request_route['userId']))
+        elif self.__request_route['route'] == "get_users":
+            from app.Controllers.UserController import UserController
+            controller = UserController()
+            return json.dumps(controller.get_users(self.__request_route['userId']))
         elif self.__request_route['route'] == "like_post":
             from app.Controllers.PostController import PostController
             controller = PostController()

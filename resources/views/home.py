@@ -103,6 +103,16 @@ class Home(Frame):
             bg="white"
         )
         self.messagesButton.place(x=0, y=250)
+        self.addFriend = Button(
+            self.master,
+            relief='flat',
+            text=fa.icons["users"] + "\tFriend  ",
+            width=13,
+            font=(self.__font_family, 11),
+            command=self.friendsView,
+            bg="white"
+        )
+        self.addFriend.place(x=0, y=280)
 
         self.logoutButton = Button(
             self.master,
@@ -115,6 +125,12 @@ class Home(Frame):
             width=11,
         )
         self.logoutButton.place(x=0, y=650)
+
+    def friendsView(self):
+        for child in self.canvas.winfo_children():
+            child.destroy()
+        from resources.views.Friends import FriendsView
+        FriendsView(self.canvas, self.master)
 
     def logout(self):
         self.forget_all()

@@ -14,3 +14,12 @@ class User:
         results = cursor.fetchall()
         db.close()
         return results
+
+    def getUsers(self):
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        sql = "select id, username, fname, lname from user;"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        db.close()
+        return results
