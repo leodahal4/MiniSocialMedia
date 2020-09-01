@@ -1,6 +1,7 @@
 from Config.config import Global_all
-from tkinter import Frame, Entry, StringVar, END, Label, Button, LEFT, RIGHT
+from tkinter import Frame, Entry, StringVar, END, Label, Button, LEFT, RIGHT, messagebox
 from validation.send_to_server import Send
+import fontawesome as fa
 import json
 
 
@@ -63,7 +64,6 @@ class FriendsView:
         f = Frame(self.frame, height=1, width=700, bg="black")
         f.place(x=0, y=80)
         self.allUsers()
-
     def search_the_query(self, *args):
         print(args)
 
@@ -72,7 +72,7 @@ class FriendsView:
         self.totalUsers = len(self.__all_users)
         list_frame = Frame(self.frame)
         list_frame.config(borderwidth=1, width=650, bg=self.__backgorud_color)
-        list_frame.place(height=250*(self.totalUsers / 6), x=0, y=120)
+        list_frame.place(height=450*(self.totalUsers / 6), x=0, y=120)
         index = 0
         for user in self.__all_users:
             name = Button(
@@ -87,21 +87,50 @@ class FriendsView:
                 list_frame,
                 relief="flat",
                 bg=self.__backgorud_color,
-                text="Add"
+                command = lambda userId=user[0] : self.sendRequest(userId),
+                text=fa.icons["plus-square"] + "  Add"
             )
             if index == 0:
                 name.place(x=0, y=0)
-                addFriend.place(x=180, y = 5)
+                addFriend.place(x=100, y =60)
             elif index == 1:
                 name.place(x=250, y=0)
-                addFriend.place(x=430, y = 5)
+                addFriend.place(x=350, y = 60)
             elif (index % 2 == 0):
-                name.place(x=250, y=42*index)
-                addFriend.place(x=430, y = 45*index)
+                xIndex = 250
+                yIndex = 60*index
+                name.place(x=xIndex, y=yIndex)
+                addFriend.place(x = xIndex+100, y = yIndex+60)
             else:
-                name.place(x=0, y=40*(index-1))
-                addFriend.place(x=180, y = 45*(index-1))
+                xIndex = 0
+                yIndex = 60*(index - 1)
+                name.place(x=xIndex, y=yIndex)
+                addFriend.place(x=xIndex+100, y = yIndex+60)
             index += 1
+
+    def sendRequest(self, requestTo):
+        valid = Send()
+        msg = {
+            "route": "send_request",
+            "add": requestTo,
+            "userId": self.master.user[0]
+        }
+        msg = json.loads(valid.message(msg))
+        if msg == "True":
+            messagebox.showinfo(
+                title="Success",
+                message="Friend Request sent"
+            )
+        else:
+            pass
+
+    def getFriends(self):
+        valid = Send()
+        msg = {
+            "route": "get_friends",
+            "userId": self.master.user[0]
+        }
+        msg = json.loads(valid.message(msg))
 
     def fetchUsers(self):
         valid = Send()

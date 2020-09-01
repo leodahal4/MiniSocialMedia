@@ -79,6 +79,16 @@ class Server:
             from app.Controllers.PostController import PostController
             controller = PostController()
             return json.dumps(controller.handle(self.__request_route))
+
+        elif self.__request_route['route'] == "send_request":
+            from app.Controllers.FriendsController import FriendsController
+            controller = FriendsController()
+            return json.dumps(controller.handle(self.__request_route))
+
+        elif self.__request_route['route'] == "get_friends":
+            from app.Controllers.FriendsController import FriendsController
+            controller = FriendsController()
+            return json.dumps(controller.handle(self.__request_route))
         else:
             return "Request is unknown"
 
