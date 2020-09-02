@@ -84,6 +84,10 @@ class Server:
             from app.Controllers.FriendsController import FriendsController
             controller = FriendsController()
             return json.dumps(controller.handle(self.__request_route))
+        elif self.__request_route['route'] == "accept_request":
+            from app.Controllers.FriendsController import FriendsController
+            controller = FriendsController()
+            return json.dumps(controller.handle(self.__request_route))
 
         elif self.__request_route['route'] == "get_friends":
             from app.Controllers.FriendsController import FriendsController

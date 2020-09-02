@@ -17,5 +17,31 @@ class Friends:
             db.close()
             return "False"
 
-    def get_friends(self):
-        pass
+    def accept_request(self, request):
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        try:
+            sql = "update friends set request=1 where origin_user=%s and destination_user=%s"
+            values = (str(request['add']), str(request['userId']))
+            cursor.execute(sql, values)
+            db.commit()
+            db.close()
+            return "True"
+        except:
+            db.close()
+            return "False"
+
+    def get_friends(self, request):
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        try:
+            sql = "select * from friends where origin_user=%s or destination_user=%s"
+            values = (str(request['userId']), str(request['userId']))
+            cursor.execute(sql, values)
+            friends = cursor.fetchall()
+            db.commit()
+            db.close()
+            return friends
+        except:
+            db.close()
+            return "False"

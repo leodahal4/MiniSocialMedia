@@ -1,5 +1,6 @@
 from Config.config import Global_all
 from tkinter import Frame, Entry, StringVar, END, Label, Button, LEFT, RIGHT, messagebox
+from tkinter import NORMAL, DISABLED
 from validation.send_to_server import Send
 import fontawesome as fa
 import json
@@ -63,6 +64,7 @@ class FriendsView:
 
         f = Frame(self.frame, height=1, width=700, bg="black")
         f.place(x=0, y=80)
+        self.getFriends()
         self.allUsers()
     def search_the_query(self, *args):
         print(args)
@@ -70,25 +72,27 @@ class FriendsView:
     def allUsers(self):
         self.__all_users = self.fetchUsers()
         self.totalUsers = len(self.__all_users)
-        list_frame = Frame(self.frame)
-        list_frame.config(borderwidth=1, width=650, bg=self.__backgorud_color)
-        list_frame.place(height=450*(self.totalUsers / 6), x=0, y=120)
+        self.allUsersFrame = Frame(self.frame)
+        self.allUsersFrame.config(borderwidth=1, width=650, bg=self.__backgorud_color)
+        self.allUsersFrame.place(height=450*(self.totalUsers / 6), x=0, y=120)
         index = 0
         for user in self.__all_users:
             name = Button(
-                list_frame,
+                self.allUsersFrame,
                 font=(self.__font_family, 12),
                 width=15,
                 relief="flat",
                 bg=self.__backgorud_color,
                 text=user[2] + " " + user[3] + "\n\t" + user[1]
             )
+            self.relation = self.checkFriend(user[0])
             addFriend = Button(
-                list_frame,
+                self.allUsersFrame,
                 relief="flat",
                 bg=self.__backgorud_color,
-                command = lambda userId=user[0] : self.sendRequest(userId),
-                text=fa.icons["plus-square"] + "  Add"
+                command = lambda userId=user[0], relation=self.relation : self.process(userId, relation),
+                text=self.relation,
+                state=DISABLED if ("Sent" in self.relation) else NORMAL
             )
             if index == 0:
                 name.place(x=0, y=0)
@@ -108,21 +112,44 @@ class FriendsView:
                 addFriend.place(x=xIndex+100, y = yIndex+60)
             index += 1
 
-    def sendRequest(self, requestTo):
-        valid = Send()
-        msg = {
-            "route": "send_request",
-            "add": requestTo,
-            "userId": self.master.user[0]
-        }
-        msg = json.loads(valid.message(msg))
-        if msg == "True":
-            messagebox.showinfo(
-                title="Success",
-                message="Friend Request sent"
-            )
+    def process(self, requestTo, relation):
+        self.allUsersFrame.destroy()
+        print("IN procress method")
+        print(relation)
+        if "Sent" in relation:
+            pass
+        elif "Accept" in relation:
+            valid = Send()
+            msg = {
+                "route": "accept_request",
+                "add": requestTo,
+                "userId": self.master.user[0]
+            }
+            msg = json.loads(valid.message(msg))
+            # if msg == "True":
+            #     messagebox.showinfo(
+            #         title="Success",
+            #         message="Request Accepted"
+            #     )
+        elif "Add" in relation:
+            print("sending request msg")
+            valid = Send()
+            msg = {
+                "route": "send_request",
+                "add": requestTo,
+                "userId": self.master.user[0]
+            }
+            msg = json.loads(valid.message(msg))
+            # if msg == "True":
+            #     messagebox.showinfo(
+            #         title="Success",
+            #         message="Friend Request sent"
+            #     )
+            #     self.relation = "Sent"
         else:
             pass
+        self.frame.destroy()
+        self.create()
 
     def getFriends(self):
         valid = Send()
@@ -130,7 +157,25 @@ class FriendsView:
             "route": "get_friends",
             "userId": self.master.user[0]
         }
-        msg = json.loads(valid.message(msg))
+        self.friends = json.loads(valid.message(msg))
+
+    def checkFriend(self, friendId):
+        for people in self.friends:
+            destination_user = people[1]
+            origin_user = people[0]
+            request = people[2]
+            print(request)
+            print(type(request))
+
+            if friendId == destination_user and self.master.user[0] == origin_user:
+                return fa.icons["check-circle"] + "  Sent"
+            elif friendId == origin_user and self.master.user[0] == destination_user:
+                if request:
+                    return fa.icons["check-circle"] + "  Friends"
+                else:
+                    return fa.icons["check-circle"] + "  Accept"
+        else:
+            return fa.icons["plus-square"] + "  Add"
 
     def fetchUsers(self):
         valid = Send()
