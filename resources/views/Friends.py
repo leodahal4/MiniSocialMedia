@@ -15,6 +15,8 @@ class FriendsView:
         self.__font_size = returned[1]
         self.__weight = returned[2]
         self.__backgorud_color = returned[3]
+        self.__all_users = self.fetchUsers()
+        self.__backup = self.__all_users
         self.create()
 
     def create(self):
@@ -34,7 +36,7 @@ class FriendsView:
             font=(self.__font_family, 12, "bold"),
             width=45,
             bg=self.__backgorud_color,
-            text="Connect People"
+            text="Connect with People"
         )
         self.frameTitle.place(height=60, x=10, y=-20)
         self.searchquery = StringVar()
@@ -47,7 +49,7 @@ class FriendsView:
             width=35
         )
         # self.search_name.pack()
-        self.search_name.insert(0, 'Enter the name')
+        self.search_name.insert(0, 'Enter the username')
         self.search_name.bind("<Key>", self.search_the_query)
         self.search_name.bind("<Button-1>", lambda x: self.search_name.delete(0, END)),
         self.search_name.place(height=35, x=10, y=30)
@@ -66,15 +68,33 @@ class FriendsView:
         f.place(x=0, y=80)
         self.getFriends()
         self.allUsers()
+
     def search_the_query(self, *args):
-        print(args)
+        '''search_the_query(self, *args):
+            self: method first argument
+            *args: all the key events generated while typing the name
+
+            This method lists all the users of the specific name typed on the
+            search bar of the view.
+
+            This method uses the list comprehension method to list down all the
+            users of the name.
+        '''
+        search_item = self.searchquery.get()
+        if search_item == "":
+            self.allUsersFrame.destroy()
+            self.__all_users = self.__backup
+            self.allUsers()
+        else:
+            self.allUsersFrame.destroy()
+            self.__all_users = [user for user in self.__backup if search_item in user[1]]
+            self.allUsers()
 
     def allUsers(self):
-        self.__all_users = self.fetchUsers()
         self.totalUsers = len(self.__all_users)
         self.allUsersFrame = Frame(self.frame)
         self.allUsersFrame.config(borderwidth=1, width=650, bg=self.__backgorud_color)
-        self.allUsersFrame.place(height=450*(self.totalUsers / 6), x=0, y=120)
+        self.allUsersFrame.place(height=450*(self.totalUsers / 5), x=0, y=120)
         index = 0
         for user in self.__all_users:
             name = Button(
@@ -114,8 +134,6 @@ class FriendsView:
 
     def process(self, requestTo, relation):
         self.allUsersFrame.destroy()
-        print("IN procress method")
-        print(relation)
         if "Sent" in relation:
             pass
         elif "Accept" in relation:
@@ -132,7 +150,6 @@ class FriendsView:
             #         message="Request Accepted"
             #     )
         elif "Add" in relation:
-            print("sending request msg")
             valid = Send()
             msg = {
                 "route": "send_request",
@@ -164,8 +181,6 @@ class FriendsView:
             destination_user = people[1]
             origin_user = people[0]
             request = people[2]
-            print(request)
-            print(type(request))
 
             if friendId == destination_user and self.master.user[0] == origin_user:
                 return fa.icons["check-circle"] + "  Sent"
