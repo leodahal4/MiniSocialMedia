@@ -98,6 +98,7 @@ class Home(Frame):
             self.master,
             relief='flat',
             text=fa.icons["envelope"] + "\tMessages",
+            command=self.messagesView,
             width=13,
             font=(self.__font_family, 11),
             bg="white"
@@ -146,3 +147,9 @@ class Home(Frame):
         for child in self.canvas.winfo_children():
             child.destroy()
         AllPosts(self.canvas, self.master)
+
+    def messagesView(self):
+        for child in self.canvas.winfo_children():
+            child.destroy()
+        from resources.views.Message import Message
+        Message(self.canvas, self.master)
