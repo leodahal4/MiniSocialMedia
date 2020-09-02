@@ -16,6 +16,7 @@ class Message:
         self.__weight = returned[2]
         self.__backgorud_color = returned[3]
         self.__primary_color = "blue"
+        self.__all_users = self.fetchUsers()
         self.create()
 
     def create(self):
@@ -71,6 +72,7 @@ class Message:
             bd=0
         )
         self.toEntry.insert(0, "Enter Username")
+        self.toEntry.bind("<Key>", self.search_the_query)
         self.toEntry.bind("<Button-1>", self.__callback_for_change)
         self.toEntry.place(height=50, x=70, y=0)
 
@@ -128,6 +130,7 @@ class Message:
 
     def __callback_for_changeMessage(self, *args):
         if self.messageText.get("1.0","end-1c") == "Enter Message":
+            self.search_the_query()
             self.messageText.delete("1.0", END)
 
     def openNewMessage(self):
@@ -135,12 +138,40 @@ class Message:
         self.newMessages()
 
     def sendMessage(self):
+        if self.toUserId:
+            valid = Send()
+            msg = {
+                "route": "send_message",
+                "messageContent": self.messageText.get("1.0","end-1c"),
+                "toUser": self.toWhom.get(),
+                "fromUser": self.master.user[0]
+            }
+            self.response = json.loads(valid.message(msg))
+            print(self.response)
+        else:
+            print('user with that username not found')
+
+    def search_the_query(self, *args):
+        '''search_the_query(self, *args):
+            self: method first argument
+            *args: all the key events generated while typing the name of the user
+
+            This method lists all the users of the specific name typed on the
+            search bar of the view.
+
+            This method uses the list comprehension method to list down all the
+            users of the name.
+        '''
+        search_item = self.toWhom.get()
+        if search_item != "":
+            self.toUserId = [user for user in self.__all_users if search_item == user[1]]
+            if self.toUserId:
+                self.toUserId = self.toUserId[0][0]
+
+    def fetchUsers(self):
         valid = Send()
-        msg = {
-            "route": "send_message",
-            "messageContent": self.messageText.get("1.0","end-1c"),
-            "toUser": self.toWhom.get(),
-            "fromUser": self.master.user[0]
+        get_post = {
+            "route": "get_users",
+            "userId": self.master.user[0]
         }
-        self.response = json.loads(valid.message(msg))
-        print(self.response)
+        return json.loads(valid.message(get_post))
