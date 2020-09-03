@@ -1,6 +1,6 @@
 from Config.config import Global_all
 from tkinter import Frame, Label, Scrollbar, Canvas, Button, Entry, StringVar
-from tkinter import Text, INSERT, END
+from tkinter import Text, INSERT, END, BOTH
 import fontawesome as fa
 from validation.send_to_server import Send
 import json
@@ -132,13 +132,21 @@ class Message:
         )
         newMessage.place(x = 0, y = 0)
         self.getMessages()
+        self.pickUnique()
 
-        for user in self.__allMessages:
+        initialy = 20
+        times = 1
+        for user in self.__oldmessage:
             messageButton = Button(
                 self.lastMessages,
+                bg=self.__backgorud_color,
+                width=8,
+                relief="flat",
+                font=(self.__font_family, 12),
                 text=self.getUser(user[2] if user[2] != self.master.user[0] else user[3])
             )
-            messageButton.place(x=0, y=20)
+            messageButton.place(x=0, y=initialy + times*30)
+            times += 1
 
     def __callback_for_change(self, *args):
         if self.toEntry.get() == "Enter Username":
@@ -190,8 +198,6 @@ class Message:
             if self.toUserId:
                 self.toUserId = self.toUserId[0][0]
 
-            print(self.toUserId)
-
     def fetchUsers(self):
         valid = Send()
         get_post = {
@@ -219,3 +225,23 @@ class Message:
             for j in i:
                 reply = j
         return reply
+
+    def pickUnique(self):
+        self.__oldmessage = []
+        self.allindex = []
+        for user in self.__allMessages:
+            self.__oldmessage.append(self.__allMessages[0])
+            self.allindex.append([user[2],user[3]])
+            break
+        for user in self.__allMessages:
+            for index in self.allindex:
+                if user[2] not in index or user[3] not in index:
+                    append = True
+                else:
+                    append = False
+
+            if append:
+                self.allindex.append([user[2], user[3]])
+                self.__oldmessage.append(user)
+            else:
+                pass
