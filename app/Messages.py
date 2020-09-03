@@ -43,3 +43,16 @@ class Messages:
             print("error")
         db.commit()
         db.close()
+
+    def setSeen(self, request):
+        fromUser = request['fromUser']
+        toUser = request['toUser']
+
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        sql = "update message set seen=1 where toUser=%s and fromUser=%s"
+        values = (toUser, fromUser)
+        cursor.execute(sql, values)
+        db.commit()
+        db.close()
+        return "True"

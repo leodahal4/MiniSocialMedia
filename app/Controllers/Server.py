@@ -106,6 +106,11 @@ class Server:
             from app.Controllers.MessageController import MessageConntroller
             controller = MessageConntroller()
             return json.dumps(controller.handle(self.__request_route))
+        elif self.__request_route['route'] == "set_seen_message":
+            print("in server route")
+            from app.Controllers.MessageController import MessageConntroller
+            controller = MessageConntroller()
+            return json.dumps(controller.handle(self.__request_route))
         else:
             return "Request is unknown"
 

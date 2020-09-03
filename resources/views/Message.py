@@ -112,7 +112,7 @@ class Message:
             font=(self.__font_family, 12),
             relief="flat",
             bg=self.__backgorud_color,
-            command=self.sendMessage
+            command=lambda x="search": self.sendMessage(x)
         )
         self.sendButton.place(x=300, y=320)
 
@@ -179,29 +179,6 @@ class Message:
     def openNewMessage(self):
         eval(self.activeFrame).destroy()
         self.newMessages()
-
-    def sendMessage(self):
-        self.search_the_query()
-        if self.toUserId != self.master.user[0]:
-            if self.toUserId:
-                valid = Send()
-                msg = {
-                    "route": "send_message",
-                    "messageContent": self.messageText.get("1.0","end-1c"),
-                    "fromUser": self.master.user[0],
-                    "toUser": self.toUserId
-                }
-                self.response = json.loads(valid.message(msg))
-                self.newMessage.destroy()
-                self.newMessages()
-                self.sendSuccess.config(text="Send Success")
-                print(self.response)
-            else:
-                self.toEntry.config(highlightcolor="red")
-                self.toEntryError.config(text="Username not found")
-        else:
-            self.toEntry.config(highlightcolor="red")
-            self.toEntryError.config(text="Send message to self?\nMay be next Update")
 
     def search_the_query(self, *args):
         '''search_the_query(self, *args):
@@ -272,6 +249,7 @@ class Message:
         eval(self.activeFrame).destroy()
         self.activeFrame = "self.conversationFrame"
         conversation = self.getConversation(userId)
+        self.setSeen(userId)
         self.conversationFrame = Frame(
             self.frame,
             height = 380,
@@ -290,7 +268,7 @@ class Message:
                     display = str(messages[1][:27]) + "\n" + str(messages[1][27:]) + fill_gaps*" "
                 messageLabel = Label(
                     self.conversationFrame,
-                    fg='blue',
+                    fg="black",
                     text=display,
                     font=(self.__font_family, 9)
                 )
@@ -304,12 +282,12 @@ class Message:
                     display = str(messages[1][:21]) + "\n" + str(messages[1][21:]) + fill_gaps*" "
                 messageLabel = Label(
                     self.conversationFrame,
-                    fg='red',
+                    fg="black",
                     font=(self.__font_family, 9),
                     text=display
                 )
                 messageLabel.place(x=placeX+220, y=placeY)
-                placeY += 20
+                placeY += 40 if "\n" in display else 20
         self.message = StringVar()
         messageEntry = Entry(
             self.conversationFrame,
@@ -327,7 +305,8 @@ class Message:
             relief="flat",
             width=5,
             activeforeground="blue",
-            underline=0
+            underline=0,
+            command=lambda toUser=userId: self.sendMessage(toUser)
         )
         sendButton.place(height=40, x=305, y=330)
 
@@ -340,3 +319,47 @@ class Message:
             "userId": self.master.user[0]
         }
         return json.loads(valid.message(get_message))
+
+    def sendMessage(self, toUser):
+        if toUser == "search":
+            self.search_the_query()
+            if self.toUserId != self.master.user[0]:
+                if self.toUserId:
+                    valid = Send()
+                    msg = {
+                        "route": "send_message",
+                        "messageContent": self.messageText.get("1.0","end-1c"),
+                        "fromUser": self.master.user[0],
+                        "toUser": self.toUserId
+                    }
+                    self.response = json.loads(valid.message(msg))
+                    self.newMessage.destroy()
+                    self.newMessages()
+                    self.sendSuccess.config(text="Send Success")
+                    print(self.response)
+                else:
+                    self.toEntry.config(highlightcolor="red")
+                    self.toEntryError.config(text="Username not found")
+            else:
+                self.toEntry.config(highlightcolor="red")
+                self.toEntryError.config(text="Send message to self?\nMay be next Update")
+        else:
+            valid = Send()
+            msg = {
+                "route": "send_message",
+                "messageContent": self.message.get(),
+                "fromUser": self.master.user[0],
+                "toUser": toUser
+            }
+            self.response = json.loads(valid.message(msg))
+            self.openMessage(toUser)
+            print(self.response)
+
+    def setSeen(self, fromUser):
+        valid = Send()
+        set_seen = {
+            "route": "set_seen_message",
+            "fromUser": fromUser,
+            "toUser": self.master.user[0]
+        }
+        print(json.loads(valid.message(set_seen)))

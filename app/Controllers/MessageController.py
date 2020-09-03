@@ -16,3 +16,6 @@ class MessageConntroller:
         elif request['route'] == "get_message":
             controller = Messages()
             return controller.getMessage(request)
+        elif request['route'] == "set_seen_message":
+            controller = Messages()
+            return controller.setSeen(request)
