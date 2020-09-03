@@ -269,6 +269,69 @@ class Message:
                 pass
 
     def openMessage(self, userId):
+        eval(self.activeFrame).destroy()
+        self.activeFrame = "self.conversationFrame"
+        conversation = self.getConversation(userId)
+        self.conversationFrame = Frame(
+            self.frame,
+            height = 380,
+            width = 380,
+            bd=1
+        )
+        self.conversationFrame.place(x = 130, y=100)
+        placeX = 0
+        placeY = 0
+        for messages in conversation:
+            if messages[2] != self.master.user[0]:
+                if len(messages[1]) < 25:
+                    display = messages[1]
+                else:
+                    fill_gaps = 28 - len(messages[1][27:])
+                    display = str(messages[1][:27]) + "\n" + str(messages[1][27:]) + fill_gaps*" "
+                messageLabel = Label(
+                    self.conversationFrame,
+                    fg='blue',
+                    text=display,
+                    font=(self.__font_family, 9)
+                )
+                messageLabel.place(x=placeX, y=placeY)
+                placeY += 40 if "\n" in display else 20
+            else:
+                if len(messages[1]) < 21:
+                    display = messages[1]
+                else:
+                    fill_gaps = 21 - len(messages[1][21:])
+                    display = str(messages[1][:21]) + "\n" + str(messages[1][21:]) + fill_gaps*" "
+                messageLabel = Label(
+                    self.conversationFrame,
+                    fg='red',
+                    font=(self.__font_family, 9),
+                    text=display
+                )
+                messageLabel.place(x=placeX+220, y=placeY)
+                placeY += 20
+        self.message = StringVar()
+        messageEntry = Entry(
+            self.conversationFrame,
+            textvariable=self.message,
+            width=42,
+            relief="flat",
+            highlightcolor="blue",
+            font=(self.__font_family, 9)
+        )
+        messageEntry.place(height=50, x=0, y=325)
+        sendButton = Button(
+            self.conversationFrame,
+            text="Send",
+            font=(self.__font_family, 10),
+            relief="flat",
+            width=5,
+            activeforeground="blue",
+            underline=0
+        )
+        sendButton.place(height=40, x=305, y=330)
+
+    def getConversation(self, userId):
         print(userId)
         valid = Send()
         get_message = {
@@ -276,5 +339,4 @@ class Message:
             "messegerId": userId,
             "userId": self.master.user[0]
         }
-        self.conversation = json.loads(valid.message(get_message))
-        print(self.conversation)
+        return json.loads(valid.message(get_message))
