@@ -75,7 +75,14 @@ class Message:
         self.toEntry.bind("<Key>", self.search_the_query)
         self.toEntry.bind("<Button-1>", self.__callback_for_change)
         self.toEntry.place(height=50, x=70, y=0)
-
+        self.toEntryError = Label(
+            self.newMessage,
+            text="",
+            fg="red",
+            bg=self.__backgorud_color,
+            font=(self.__font_family, 8)
+        )
+        self.toEntryError.place(x=70, y=60)
         self.messageText = Text(
             self.newMessage,
             relief="flat",
@@ -124,6 +131,15 @@ class Message:
             relief="flat"
         )
         newMessage.place(x = 0, y = 0)
+        self.getMessages()
+
+        for user in self.__allMessages:
+            messageButton = Button(
+                self.lastMessages,
+                text=self.getUser(user[2] if user[2] != self.master.user[0] else user[3])
+            )
+            messageButton.place(x=0, y=20)
+
     def __callback_for_change(self, *args):
         if self.toEntry.get() == "Enter Username":
             self.toEntry.delete(0, END)
@@ -138,18 +154,24 @@ class Message:
         self.newMessages()
 
     def sendMessage(self):
-        if self.toUserId:
-            valid = Send()
-            msg = {
-                "route": "send_message",
-                "messageContent": self.messageText.get("1.0","end-1c"),
-                "toUser": self.toWhom.get(),
-                "fromUser": self.master.user[0]
-            }
-            self.response = json.loads(valid.message(msg))
-            print(self.response)
+        self.search_the_query()
+        if self.toUserId != self.master.user[0]:
+            if self.toUserId:
+                valid = Send()
+                msg = {
+                    "route": "send_message",
+                    "messageContent": self.messageText.get("1.0","end-1c"),
+                    "fromUser": self.master.user[0],
+                    "toUser": self.toUserId
+                }
+                self.response = json.loads(valid.message(msg))
+                print(self.response)
+            else:
+                self.toEntry.config(highlightcolor="red")
+                self.toEntryError.config(text="Username not found")
         else:
-            print('user with that username not found')
+            self.toEntry.config(highlightcolor="red")
+            self.toEntryError.config(text="Send message to self?\nMay be next Update")
 
     def search_the_query(self, *args):
         '''search_the_query(self, *args):
@@ -168,6 +190,8 @@ class Message:
             if self.toUserId:
                 self.toUserId = self.toUserId[0][0]
 
+            print(self.toUserId)
+
     def fetchUsers(self):
         valid = Send()
         get_post = {
@@ -175,3 +199,23 @@ class Message:
             "userId": self.master.user[0]
         }
         return json.loads(valid.message(get_post))
+
+    def getMessages(self):
+        valid = Send()
+        get_post = {
+            "route": "get_messages",
+            "userId": self.master.user[0]
+        }
+        self.__allMessages = json.loads(valid.message(get_post))
+        print(self.__allMessages)
+    def getUser(self, userId):
+        getUser = {
+            "route": "get_user",
+            "userId": userId
+        }
+        valid = Send()
+        reply = json.loads(valid.message(getUser))
+        for i in reply:
+            for j in i:
+                reply = j
+        return reply

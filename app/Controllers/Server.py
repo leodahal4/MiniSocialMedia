@@ -98,6 +98,10 @@ class Server:
             from app.Controllers.MessageController import MessageConntroller
             controller = MessageConntroller()
             return json.dumps(controller.handle(self.__request_route))
+        elif self.__request_route['route'] == "get_messages":
+            from app.Controllers.MessageController import MessageConntroller
+            controller = MessageConntroller()
+            return json.dumps(controller.handle(self.__request_route))
         else:
             return "Request is unknown"
 
