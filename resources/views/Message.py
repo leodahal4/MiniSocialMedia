@@ -1,8 +1,8 @@
 from Config.config import Global_all
 from tkinter import Frame, Label, Scrollbar, Canvas, Button, Entry, StringVar
 from tkinter import Text, INSERT, END, BOTH
-import fontawesome as fa
 from validation.send_to_server import Send
+import fontawesome as fa
 import json
 
 
@@ -134,7 +134,15 @@ class Message:
         self.getMessages()
         self.pickUnique()
 
-        initialy = 20
+        self.oldLabel = Label(
+            self.lastMessages,
+            text="Old Messages",
+            font=(self.__font_family, 9),
+            underline=0,
+            bg=self.__backgorud_color
+        )
+        self.oldLabel.place(x=0, y=40)
+        initialy = 30
         times = 1
         for user in self.__oldmessage:
             messageButton = Button(
