@@ -29,3 +29,17 @@ class Messages:
             print("error")
         db.commit()
         db.close()
+
+    def getMessage(self, request):
+        db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
+        cursor = db.cursor()
+        try:
+            sql = "select * from message where (fromUser=%s and toUser=%s) or (fromUser=%s and toUser=%s);"
+            values = (request['messegerId'], request['userId'], request['userId'], request['messegerId'])
+            cursor.execute(sql, values)
+            results = cursor.fetchall()
+            return results
+        except:
+            print("error")
+        db.commit()
+        db.close()

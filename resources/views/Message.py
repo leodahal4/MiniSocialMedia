@@ -83,6 +83,14 @@ class Message:
             font=(self.__font_family, 8)
         )
         self.toEntryError.place(x=70, y=60)
+        self.sendSuccess = Label(
+            self.newMessage,
+            text="",
+            fg="blue",
+            bg=self.__backgorud_color,
+            font=(self.__font_family, 8)
+        )
+        self.sendSuccess.place(x=70, y=60)
         self.messageText = Text(
             self.newMessage,
             relief="flat",
@@ -151,7 +159,10 @@ class Message:
                 width=8,
                 relief="flat",
                 font=(self.__font_family, 12),
-                text=self.getUser(user[2] if user[2] != self.master.user[0] else user[3])
+                activeforeground="blue",
+                fg="red" if not(user[4]) else "black",
+                text=self.getUser(user[2] if user[2] != self.master.user[0] else user[3]),
+                command=lambda id=user[2] if user[2] != self.master.user[0] else user[3]:self.openMessage(id)
             )
             messageButton.place(x=0, y=initialy + times*30)
             times += 1
@@ -181,6 +192,9 @@ class Message:
                     "toUser": self.toUserId
                 }
                 self.response = json.loads(valid.message(msg))
+                self.newMessage.destroy()
+                self.newMessages()
+                self.sendSuccess.config(text="Send Success")
                 print(self.response)
             else:
                 self.toEntry.config(highlightcolor="red")
@@ -216,12 +230,11 @@ class Message:
 
     def getMessages(self):
         valid = Send()
-        get_post = {
+        get_messages = {
             "route": "get_messages",
             "userId": self.master.user[0]
         }
-        self.__allMessages = json.loads(valid.message(get_post))
-        print(self.__allMessages)
+        self.__allMessages = json.loads(valid.message(get_messages))
     def getUser(self, userId):
         getUser = {
             "route": "get_user",
@@ -247,9 +260,21 @@ class Message:
                     append = True
                 else:
                     append = False
+                    break
 
             if append:
                 self.allindex.append([user[2], user[3]])
                 self.__oldmessage.append(user)
             else:
                 pass
+
+    def openMessage(self, userId):
+        print(userId)
+        valid = Send()
+        get_message = {
+            "route": "get_message",
+            "messegerId": userId,
+            "userId": self.master.user[0]
+        }
+        self.conversation = json.loads(valid.message(get_message))
+        print(self.conversation)
