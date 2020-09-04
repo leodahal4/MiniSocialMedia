@@ -16,60 +16,60 @@ directory under app directory.
 
 The project folder is as shown below
 
-.
-├── app
-│   ├── Controllers
-│   │   ├── FriendsController.py
-│   │   ├── FriendsController_test.py
-│   │   ├── LoginController.py
-│   │   ├── MessageController.py
-│   │   ├── PostController.py
-│   │   ├── README.md
-│   │   ├── RegisterController.py
-│   │   ├── Server.py
-│   │   └── UserController.py
-│   ├── Friends.py
-│   ├── LoginRegister.py
-│   ├── LoginRegister_test.py
-│   ├── Messages.py
-│   ├── Post.py
-│   ├── README.md
-│   └── User.py
-├── codeCount
-├── Config
-│   ├── check.py
-│   ├── config.py
-│   └── image_works.py
-├── LICENSE
-├── loggedin
-├── marksAsPerTopics
-├── README.md
-├── requirements.txt
-├── resources
-│   ├── assets
-│   │   └── default_avatar.png
-│   └── views
-│       ├── AddPost.py
-│       ├── AllPosts.py
-│       ├── clear_widgets.py
-│       ├── Friends.py
-│       ├── home.py
-│       ├── login.py
-│       ├── Message.py
-│       ├── OpenPost.py
-│       └── register.py
-├── routes
-│   ├── index.py
-│   └── README.md
-├── run_me_client.py
-├── server.py
-└── validation
-    ├── core_validation.py
-    ├── core_validation_test.py
-    ├── README.md
-    └── send_to_server.py
-
-8 directories, 43 files
+> .
+> ├── app
+> │   ├── Controllers
+> │   │   ├── FriendsController.py
+> │   │   ├── FriendsController_test.py
+> │   │   ├── LoginController.py
+> │   │   ├── MessageController.py
+> │   │   ├── PostController.py
+> │   │   ├── README.md
+> │   │   ├── RegisterController.py
+> │   │   ├── Server.py
+> │   │   └── UserController.py
+> │   ├── Friends.py
+> │   ├── LoginRegister.py
+> │   ├── LoginRegister_test.py
+> │   ├── Messages.py
+> │   ├── Post.py
+> │   ├── README.md
+> │   └── User.py
+> ├── codeCount
+> ├── Config
+> │   ├── check.py
+> │   ├── config.py
+> │   └── image_works.py
+> ├── LICENSE
+> ├── loggedin
+> ├── marksAsPerTopics
+> ├── README.md
+> ├── requirements.txt
+> ├── resources
+> │   ├── assets
+> │   │   └── default_avatar.png
+> │   └── views
+> │       ├── AddPost.py
+> │       ├── AllPosts.py
+> │       ├── clear_widgets.py
+> │       ├── Friends.py
+> │       ├── home.py
+> │       ├── login.py
+> │       ├── Message.py
+> │       ├── OpenPost.py
+> │       └── register.py
+> ├── routes
+> │   ├── index.py
+> │   └── README.md
+> ├── run_me_client.py
+> ├── server.py
+> └── validation
+>     ├── core_validation.py
+>     ├── core_validation_test.py
+>     ├── README.md
+>     └── send_to_server.py
+>
+> 8 directories, 43 files
 
 ## Run as
 
