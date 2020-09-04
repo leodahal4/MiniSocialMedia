@@ -14,6 +14,65 @@ All the application logic will be on the app directory.\
 Each view will have its own respective Controller on the controllers\
 directory under app directory.
 
+The project folder is as shown below
+> .
+> ├── app
+> │   ├── Controllers
+> │   │   ├── FriendsController.py
+> │   │   ├── HomeController.py
+> │   │   ├── LoginController.py
+> │   │   ├── MessageController.py
+> │   │   ├── PostController.py
+> │   │   ├── README.md
+> │   │   ├── RegisterController.py
+> │   │   ├── Server.py
+> │   │   └── UserController.py
+> │   ├── Exceptions
+> │   │   ├── DuplicateUserName.py
+> │   │   ├── exceptions.py
+> │   │   └── README.md
+> │   ├── Friends.py
+> │   ├── LoginRegister.py
+> │   ├── Messages.py
+> │   ├── Post.py
+> │   ├── README.md
+> │   └── User.py
+> ├── codeCount
+> ├── Complete
+> ├── Config
+> │   ├── check.py
+> │   ├── config.py
+> │   └── image_works.py
+> ├── LICENSE
+> ├── loggedin
+> ├── marksAsPerTopics
+> ├── README.md
+> ├── requirements.txt
+> ├── resources
+> │   ├── assets
+> │   │   └── default_avatar.png
+> │   └── views
+> │       ├── AddPost.py
+> │       ├── AllPosts.py
+> │       ├── clear_widgets.py
+> │       ├── Friends.py
+> │       ├── home.py
+> │       ├── login.py
+> │       ├── Message.py
+> │       ├── OpenPost.py
+> │       └── register.py
+> ├── routes
+> │   ├── index.py
+> │   └── README.md
+> ├── run_me_client.py
+> ├── server.py
+> └── validation
+>     ├── core_validation.py
+>     ├── README.md
+>     └── send_to_server.py
+>
+> 9 directories, 45 files
+
 
 ## Run as
 
@@ -22,25 +81,5 @@ directory under app directory.
   pip install -r requirements.txt
 
 
-### done
-> User can register  
-> user can login  
-> user can view all posts  
-> user can view specific post  
-> Navbar design for messages, new post and user image
-> how many likes already on the post?  
-> user can like the post  
-> User can add friends
-> UserController for gettting user details
-
-### not done
-> user can view specific posts but not the comments associated with those post  
-> user cannot comment  
-> code cleanup
-
-
-# Updates will be coming soon.
-
-> Complete README.md will be updated soon.
 
 [Star Repo]: https://github.com/leodahal4/MiniSocialMedia

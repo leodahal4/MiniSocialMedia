@@ -1,14 +1,28 @@
+import json
 import socket
 import threading
 import time
-import json
 
 
 class Server:
+    ''' Server:
+            This class contains all the code for letting the user to host a
+            server on the system
+    '''
     def __init__(self):
-        self.constant()
+        '''__init__(self)
+            self: very first argument of the method
 
+            This method calls the constant method to declare all the constant
+            needed inorder to host a server
+        '''
+        self.constant()
     def constant(self):
+        '''constant(self)
+            self: very first argument of the method
+
+            This method declares all the constant values needed to host a server
+        '''
         self.__HEADER = 64
         self.__PORT = 5060
         self.__SERVER = socket.gethostbyname(socket.gethostname())
@@ -19,6 +33,11 @@ class Server:
         self.__server.bind(self.__ADDR)
 
     def handle_client(self, conn, addr):
+        '''handle_client(self)
+            self: very first argument of the method
+
+            This method handles all the client that connects on the server
+        '''
         print(f"[NEW CONNECTION] {addr} connected.")
         connected = True
         while connected:
@@ -35,13 +54,11 @@ class Server:
         conn.close()
 
     def route(self, request):
-        # Valid rotes in server
-        # login
-        # register
-        # message
-        # create_post
-        # open post
-        # people / person
+        '''route(self, request):
+            self: very first argument of the method
+            request: contains all the routes, requests and all information
+            sent by the client
+        '''
         self.__request_route = json.loads(request)
         if self.__request_route['route'] == "login":
             from app.Controllers.LoginController import LoginController
@@ -114,6 +131,12 @@ class Server:
             return "Request is unknown"
 
     def start(self):
+        '''start(self):
+            self: very first argument of the method
+
+            This method starts the threading for handling the clients by calling
+            the handle_client method
+        '''
         try:
             self.__server.listen()
             print(f"[LISTENING] Server is listening on {self.__SERVER}")
@@ -122,16 +145,13 @@ class Server:
                 thread = threading.Thread(target=self.handle_client, args=(conn, addr))
                 thread.start()
                 print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
-
         except KeyboardInterrupt:
             print('You pressed Ctrl + C')
             # socket.close()
             self.__server.shutdown(1)
             self.__server.close()
-
         for i in range(1000):
             print()
-
         print('[Terminate]\t Server is terminating..\n\n')
         time.sleep(2)
 

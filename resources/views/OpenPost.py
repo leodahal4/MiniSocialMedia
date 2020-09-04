@@ -90,12 +90,6 @@ class OpenPost:
 
         self.likeCount = i[4]
         self.drawLikeButton()
-        self.comment = Button(
-            self.frame,
-            text=fa.icons['comment-alt'] + " \t 0",
-            bg="white",
-        )
-        self.comment.pack( side = RIGHT)
 
     def checkThisLike(self):
         valid = Send()
