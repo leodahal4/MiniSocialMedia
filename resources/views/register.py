@@ -1,7 +1,6 @@
 from Config import image_works
 from Config.config import Global_all
 from PIL import Image, ImageTk
-from app.Exceptions.DuplicateUserName import DuplicateUserName
 from resources.views.clear_widgets import Clear
 from routes.index import Routes
 from tkinter import Frame, Button, Label, Entry, FLAT, END, StringVar
@@ -281,18 +280,7 @@ class RegisterForm(Frame):
             )
             self.__user_name_error_count = 1
         else:
-            try:
-                pass
-            except DuplicateUserName:
-                self.__user_name_error_label.config(text="*UserName taken")
-
-            except FileNotFoundError:
-                self.__user_name_error_label.config(text="")
-                self.__user_name_error_count = 0
-
-            else:
-                self.__user_name_error_label.config(text="")
-                self.__user_name_error_count = 0
+            pass
         if valid.isBlank(self.__password_var.get()):
             self.__password_error_label.config(text="*Enter your password")
             self.__password_error_count = 1
