@@ -43,6 +43,7 @@ The project folder is as shown below
 > ├── LICENSE  
 > ├── loggedin  
 > ├── marksAsPerTopics  
+> ├── minisocialmedia.sql  
 > ├── README.md  
 > ├── requirements.txt  
 > ├── resources  
