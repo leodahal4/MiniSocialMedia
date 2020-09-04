@@ -1,3 +1,4 @@
+from Config.config import Global_all
 from PIL import Image, ImageTk
 from PIL import Image, ImageTk
 from resources.views.AllPosts import AllPosts
@@ -5,7 +6,6 @@ from routes.index import Routes
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 import fontawesome as fa
-from Config.config import Global_all
 
 
 class Home(Frame):
@@ -26,7 +26,6 @@ class Home(Frame):
         self.__create_all_fields()
 
     def __create_all_fields(self):
-        # self.menu_bar()
         self.navbar()
         self.posts()
 
@@ -42,8 +41,6 @@ class Home(Frame):
         # contents
         self.__font_size = 10
         self.canvas = Canvas(self.master, bg="white")
-        # self.canvas.create_line(150, 10, 150, 6000, dash = (5, 2))
-        # self.canvas.pack(fill=BOTH, expand = True)
 
         self.__user_avatar_path = "Images/default_avatar.png"
 
@@ -60,7 +57,6 @@ class Home(Frame):
         self.__img.image = render
         self.__img.place(x=10, y=50)
 
-        # Username
         self.__user_name = self.master.user[1].capitalize()
         self.app_title = Label(
             self.master,

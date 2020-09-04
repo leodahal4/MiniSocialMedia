@@ -1,10 +1,10 @@
-from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
-from tkinter import DISABLED, NORMAL
-from validation.send_to_server import Send
-from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
-import json
-import fontawesome as fa
 from Config.config import Global_all
+from tkinter import DISABLED, NORMAL
+from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
+from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
+from validation.send_to_server import Send
+import fontawesome as fa
+import json
 
 
 class OpenPost:
@@ -12,7 +12,6 @@ class OpenPost:
         self.canvas = canvas
         self.master = master
         self.clickedPostId = clickedPostId
-        # declare the global configurations
         returned = Global_all.global_config_for_font()
         self.__font_family = returned[0]
         self.__font_size = returned[1]
@@ -149,7 +148,6 @@ class OpenPost:
     def backToAllPosts(self):
         self.backButton.destroy()
         self.frame.destroy()
-        # self.master.scrollbar.destroy()
         from resources.views.AllPosts import AllPosts
         AllPosts(self.canvas, self.master)
 

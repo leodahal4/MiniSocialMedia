@@ -117,8 +117,6 @@ class Message:
         self.sendButton.place(x=300, y=320)
 
     def on_configure(self, event):
-        # update scrollregion after starting 'mainloop'
-        # when all widgets are in canvas
         self.lastMessages.configure(scrollregion=self.canvas.bbox('all'))
 
     def lastMessagesNav(self):

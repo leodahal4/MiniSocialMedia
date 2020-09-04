@@ -1,11 +1,10 @@
+from Config.config import Global_all
+from app.Controllers.PostController import PostController
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
-from app.Controllers.PostController import PostController
-import json
-from Config.config import Global_all
 from validation.send_to_server import Send
 import fontawesome as fa
-
+import json
 
 
 class AllPosts:
@@ -40,8 +39,6 @@ class AllPosts:
         self.canvas.bind('<Configure>', self.on_configure)
 
     def on_configure(self, event):
-        # update scrollregion after starting 'mainloop'
-        # when all widgets are in canvas
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
 
     def __allPosts(self):
@@ -97,7 +94,6 @@ class AllPosts:
 
     def clickThis(self, clickedPostId):
         self.frame.destroy()
-        # self.scrollbar.destroy()
         from resources.views.OpenPost import OpenPost
         OpenPost(self.canvas, clickedPostId, self.master)
 

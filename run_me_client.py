@@ -1,9 +1,9 @@
-from tkinter import Tk, Frame, Menu, messagebox
 from Config.config import Global_all
-import os, os.path
-import subprocess
-import shutil
 from routes.index import Routes
+from tkinter import Tk, Frame, Menu, messagebox
+import os, os.path
+import shutil
+import subprocess
 
 my_root_app = ""
 

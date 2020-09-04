@@ -15,13 +15,6 @@ class Routes:
             from resources.views.login import LoginForm
             LoginForm(master)
 
-       # from_address(source, destination)
-
     def from_address(self, source, destination):
-        # some defined paths are given below
-        # destination: Dashboard -> source: login
-        # destination: Register -> source: login
-        # destination: Forgot password -> source: login
-        # destination: Change password -> source: settings
         if destination == "home":
             return True if source == "login" or source == "register" else False

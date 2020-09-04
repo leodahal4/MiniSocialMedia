@@ -1,4 +1,3 @@
-# from validation.login_validation import Validate
 from Config.config import Global_all
 from resources.views.clear_widgets import Clear
 from routes import index
@@ -21,7 +20,6 @@ class LoginForm(Frame):
         super().__init__(master)
         self.master = master
         self.__primary_color="blue"
-        # declare the global configurations
         returned = Global_all.global_config_for_font()
         self.__font_family = returned[0]
         self.__font_size = returned[1]
@@ -31,7 +29,6 @@ class LoginForm(Frame):
         self.master.config(bg=self.__backgorud_color)
         # bind ENTER key or RETURN key to the login button
         self.master.bind("<Return>", lambda x: self.__login())
-        # now pass the program flow to create_all_fields
         self.__create_all_fields()
         self.__cleared = 0
 
@@ -46,7 +43,6 @@ class LoginForm(Frame):
                 buttons on the window for making a successfull login
         """
 
-        # Create a button for registering the user
         self.__register_button = Button(
             self.master,
             bg=self.__backgorud_color,
@@ -68,7 +64,6 @@ class LoginForm(Frame):
             font=(self.__font_family, 15)
         )
         self.__loginHead.place(height=40, x=220, y=130)
-        # Create username field with a label on the top of it.
         self.__user_name = StringVar()
         self.__user_name = Entry(
             self.master,
@@ -85,8 +80,6 @@ class LoginForm(Frame):
         self.__user_name.place(height=50, x=250, y=180)
         self.__user_name.bind("<Button-1>", self.__callback_for_change)
 
-        # Create a password field with a label on the top of it.
-        # Global password
         self.__password = StringVar()
         self.__password = Entry(
             self.master,
@@ -102,7 +95,6 @@ class LoginForm(Frame):
         )
         self.__password.place(height=50, x=250, y=270)
 
-        # Show pass eye button
         self.__eye_show = Button(
             self.master,
             bg=self.__backgorud_color,
@@ -115,7 +107,6 @@ class LoginForm(Frame):
         )
         self.__eye_show.place(height=50, x=410, y=270)
 
-        # Hide pass eye button
         self.__eye_hide = Button(
             self.master,
             bg=self.__backgorud_color,
@@ -135,7 +126,6 @@ class LoginForm(Frame):
         )
         self.__error_label.place(x=250, y=320)
 
-        # Create a forgot password button
         var = StringVar()
         self.__forgot_password = Button(
             self.master,
@@ -149,7 +139,6 @@ class LoginForm(Frame):
         var.set("Forgot Password?")
         self.__forgot_password.place(x=310, y=340)
 
-        # Create the login Button
         self.__login_button = Button(
             self.master,
             bg=self.__backgorud_color,

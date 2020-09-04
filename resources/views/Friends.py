@@ -48,7 +48,6 @@ class FriendsView:
             relief='flat',
             width=35
         )
-        # self.search_name.pack()
         self.search_name.insert(0, 'Enter the username')
         self.search_name.bind("<Key>", self.search_the_query)
         self.search_name.bind("<Button-1>", lambda x: self.search_name.delete(0, END)),
@@ -152,11 +151,6 @@ class FriendsView:
                 "userId": self.master.user[0]
             }
             msg = json.loads(valid.message(msg))
-            # if msg == "True":
-            #     messagebox.showinfo(
-            #         title="Success",
-            #         message="Request Accepted"
-            #     )
         elif "Add" in relation:
             valid = Send()
             msg = {
@@ -165,12 +159,6 @@ class FriendsView:
                 "userId": self.master.user[0]
             }
             msg = json.loads(valid.message(msg))
-            # if msg == "True":
-            #     messagebox.showinfo(
-            #         title="Success",
-            #         message="Friend Request sent"
-            #     )
-            #     self.relation = "Sent"
         else:
             pass
         self.frame.destroy()

@@ -27,7 +27,6 @@ class RegisterForm(Frame):
         self.master = master
         self.__user_avatar_path = ""
 
-        # declare the global configurations
         returned = Global_all.global_config_for_font()
         self.__font_family = returned[0]
         self.__font_size = returned[1]
@@ -44,7 +43,6 @@ class RegisterForm(Frame):
         if self.__user_avatar_path != "":
             load = Image.open(self.__user_avatar_path)
         else:
-            # use the default image as the default user avatar at first
             self.__user_avatar_path = "Images/default_avatar.png"
             load = Image.open("resources/assets/default_avatar.png")
         load.resize((100, 100), Image.ANTIALIAS)
@@ -57,7 +55,6 @@ class RegisterForm(Frame):
         self.__img.image = render
         self.__img.place(x=580, y=5)
 
-        # create a button for choosing the avatar by the user
         self.__user_avatar_browser = Button(
             self.master,
             text="Choose Avtar",
@@ -69,7 +66,6 @@ class RegisterForm(Frame):
         )
         self.__user_avatar_browser.place(x=580, y=120)
 
-        # Create First Name field
         self.__first_name_error_label = Label(
             self.master,
             bg=self.__background_color,
@@ -93,7 +89,6 @@ class RegisterForm(Frame):
         )
         self.first_name_entry.place(height=50, x=120, y=80)
 
-        # Create Last Name field
         self.__last_name_error_label = Label(
             self.master,
             text="",
@@ -119,7 +114,6 @@ class RegisterForm(Frame):
         )
         self.__last_name_entry.place(height=50, x=360, y=80)
 
-        # Create User Name field
         self.__user_name_error_label = Label(
             self.master,
             text="",
@@ -145,7 +139,6 @@ class RegisterForm(Frame):
         )
         self.__user_name_entry.place(height=50, x=120, y=150)
 
-        # Create Password field
         self.__password_label = Label(
             self.master,
             font=(self.__font_family, 13),
@@ -162,7 +155,6 @@ class RegisterForm(Frame):
             relief=FLAT
         )
         self.__password_error_label.place(x=180, y=300)
-        # Password entry
         self.__password_var = StringVar()
         self.__entry = self.__password_entry = Entry(
             self.master,
@@ -176,7 +168,6 @@ class RegisterForm(Frame):
         self.__password_entry.bind("<Key>", self.show_pass)
         self.__password_entry.place(height=50, x=120, y=250)
 
-        # Create Re-Type Password Field
         self.__re_password_label = Label(
             self.master,
             font=(self.__font_family, 13),
@@ -198,7 +189,6 @@ class RegisterForm(Frame):
         self.__re_password_entry.bind("<Key>", self.re_show_pass)
         self.__re_password_entry.place(height=50, x=120, y=350)
 
-        # Create Register Button
         self.__register_button = Button(
             self.master,
             text="Register",
@@ -210,7 +200,6 @@ class RegisterForm(Frame):
         )
         self.__register_button.place(height=50, x=240, y=430)
 
-        # Create a login Button
         self.__login_button = Button(
             self.master,
             text="Login",
@@ -247,7 +236,6 @@ class RegisterForm(Frame):
         )
         self.__user_avatar_path = filename
 
-        # now use the selected image as the avatar of the user
         crop_images = image_works.Image_work()
         self.__user_avatar_path = crop_images.crop_image(
             self.__user_avatar_path
@@ -272,22 +260,18 @@ class RegisterForm(Frame):
         self.__user_name_info = self.__user_name_var.get()
 
         valid = CoreValidation()
-        # Check for the first name
         if valid.isBlank(self.__first_name_var.get(), "First Name"):
             self.__first_name_error_label.config(text="*Required")
             self.__first_name_error_count = 1
         else:
             self.__first_name_error_label.config(text="")
             self.__first_name_error_count = 0
-        # Check for the last name
         if valid.isBlank(self.__last_name_var.get(), "Last Name"):
             self.__last_name_error_label.config(text="*Required")
             self.__last_name_error_count = 1
         else:
             self.__last_name_error_label.config(text="")
             self.__last_name_error_count = 0
-        # Check for the username and its length
-        # i.e username length must be equal or greater than 3
         if valid.isBlank(self.__user_name_var.get(), "UserName"):
             self.__user_name_error_label.config(text="*Required")
             self.__user_name_error_count = 1
@@ -309,7 +293,6 @@ class RegisterForm(Frame):
             else:
                 self.__user_name_error_label.config(text="")
                 self.__user_name_error_count = 0
-        # Check for the password
         if valid.isBlank(self.__password_var.get()):
             self.__password_error_label.config(text="*Enter your password")
             self.__password_error_count = 1
