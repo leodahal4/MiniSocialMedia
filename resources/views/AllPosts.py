@@ -1,5 +1,4 @@
 from Config.config import Global_all
-from app.Controllers.PostController import PostController
 from tkinter import Frame, StringVar, Label, Tk, Menu, Canvas, BOTH, RIGHT
 from tkinter import LEFT, Listbox, END, Scrollbar, Y, TOP, Button
 from validation.send_to_server import Send
@@ -84,13 +83,11 @@ class AllPosts:
             l.pack()
 
     def get_posts(self):
-        controller = PostController()
-        self.__posts = controller.get()
         valid = Send()
         get_post = {
             "route": "get_all_posts"
         }
-        self.__post = json.loads(valid.message(get_post))
+        self.__posts = json.loads(valid.message(get_post))
 
     def clickThis(self, clickedPostId):
         self.frame.destroy()
