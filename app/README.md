@@ -4,13 +4,17 @@
 All the models will be on this folder of this application.
 Models are the code seperated which only deals with the database.
 
+this folder contains following files and folders
 
-This folder contains all the following fils and folder
 > .  
 > ├── Controllers  
 > ├── Friends.py  
 > ├── LoginRegister.py  
+> ├── LoginRegister_test.py  
 > ├── Messages.py  
 > ├── Post.py  
 > ├── README.md  
 > └── User.py  
+> directory, 16 files  
+
+This folder contains all the following fils and folder
