@@ -1,10 +1,13 @@
-# all the application logic will be kept here.
+## Models
+
+
+#### all the application logic will be kept here.
 
 
 All the models will be on this folder of this application.
 Models are the code seperated which only deals with the database.
 
-this folder contains following files and folders
+This folder contains following files and folders
 
 > .  
 > ├── Controllers  
@@ -17,4 +20,3 @@ this folder contains following files and folders
 > └── User.py  
 > directory, 16 files  
 
-This folder contains all the following fils and folder
