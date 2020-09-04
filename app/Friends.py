@@ -21,9 +21,15 @@ class Friends:
         db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
         try:
-            sql = "update friends set request=1 where origin_user=%s and destination_user=%s"
+            sql = "select * from friends where origin_user=%s and destination_user=%s"
             values = (str(request['add']), str(request['userId']))
             cursor.execute(sql, values)
+            if(cursor.fetchall()):
+                sql = "update friends set request=1 where origin_user=%s and destination_user=%s"
+                values = (str(request['add']), str(request['userId']))
+                cursor.execute(sql, values)
+            else:
+                return "False"
             db.commit()
             db.close()
             return "True"
@@ -35,13 +41,19 @@ class Friends:
         db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
         try:
-            sql = "select * from friends where origin_user=%s or destination_user=%s"
-            values = (str(request['userId']), str(request['userId']))
-            cursor.execute(sql, values)
-            friends = cursor.fetchall()
-            db.commit()
-            db.close()
-            return friends
+            sql = "select * from user where id=" + str(request['userId'])
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            if results:
+                sql = "select * from friends where origin_user=%s or destination_user=%s"
+                values = (str(request['userId']), str(request['userId']))
+                cursor.execute(sql, values)
+                friends = cursor.fetchall()
+                db.commit()
+                db.close()
+                return friends
+            else:
+                return "False"
         except:
             db.close()
             return "False"

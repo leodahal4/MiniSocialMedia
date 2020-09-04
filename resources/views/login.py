@@ -196,6 +196,7 @@ class LoginForm(Frame):
                 }
                 message = valid.message(to_auth)
                 message = json.loads(message)
+                print(message)
                 if(type(message) == list):
                     self.master.unbind("<Return>")
                     for i in message:

@@ -21,6 +21,8 @@ class FriendsController:
             return self.get_friends(request)
         elif request['route'] == "accept_request":
             return self.accept_request(request)
+        else:
+            return "False"
 
     def send_request(self, request):
         '''send_request(self, request)
