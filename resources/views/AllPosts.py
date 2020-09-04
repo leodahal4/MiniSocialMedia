@@ -4,6 +4,7 @@ from app.Controllers.PostController import PostController
 import json
 from Config.config import Global_all
 from validation.send_to_server import Send
+import fontawesome as fa
 
 
 
@@ -52,7 +53,7 @@ class AllPosts:
             width="500"
         )
         for i in self.__posts:
-            user = self.getUser(i[3])
+            user = self.getUser(i[3])+ "  " + fa.icons['thumbs-up'] + "  " + str(i[4])
             title = "\' " + i[1] + " \'"
             if len(title) < 55:
                 fill_gaps = 55 - len(title)
@@ -92,7 +93,7 @@ class AllPosts:
         get_post = {
             "route": "get_all_posts"
         }
-        self.__post = valid.message(get_post)
+        self.__post = json.loads(valid.message(get_post))
 
     def clickThis(self, clickedPostId):
         self.frame.destroy()

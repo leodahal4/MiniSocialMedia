@@ -311,7 +311,6 @@ class Message:
         sendButton.place(height=40, x=305, y=330)
 
     def getConversation(self, userId):
-        print(userId)
         valid = Send()
         get_message = {
             "route": "get_message",
@@ -336,7 +335,6 @@ class Message:
                     self.newMessage.destroy()
                     self.newMessages()
                     self.sendSuccess.config(text="Send Success")
-                    print(self.response)
                 else:
                     self.toEntry.config(highlightcolor="red")
                     self.toEntryError.config(text="Username not found")
@@ -353,7 +351,6 @@ class Message:
             }
             self.response = json.loads(valid.message(msg))
             self.openMessage(toUser)
-            print(self.response)
 
     def setSeen(self, fromUser):
         valid = Send()
@@ -362,4 +359,3 @@ class Message:
             "fromUser": fromUser,
             "toUser": self.master.user[0]
         }
-        print(json.loads(valid.message(set_seen)))

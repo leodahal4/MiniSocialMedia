@@ -4,10 +4,14 @@ from mysql.connector import Error
 
 
 class Post:
+    ''' Post: Model
+            This class is a model for Post i.e this class will contain all the
+            code for database while fetching or updating post.
+    '''
     def get_posts():
         db = mysql.connect(host="localhost",database="minisocialmedia",user="root",password="MausamDahal" )
         cursor = db.cursor()
-        sql = "SELECT * FROM post"
+        sql = "SELECT * FROM post order by likes desc;"
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
@@ -47,8 +51,6 @@ class Post:
         values = (str(postId), str(userId))
         cursor.execute(sql, values)
         results = cursor.fetchall()
-        print("data fetched from server is: ", end="\t")
-        print(results)
         if results:
             return "False"
         else:
@@ -62,15 +64,10 @@ class Post:
             cursor.execute(sql)
             likes = cursor.fetchall()
             db.commit()
-            print("likes fetched is ", end="\t")
-            print(likes)
             for i in likes:
-                print(likes)
                 newlikes = i[0]
-                print(newlikes)
 
             newlikes += 1
-            print(likes)
             sql = "update post set likes=%s where id=%s;"
             values = (str(newlikes), str(postId))
             cursor.execute(sql, values)
@@ -86,8 +83,6 @@ class Post:
         values = (str(postId), str(userId))
         cursor.execute(sql, values)
         results = cursor.fetchall()
-        print("data fetched from server  to check if liked is: ", end="\t")
-        print(results)
         if results:
             return "False"
         else:

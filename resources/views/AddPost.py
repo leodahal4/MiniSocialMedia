@@ -128,7 +128,6 @@ class AddPost:
         else:
             self.__descError = 0
 
-        print(f"value of conditions {self.__titleError}, {self.__descError}")
         notValid = True if(self.__descError or self.__titleError) else False
 
         if notValid:
@@ -144,7 +143,7 @@ class AddPost:
                 "postDescription": self.__description,
                 "userId": self.master.user[0]
             }
-            print(valid.message(commitPost))
+            response = valid.message(commitPost)
             messagebox.showinfo(
                 title="Success",
                 message="Your Update has been successfully posted."

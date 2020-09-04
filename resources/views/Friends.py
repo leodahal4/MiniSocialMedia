@@ -87,8 +87,16 @@ class FriendsView:
             self.allUsers()
         else:
             self.allUsersFrame.destroy()
-            self.__all_users = [user for user in self.__backup if search_item in user[1]]
+            # self.__all_users = [user for user in self.__backup if search_item in user[1]]
+            self.__all_users = self.search_algorithm(search_item, self.__backup)
             self.allUsers()
+
+    def search_algorithm(self, query, valuePot):
+        result = []
+        for user in valuePot:
+            if query in user[1]:
+                result.append(user)
+        return result
 
     def allUsers(self):
         self.totalUsers = len(self.__all_users)

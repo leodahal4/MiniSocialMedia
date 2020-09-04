@@ -12,8 +12,6 @@ class LoginRegister:
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
-            print("data fetched from server is: ", end="\t")
-            print(results)
             if results:
                 return results
             else:
