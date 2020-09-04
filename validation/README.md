@@ -7,8 +7,6 @@ All the logic of the validation of the forms or either view will be kept here.\
 Core validation i.e those of validation which will be used on different forms\
 if not all.
 
-> # login_validation
-Validation related to the Login Form
+> # send_to_server
+This module is used to send the data from the client to the server
 
-> # register_validation
-Validation related to the Register Form
